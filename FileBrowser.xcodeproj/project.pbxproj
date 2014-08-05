@@ -8,24 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */; };
-		D0353DEB1FA9735C0082508D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DEA1FA9735C0082508D /* ViewController.m */; };
 		D0353DEE1FA9735C0082508D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEC1FA9735C0082508D /* Main.storyboard */; };
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
+		D0353E011FA9735C0082508D /* OSFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E001FA9735C0082508D /* OSFileCollectionViewController.m */; };
+		D0353E041FA9735C0082508D /* OSFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E031FA9735C0082508D /* OSFileCollectionViewCell.m */; };
+		D0353E071FA9735C0082508D /* FilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E061FA9735C0082508D /* FilePreviewViewController.m */; };
+		D0353E0A1FA9735C0082508D /* OSFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E091FA9735C0082508D /* OSFileBottomHUD.m */; };
+		D0353E0D1FA9735C0082508D /* OSFileAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E0C1FA9735C0082508D /* OSFileAttributeItem.m */; };
+		D0353E101FA9735C0082508D /* OSFileCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E0F1FA9735C0082508D /* OSFileCollectionViewFlowLayout.m */; };
+		D0353E131FA9735C0082508D /* OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E121FA9735C0082508D /* OSFile.m */; };
+		D0353E161FA9735C0082508D /* NSString+OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E151FA9735C0082508D /* NSString+OSFile.m */; };
+		D0353E191FA9735C0082508D /* NSString+OSDrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D0353DE31FA9735C0082508D /* FileBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBrowserAppDelegate.h; sourceTree = "<group>"; };
 		D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileBrowserAppDelegate.m; sourceTree = "<group>"; };
-		D0353DE91FA9735C0082508D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D0353DEA1FA9735C0082508D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D0353DED1FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0353DEF1FA9735C0082508D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D0353DFF1FA9735C0082508D /* OSFileCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionViewController.h; sourceTree = "<group>"; };
+		D0353E001FA9735C0082508D /* OSFileCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionViewController.m; sourceTree = "<group>"; };
+		D0353E021FA9735C0082508D /* OSFileCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionViewCell.h; sourceTree = "<group>"; };
+		D0353E031FA9735C0082508D /* OSFileCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionViewCell.m; sourceTree = "<group>"; };
+		D0353E051FA9735C0082508D /* FilePreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilePreviewViewController.h; sourceTree = "<group>"; };
+		D0353E061FA9735C0082508D /* FilePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilePreviewViewController.m; sourceTree = "<group>"; };
+		D0353E081FA9735C0082508D /* OSFileBottomHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBottomHUD.h; sourceTree = "<group>"; };
+		D0353E091FA9735C0082508D /* OSFileBottomHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileBottomHUD.m; sourceTree = "<group>"; };
+		D0353E0B1FA9735C0082508D /* OSFileAttributeItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileAttributeItem.h; sourceTree = "<group>"; };
+		D0353E0C1FA9735C0082508D /* OSFileAttributeItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileAttributeItem.m; sourceTree = "<group>"; };
+		D0353E0E1FA9735C0082508D /* OSFileCollectionViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		D0353E0F1FA9735C0082508D /* OSFileCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		D0353E111FA9735C0082508D /* OSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFile.h; sourceTree = "<group>"; };
+		D0353E121FA9735C0082508D /* OSFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFile.m; sourceTree = "<group>"; };
+		D0353E141FA9735C0082508D /* NSString+OSFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OSFile.h"; sourceTree = "<group>"; };
+		D0353E151FA9735C0082508D /* NSString+OSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OSFile.m"; sourceTree = "<group>"; };
+		D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OSDrawingAdditions.m"; sourceTree = "<group>"; };
+		D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OSDrawingAdditions.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +84,24 @@
 			children = (
 				D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */,
 				D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */,
-				D0353DE91FA9735C0082508D /* ViewController.h */,
-				D0353DEA1FA9735C0082508D /* ViewController.m */,
+				D0353DFF1FA9735C0082508D /* OSFileCollectionViewController.h */,
+				D0353E001FA9735C0082508D /* OSFileCollectionViewController.m */,
+				D0353E021FA9735C0082508D /* OSFileCollectionViewCell.h */,
+				D0353E031FA9735C0082508D /* OSFileCollectionViewCell.m */,
+				D0353E051FA9735C0082508D /* FilePreviewViewController.h */,
+				D0353E061FA9735C0082508D /* FilePreviewViewController.m */,
+				D0353E081FA9735C0082508D /* OSFileBottomHUD.h */,
+				D0353E091FA9735C0082508D /* OSFileBottomHUD.m */,
+				D0353E0B1FA9735C0082508D /* OSFileAttributeItem.h */,
+				D0353E0C1FA9735C0082508D /* OSFileAttributeItem.m */,
+				D0353E0E1FA9735C0082508D /* OSFileCollectionViewFlowLayout.h */,
+				D0353E0F1FA9735C0082508D /* OSFileCollectionViewFlowLayout.m */,
+				D0353E111FA9735C0082508D /* OSFile.h */,
+				D0353E121FA9735C0082508D /* OSFile.m */,
+				D0353E141FA9735C0082508D /* NSString+OSFile.h */,
+				D0353E151FA9735C0082508D /* NSString+OSFile.m */,
+				D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */,
+				D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */,
 				D0353DFE1FA9735C0082508D /* Supporting Files */,
 			);
 			path = FileBrowser;
@@ -150,9 +190,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0353DEB1FA9735C0082508D /* ViewController.m in Sources */,
+				D0353E011FA9735C0082508D /* OSFileCollectionViewController.m in Sources */,
+				D0353E0A1FA9735C0082508D /* OSFileBottomHUD.m in Sources */,
+				D0353E071FA9735C0082508D /* FilePreviewViewController.m in Sources */,
+				D0353E131FA9735C0082508D /* OSFile.m in Sources */,
+				D0353E0D1FA9735C0082508D /* OSFileAttributeItem.m in Sources */,
+				D0353E161FA9735C0082508D /* NSString+OSFile.m in Sources */,
+				D0353E101FA9735C0082508D /* OSFileCollectionViewFlowLayout.m in Sources */,
+				D0353E041FA9735C0082508D /* OSFileCollectionViewCell.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
 				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
+				D0353E191FA9735C0082508D /* NSString+OSDrawingAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
