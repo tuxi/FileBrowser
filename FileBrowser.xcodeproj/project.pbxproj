@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */; };
 		D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */; };
-		D0353DEE1FA9735C0082508D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEC1FA9735C0082508D /* Main.storyboard */; };
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
@@ -21,13 +21,23 @@
 		D0353E131FA9735C0082508D /* OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E121FA9735C0082508D /* OSFile.m */; };
 		D0353E161FA9735C0082508D /* NSString+OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E151FA9735C0082508D /* NSString+OSFile.m */; };
 		D0353E191FA9735C0082508D /* NSString+OSDrawingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */; };
+		D0353E1C1FA9735C0082508D /* UIImageView+XYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E1B1FA9735C0082508D /* UIImageView+XYExtension.m */; };
+		D0353E221FA9735C0082508D /* OSFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E211FA9735C0082508D /* OSFileManager.m */; };
+		D0353E251FA9735C0082508D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E231FA9735C0082508D /* NSString+MD5.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D0353E391FA9735C0082508D /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E381FA9735C0082508D /* DirectoryWatcher.m */; };
+		D0353E3F1FA9735C0082508D /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E3E1FA9735C0082508D /* UIImage+XYImage.m */; };
+		D0353E421FA9735C0082508D /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E411FA9735C0082508D /* NSDate+Utilities.m */; };
+		D0353E451FA9735C0082508D /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E441FA9735C0082508D /* UIViewController+XYExtensions.m */; };
+		D0353E481FA9735C0082508D /* NSObject+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353E471FA9735C0082508D /* NSObject+XYHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FileBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE31FA9735C0082508D /* FileBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBrowserAppDelegate.h; sourceTree = "<group>"; };
 		D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileBrowserAppDelegate.m; sourceTree = "<group>"; };
-		D0353DED1FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0353DEF1FA9735C0082508D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +60,22 @@
 		D0353E151FA9735C0082508D /* NSString+OSFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OSFile.m"; sourceTree = "<group>"; };
 		D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OSDrawingAdditions.m"; sourceTree = "<group>"; };
 		D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OSDrawingAdditions.h"; sourceTree = "<group>"; };
+		D0353E1A1FA9735C0082508D /* UIImageView+XYExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XYExtension.h"; sourceTree = "<group>"; };
+		D0353E1B1FA9735C0082508D /* UIImageView+XYExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XYExtension.m"; sourceTree = "<group>"; };
+		D0353E201FA9735C0082508D /* OSFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSFileManager.h; sourceTree = "<group>"; };
+		D0353E211FA9735C0082508D /* OSFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSFileManager.m; sourceTree = "<group>"; };
+		D0353E231FA9735C0082508D /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		D0353E241FA9735C0082508D /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		D0353E371FA9735C0082508D /* DirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoryWatcher.h; sourceTree = "<group>"; };
+		D0353E381FA9735C0082508D /* DirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryWatcher.m; sourceTree = "<group>"; };
+		D0353E3D1FA9735C0082508D /* UIImage+XYImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+XYImage.h"; sourceTree = "<group>"; };
+		D0353E3E1FA9735C0082508D /* UIImage+XYImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+XYImage.m"; sourceTree = "<group>"; };
+		D0353E401FA9735C0082508D /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
+		D0353E411FA9735C0082508D /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
+		D0353E431FA9735C0082508D /* UIViewController+XYExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XYExtensions.h"; sourceTree = "<group>"; };
+		D0353E441FA9735C0082508D /* UIViewController+XYExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XYExtensions.m"; sourceTree = "<group>"; };
+		D0353E461FA9735C0082508D /* NSObject+XYHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XYHUD.h"; sourceTree = "<group>"; };
+		D0353E471FA9735C0082508D /* NSObject+XYHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+XYHUD.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,17 +83,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		253C02E42EC323CC7769126E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */,
+				74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		92BAC9D7815381157176AD4D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D0353DDA1FA9735C0082508D = {
 			isa = PBXGroup;
 			children = (
 				D0353DE51FA9735C0082508D /* FileBrowser */,
 				D0353DE41FA9735C0082508D /* Products */,
+				253C02E42EC323CC7769126E /* Pods */,
+				92BAC9D7815381157176AD4D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +148,22 @@
 				D0353E151FA9735C0082508D /* NSString+OSFile.m */,
 				D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */,
 				D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */,
+				D0353E1A1FA9735C0082508D /* UIImageView+XYExtension.h */,
+				D0353E1B1FA9735C0082508D /* UIImageView+XYExtension.m */,
+				D0353E3D1FA9735C0082508D /* UIImage+XYImage.h */,
+				D0353E3E1FA9735C0082508D /* UIImage+XYImage.m */,
+				D0353E201FA9735C0082508D /* OSFileManager.h */,
+				D0353E211FA9735C0082508D /* OSFileManager.m */,
+				D0353E241FA9735C0082508D /* NSString+MD5.h */,
+				D0353E231FA9735C0082508D /* NSString+MD5.m */,
+				D0353E371FA9735C0082508D /* DirectoryWatcher.h */,
+				D0353E381FA9735C0082508D /* DirectoryWatcher.m */,
+				D0353E401FA9735C0082508D /* NSDate+Utilities.h */,
+				D0353E411FA9735C0082508D /* NSDate+Utilities.m */,
+				D0353E431FA9735C0082508D /* UIViewController+XYExtensions.h */,
+				D0353E441FA9735C0082508D /* UIViewController+XYExtensions.m */,
+				D0353E461FA9735C0082508D /* NSObject+XYHUD.h */,
+				D0353E471FA9735C0082508D /* NSObject+XYHUD.m */,
 				D0353DFE1FA9735C0082508D /* Supporting Files */,
 			);
 			path = FileBrowser;
@@ -110,7 +172,6 @@
 		D0353DFE1FA9735C0082508D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D0353DEC1FA9735C0082508D /* Main.storyboard */,
 				D0353DEF1FA9735C0082508D /* Assets.xcassets */,
 				D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */,
 				D0353DF41FA9735C0082508D /* Info.plist */,
@@ -126,9 +187,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0353DF91FA9735C0082508D /* Build configuration list for PBXNativeTarget "FileBrowser" */;
 			buildPhases = (
+				CD216BD3FB2A29F122F87DE9 /* [CP] Check Pods Manifest.lock */,
 				D0353DDF1FA9735C0082508D /* Sources */,
 				D0353DE01FA9735C0082508D /* Frameworks */,
 				D0353DE11FA9735C0082508D /* Resources */,
+				D8DAA0979E8900C1AE9F8DF6 /* [CP] Embed Pods Frameworks */,
+				EAFB50A680EF14FCF6DA7195 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -179,42 +243,89 @@
 			files = (
 				D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */,
 				D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */,
-				D0353DEE1FA9735C0082508D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CD216BD3FB2A29F122F87DE9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D8DAA0979E8900C1AE9F8DF6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAFB50A680EF14FCF6DA7195 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D0353DDF1FA9735C0082508D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0353E391FA9735C0082508D /* DirectoryWatcher.m in Sources */,
 				D0353E011FA9735C0082508D /* OSFileCollectionViewController.m in Sources */,
 				D0353E0A1FA9735C0082508D /* OSFileBottomHUD.m in Sources */,
 				D0353E071FA9735C0082508D /* FilePreviewViewController.m in Sources */,
 				D0353E131FA9735C0082508D /* OSFile.m in Sources */,
+				D0353E481FA9735C0082508D /* NSObject+XYHUD.m in Sources */,
 				D0353E0D1FA9735C0082508D /* OSFileAttributeItem.m in Sources */,
 				D0353E161FA9735C0082508D /* NSString+OSFile.m in Sources */,
 				D0353E101FA9735C0082508D /* OSFileCollectionViewFlowLayout.m in Sources */,
 				D0353E041FA9735C0082508D /* OSFileCollectionViewCell.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
+				D0353E1C1FA9735C0082508D /* UIImageView+XYExtension.m in Sources */,
+				D0353E221FA9735C0082508D /* OSFileManager.m in Sources */,
+				D0353E3F1FA9735C0082508D /* UIImage+XYImage.m in Sources */,
+				D0353E251FA9735C0082508D /* NSString+MD5.m in Sources */,
+				D0353E421FA9735C0082508D /* NSDate+Utilities.m in Sources */,
 				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
 				D0353E191FA9735C0082508D /* NSString+OSDrawingAdditions.m in Sources */,
+				D0353E451FA9735C0082508D /* UIViewController+XYExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D0353DEC1FA9735C0082508D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0353DED1FA9735C0082508D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -332,30 +443,38 @@
 		};
 		D0353DFA1FA9735C0082508D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NKW67GFDHM;
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ossey.FileBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ossey.fileBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		D0353DFB1FA9735C0082508D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NKW67GFDHM;
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ossey.FileBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ossey.fileBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

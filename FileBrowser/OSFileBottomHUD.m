@@ -7,6 +7,7 @@
 //
 
 #import "OSFileBottomHUD.h"
+#import "NSString+OSDrawingAdditions.h"
 
 @interface OSFileBottomHUDButton : UIButton
 

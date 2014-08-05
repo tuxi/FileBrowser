@@ -16,6 +16,16 @@
 #import <UIScrollView+NoDataExtend.h>
 #import "OSFileBottomHUD.h"
 #import "NSString+OSFile.h"
+#import <MBProgressHUD.h>
+#import "NSObject+XYHUD.h"
+#import "UIViewController+XYExtensions.h"
+
+#define dispatch_main_safe_async(block)\
+    if ([NSThread isMainThread]) {\
+    block();\
+    } else {\
+    dispatch_async(dispatch_get_main_queue(), block);\
+    }
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 
@@ -112,7 +122,7 @@ static const CGFloat windowHeight = 49.0;
     BOOL displayEdit = YES;
     if (self.directoryArray && self.directoryArray.count <= 2) {
         NSIndexSet *set = [self.directoryArray indexesOfObjectsPassingTest:^BOOL(NSString * _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [path isEqualToString:[OSFileDownloaderConfiguration getDownloadLocalFolderPath]] || [path isEqualToString:[OSFileDownloaderConfiguration getDocumentPath]];
+            return [path isEqualToString:[NSString getDownloadLocalFolderPath]] || [path isEqualToString:[NSString getDocumentPath]];
         }];
         if (set.count == self.directoryArray.count) {
             displayEdit = NO;
@@ -206,7 +216,7 @@ static const CGFloat windowHeight = 49.0;
     [self.collectionView reloadData];
     self.navigationItem.rightBarButtonItem.title = @"完成";
     
-    [self.bottomHUD showHUDWithFrame:CGRectMake(0, self.view.frame.size.height - windowHeight, self.view.width, windowHeight) completion:^{
+    [self.bottomHUD showHUDWithFrame:CGRectMake(0, self.view.frame.size.height - windowHeight, self.view.frame.size.width, windowHeight) completion:^{
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
 }
@@ -307,10 +317,10 @@ static const CGFloat windowHeight = 49.0;
     self.navigationItem.title = @"文件管理";
     if (self.rootDirectory.length) {
         self.navigationItem.title = [self.rootDirectory lastPathComponent];
-        if ([self.rootDirectory isEqualToString:[OSFileDownloaderConfiguration getDocumentPath]]) {
+        if ([self.rootDirectory isEqualToString:[NSString getDocumentPath]]) {
             self.navigationItem.title = @"iTunes文件";
         }
-        else if ([self.rootDirectory isEqualToString:[OSFileDownloaderConfiguration getDownloadLocalFolderPath]]) {
+        else if ([self.rootDirectory isEqualToString:[NSString getDownloadLocalFolderPath]]) {
             self.navigationItem.title = @"下载";
         }
     }
@@ -980,8 +990,8 @@ static const CGFloat windowHeight = 49.0;
 /// 选择文件最终复制的目标目录
 - (void)chooseDesDirectoryToCopy {
     OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
-                                                                                                          [OSFileDownloaderConfiguration getDownloadLocalFolderPath],
-                                                                                                          [OSFileDownloaderConfiguration getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeCopy];
+                                                                                                          [NSString getDownloadLocalFolderPath],
+                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeCopy];
     UINavigationController *nac = [[[self.navigationController class] alloc] initWithRootViewController:vc];
     vc.selectorFiles = self.selectorFiles.mutableCopy;
     [self showDetailViewController:nac sender:self];
@@ -989,8 +999,8 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)chooseDesDirectoryToMove {
     OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
-                                                                                                          [OSFileDownloaderConfiguration getDownloadLocalFolderPath],
-                                                                                                          [OSFileDownloaderConfiguration getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeMove];
+                                                                                                          [NSString getDownloadLocalFolderPath],
+                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeMove];
     UINavigationController *nac = [[[self.navigationController class] alloc] initWithRootViewController:vc];
     vc.selectorFiles = self.selectorFiles.mutableCopy;
     [self showDetailViewController:nac sender:self];
@@ -1264,7 +1274,7 @@ completionHandler:(void (^)(NSError *error))completion {
 ////////////////////////////////////////////////////////////////////////
 
 - (BOOL)isDownloadBrowser {
-    return [self.rootDirectory isEqualToString:[OSFileDownloaderConfiguration getDownloadLocalFolderPath]];
+    return [self.rootDirectory isEqualToString:[NSString getDownloadLocalFolderPath]];
 }
 
 

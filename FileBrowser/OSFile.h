@@ -6,7 +6,7 @@
 //  Copyright © 2014 xiaoyuan. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef enum
 {
@@ -123,7 +123,7 @@ OSFileFlags;
 @property( atomic, readonly ) NSString    * humanReadablePermissions;
 @property( atomic, readonly ) NSDate      * creationDate;
 @property( atomic, readonly ) NSDate      * modificationDate;
-@property( atomic, readonly ) UIImage     * icon;
+//@property( atomic, readonly ) UIImage     * icon;
 @property( atomic, readonly ) OSFile      * targetFile;
 
 /// 当文件不存在获取读取文件失败时，return nil

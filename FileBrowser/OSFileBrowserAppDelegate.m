@@ -7,6 +7,8 @@
 //
 
 #import "OSFileBrowserAppDelegate.h"
+#import "OSFileCollectionViewController.h"
+#import "NSString+OSFile.h"
 
 @interface OSFileBrowserAppDelegate ()
 
@@ -17,6 +19,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
+                                                                                                          [NSString getDownloadLocalFolderPath],
+                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeCopy];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    self.window.rootViewController = navController;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

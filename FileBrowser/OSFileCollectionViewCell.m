@@ -11,7 +11,9 @@
 #import "UIImageView+XYExtension.h"
 #import "NSString+OSFile.h"
 #import "OSFileManager.h"
-#import "UITextField+OSRangeExtension.h"
+#import "NSDate+Utilities.h"
+#import "UIViewController+XYExtensions.h"
+#import "NSObject+XYHUD.h"
 
 @interface OSFileCollectionViewCell ()
 
@@ -103,12 +105,12 @@
     }
     
     if (fileModel.fullPath.length) {
-        if ([fileModel.fullPath isEqualToString:[OSFileDownloaderConfiguration getDocumentPath]]) {
+        if ([fileModel.fullPath isEqualToString:[NSString getDocumentPath]]) {
             self.titleLabel.text  = @"iTunes文件";
             self.iconView.image = [UIImage imageNamed:@"table-folder-itunes-files-sharing"];
             self.optionBtn.hidden = YES;
         }
-        else if ([fileModel.fullPath isEqualToString:[OSFileDownloaderConfiguration getDownloadLocalFolderPath]]) {
+        else if ([fileModel.fullPath isEqualToString:[NSString getDownloadLocalFolderPath]]) {
             self.titleLabel.text  = @"下载";
             self.optionBtn.hidden = YES;
         }
@@ -146,13 +148,7 @@
 
 - (void)renameFile {
     
-    UIAlertController *alert = nil;
-    if (IS_IPAD) {
-        alert = [UIAlertController alertControllerWithTitle:@"rename" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    }
-    else {
-        alert = [UIAlertController alertControllerWithTitle:@"rename" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"rename" message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         NSString *fileName = self.fileModel.filename;

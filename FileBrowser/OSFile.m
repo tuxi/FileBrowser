@@ -55,7 +55,7 @@
 @synthesize humanReadablePermissions    = _humanReadablePermissions;
 @synthesize creationDate                = _creationDate;
 @synthesize modificationDate            = _modificationDate;
-@synthesize icon                        = _icon;
+//@synthesize icon                        = _icon;
 @synthesize targetFile                  = _targetFile;
 
 + (instancetype)fileWithPath:(NSString *)filePath {
@@ -119,7 +119,7 @@
         }
         
         [ self getSubTypes];
-        [ self getIcon ];
+//        [ self getIcon ];
     }
     
     return self;
