@@ -14,12 +14,12 @@
 
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-#import "NSDate+Utilities.h"
+#import "NSDate+ESUtilities.h"
 
 // Thanks, AshFurrow
 static const unsigned componentFlags = (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit);
 
-@implementation NSDate (Utilities)
+@implementation NSDate (ESUtilities)
 
 // Courtesy of Lukasz Margielewski
 // Updated via Holger Haenisch

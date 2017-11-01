@@ -7,7 +7,6 @@
 //
 
 #import "OSFileBottomHUD.h"
-#import "NSString+OSDrawingAdditions.h"
 
 @interface OSFileBottomHUDButton : UIButton
 
@@ -210,8 +209,37 @@
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state {
     [super setTitle:title forState:state];
-    _titleLabelSize = [title sizeWithMaxSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) font:self.titleLabel.font];
+    _titleLabelSize = [self string:title sizeWithMaxSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) font:self.titleLabel.font];
 }
+
+- (CGSize)string:(NSString *)string sizeWithMaxSize:(CGSize)maxSize font:(UIFont*)font {
+    
+    CGSize textSize = CGSizeZero;
+    if ([self respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+        NSStringDrawingOptions opts = NSStringDrawingUsesLineFragmentOrigin |
+        NSStringDrawingUsesFontLeading;
+        
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+        [style setLineBreakMode:NSLineBreakByCharWrapping];
+        
+        NSDictionary *attributes = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : style };
+        
+        CGRect rect = [string boundingRectWithSize:maxSize
+                                         options:opts
+                                      attributes:attributes
+                                         context:nil];
+        textSize = rect.size;
+    }
+    else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        textSize = [string sizeWithFont:font constrainedToSize:maxSize lineBreakMode:NSLineBreakByCharWrapping];
+#pragma clang diagnostic pop
+    }
+    
+    return textSize;
+}
+
 
 
 @end

@@ -12,7 +12,7 @@
 #define D_WEEK		604800
 #define D_YEAR		31556926
 
-@interface NSDate (Utilities)
+@interface NSDate (ESUtilities)
 + (NSCalendar *) currentCalendar; // avoid bottlenecks
 
 // Relative dates from the current date

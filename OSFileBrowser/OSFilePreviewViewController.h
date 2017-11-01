@@ -1,5 +1,5 @@
 //
-//  FilePreviewViewController.h
+//  OSFilePreviewViewController.h
 //  FileBrowser
 //
 //  Created by xiaoyuan on 05/08/2014.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilePreviewViewController : UIViewController {
+@interface OSFilePreviewViewController : UIViewController {
     UITextView *_textView;
     UIImageView *_imageView;
 }

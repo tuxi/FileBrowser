@@ -7,8 +7,8 @@
 //
 
 #import "OSFileBrowserAppDelegate.h"
-#import "OSFileCollectionViewController.h"
-#import "NSString+OSFile.h"
+#import "../OSFileBrowser/OSFileCollectionViewController.h"
+#import "../OSFileBrowser/NSString+OSFile.h"
 
 @interface OSFileBrowserAppDelegate ()
 

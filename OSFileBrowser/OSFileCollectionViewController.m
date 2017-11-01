@@ -12,7 +12,7 @@
 #import "DirectoryWatcher.h"
 #import "OSFileManager.h"
 #import "OSFileAttributeItem.h"
-#import "FilePreviewViewController.h"
+#import "OSFilePreviewViewController.h"
 #import <UIScrollView+NoDataExtend.h>
 #import "OSFileBottomHUD.h"
 #import "NSString+OSFile.h"
@@ -334,12 +334,6 @@ static const CGFloat windowHeight = 49.0;
     self.navigationItem.title = @"文件管理";
     if (self.rootDirectoryItem) {
         self.navigationItem.title = self.rootDirectoryItem.displayName;
-//        if ([self.rootDirectory isEqualToString:[NSString getDocumentPath]]) {
-//            self.navigationItem.title = @"iTunes文件";
-//        }
-//        else if ([self.rootDirectory isEqualToString:[NSString getDownloadLocalFolderPath]]) {
-//            self.navigationItem.title = @"下载";
-//        }
     }
     self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     
@@ -618,7 +612,7 @@ static const CGFloat windowHeight = 49.0;
             [self.navigationController showViewController:vc sender:self];
             
         } else if (![QLPreviewController canPreviewItem:url]) {
-            FilePreviewViewController *preview = (FilePreviewViewController *)viewController;
+            OSFilePreviewViewController *preview = (OSFilePreviewViewController *)viewController;
             preview.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
             UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:preview];
             
@@ -684,7 +678,7 @@ static const CGFloat windowHeight = 49.0;
             }
             
         } else if (![QLPreviewController canPreviewItem:url]) {
-            vc = [[FilePreviewViewController alloc] initWithPath:newPath];
+            vc = [[OSFilePreviewViewController alloc] initWithPath:newPath];
         } else {
             QLPreviewController *preview= [[QLPreviewController alloc] init];
             preview.dataSource = self;
@@ -783,7 +777,7 @@ static const CGFloat windowHeight = 49.0;
         [collectionView registerClass:[OSFileCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
         _collectionView = collectionView;
         _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 0, 20);
+        _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
     }
     return _collectionView;
 }
@@ -1208,11 +1202,6 @@ completionHandler:(void (^)(NSError *error))completion {
     return attributedString;
     
 }
-
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Others
-////////////////////////////////////////////////////////////////////////
-
 
 @end
 

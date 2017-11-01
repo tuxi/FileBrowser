@@ -1,24 +1,24 @@
 //
-//  FilePreviewViewController.m
+//  OSFilePreviewViewController.m
 //  FileBrowser
 //
 //  Created by xiaoyuan on 05/08/2014.
 //  Copyright © 2014 xiaoyuan. All rights reserved.
 //
 
-#import "FilePreviewViewController.h"
+#import "OSFilePreviewViewController.h"
 #import "NSString+OSFile.h"
 
-@interface FilePreviewViewController ()
+@interface OSFilePreviewViewController ()
 
 @end
 
 
-#pragma mark *** FilePreviewViewController ***
+#pragma mark *** OSFilePreviewViewController ***
 
 
 
-@implementation FilePreviewViewController
+@implementation OSFilePreviewViewController
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - initialize
