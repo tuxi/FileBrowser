@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "OSFileBrowser"
-  s.version      = "0.0.1"
+  s.version      = "0.0.3"
   s.summary      = "一个很实用的文件浏览器."
   s.description  = "一个很实用的本地浏览器，平时开发时，你可以很简单的访问沙盒，查看信息"
 

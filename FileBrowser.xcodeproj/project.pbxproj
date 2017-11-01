@@ -477,6 +477,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -496,6 +497,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
