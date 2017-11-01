@@ -77,7 +77,7 @@
     [self setStatus:fileModel.status];
     
     /// 根据文件类型显示
-    self.titleLabel.text = [fileModel.fullPath lastPathComponent];
+    self.titleLabel.text = fileModel.displayName;
     if (fileModel.isDirectory) {
         self.iconView.image = [UIImage imageNamed:@"table-folder"];
         self.subTitleLabel.text = [NSString stringWithFormat:@"%ld个文件", fileModel.numberOfSubFiles];
@@ -86,9 +86,9 @@
         
         self.subTitleLabel.text = [fileModel.creationDate shortDateString];
         if (fileModel.isImage) {
-            self.iconView.image = [UIImage imageWithContentsOfFile:fileModel.fullPath];
+            self.iconView.image = [UIImage imageWithContentsOfFile:fileModel.path];
         } else if (fileModel.isVideo) {
-            NSURL *videoURL = [NSURL fileURLWithPath:fileModel.fullPath];
+            NSURL *videoURL = [NSURL fileURLWithPath:fileModel.path];
             [self.iconView xy_imageWithMediaURL:videoURL placeholderImage:[UIImage imageNamed:@"table-fileicon-images"] completionHandlder:^(UIImage *image) {
                 
             }];
@@ -104,13 +104,13 @@
         }
     }
     
-    if (fileModel.fullPath.length) {
-        if ([fileModel.fullPath isEqualToString:[NSString getDocumentPath]]) {
+    if (fileModel.path) {
+        if ([fileModel.path isEqualToString:[NSString getDocumentPath]]) {
             self.titleLabel.text  = @"iTunes文件";
             self.iconView.image = [UIImage imageNamed:@"table-folder-itunes-files-sharing"];
             self.optionBtn.hidden = YES;
         }
-        else if ([fileModel.fullPath isEqualToString:[NSString getDownloadLocalFolderPath]]) {
+        else if ([fileModel.path isEqualToString:[NSString getDownloadLocalFolderPath]]) {
             self.titleLabel.text  = @"下载";
             self.optionBtn.hidden = YES;
         }

@@ -443,19 +443,19 @@ static const CGFloat windowHeight = 49.0;
              ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
              */
             NSArray *array = nil;
-            if ([directoryPath isEqualToString:@"/System"]) {
+            if ([path isEqualToString:@"/System"]) {
                 array = @[@"Library"];
             }
             
-            if ([directoryPath isEqualToString:@"/Library"]) {
+            if ([path isEqualToString:@"/Library"]) {
                 array = @[@"Preferences"];
             }
             
-            if ([directoryPath isEqualToString:@"/var"]) {
+            if ([path isEqualToString:@"/var"]) {
                 array = @[@"mobile"];
             }
             
-            if ([directoryPath isEqualToString:@"/usr"]) {
+            if ([path isEqualToString:@"/usr"]) {
                 array = @[@"lib", @"libexec", @"bin"];
             }
             return array;
