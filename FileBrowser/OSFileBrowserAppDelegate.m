@@ -24,7 +24,7 @@
     
     OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
                                                                                                           [NSString getDownloadLocalFolderPath],
-                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeCopy];
+                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeDefault];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     
