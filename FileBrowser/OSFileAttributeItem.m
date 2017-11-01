@@ -10,9 +10,9 @@
 
 @implementation OSFileAttributeItem
 
-- (instancetype)initWithPath:(NSString *)filePath {
-    if (self = [super initWithPath:filePath]) {
-        self.fullPath = filePath;
+- (instancetype)initWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error {
+    if (self = [super initWithPath:filePath hideDisplayFiles:hideDisplayFiles error:error]) {
+        _path = filePath;
         self.status = OSFileAttributeItemStatusDefault;
     }
     return self;

@@ -80,7 +80,7 @@
     self.titleLabel.text = [fileModel.fullPath lastPathComponent];
     if (fileModel.isDirectory) {
         self.iconView.image = [UIImage imageNamed:@"table-folder"];
-        self.subTitleLabel.text = [NSString stringWithFormat:@"%ld个文件", fileModel.subFileCount];
+        self.subTitleLabel.text = [NSString stringWithFormat:@"%ld个文件", fileModel.numberOfSubFiles];
     }
     else {
         
@@ -179,7 +179,8 @@
         if (!moveError) {
             [newPath updateFileModificationDateForFilePath];
             [[NSFileManager defaultManager] removeItemAtPath:oldPath error:&moveError];
-            self.fileModel.fullPath = newPath;
+            NSError *error = nil;
+            [self.fileModel reloadFileWithPath:newPath error:&error];
             if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:fileAttributeChange:)]) {
                 [self.delegate fileCollectionViewCell:self fileAttributeChange:self.fileModel];
             }

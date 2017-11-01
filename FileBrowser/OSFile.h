@@ -72,6 +72,7 @@ OSFileFlags;
     NSDictionary  * _attributes;
     NSFileManager * _fileManager;
     OSFile        * _targetFile;
+    BOOL            _hideDisplayFiles;
     
 @private
     
@@ -125,11 +126,30 @@ OSFileFlags;
 @property( atomic, readonly ) NSDate      * modificationDate;
 //@property( atomic, readonly ) UIImage     * icon;
 @property( atomic, readonly ) OSFile      * targetFile;
+@property( atomic, readwrite ) NSArray     * subFiles;
+@property( atomic, readonly ) BOOL          hideDisplayFiles;
 
-/// 当文件不存在获取读取文件失败时，return nil
+/// 初始化方法，根据文件路径创建一个OSFile对象
+/// @param filePath 文件完整路径
+/// @param hideDisplayFiles 是否显示隐藏文件，默认显示的
+/// @param error 返回错误信息
+/// @return OSFile对象，当文件不存在获取读取文件失败时，return nil
++ (instancetype)fileWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error;
+- (instancetype)initWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error;
+- (instancetype)initWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error;
 + (instancetype)fileWithPath:(NSString *)filePath;
-- (instancetype)initWithPath:(NSString *)filePath;
++ (instancetype)fileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error;
 
+/// 重新加载当前文件文件，对象不会改变，但会重新获取文件的结果，
+/// @param error 返回错误信息
+/// @return 如果当前文件不存在了，会返回NO
+- (BOOL)reloadFileWithError:(NSError *__autoreleasing *)error;
+- (BOOL)reloadFile;
+/// 加载一个新的文件路径，对象不会改变，如果当前文件不存在了，会返回NO
+/// @param filePath 需要加载的路径
+/// @param error 返回错误信息
+/// @return 如果当前文件不存在了，会返回NO
+- (BOOL)reloadFileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error;
 
 @end
 

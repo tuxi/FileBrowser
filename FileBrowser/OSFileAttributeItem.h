@@ -20,7 +20,6 @@ typedef NS_ENUM(NSInteger, OSFileAttributeItemStatus) {
 @interface OSFileAttributeItem : OSFile
 
 @property (nonatomic, copy) NSString *fullPath;
-@property (nonatomic, assign) NSUInteger subFileCount;
 @property (nonatomic, assign) OSFileAttributeItemStatus status;
 
 @end

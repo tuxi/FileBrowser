@@ -406,20 +406,12 @@ static const CGFloat windowHeight = 49.0;
     [_loadFileQueue addOperationWithBlock:^{
         NSMutableArray *array = @[].mutableCopy;
         [directoryArray enumerateObjectsUsingBlock:^(NSString * _Nonnull fullPath, NSUInteger idx, BOOL * _Nonnull stop) {
-            OSFileAttributeItem *model = [[OSFileAttributeItem alloc] initWithPath:fullPath];
+            NSError *error = nil;
+            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_displayHiddenFiles error:&error];
             if (model) {
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
                 }
-                NSError *error = nil;
-                NSArray *subFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fullPath error:&error];
-                if (!error) {
-                    if (!_displayHiddenFiles) {
-                        subFiles = [self removeHiddenFilesFromFiles:subFiles];
-                    }
-                    model.subFileCount = subFiles.count;
-                }
-                
                 [array addObject:model];
             }
         }];
@@ -443,27 +435,48 @@ static const CGFloat windowHeight = 49.0;
     [_loadFileQueue cancelAllOperations];
     [_loadFileQueue addOperationWithBlock:^{
         
+        NSArray *(^processFileBlock)(NSString *path) = ^(NSString *path) {
+            /*
+             系统中某些文件没有权限加载
+             Error Domain=NSCocoaErrorDomain Code=257 "The file “var” couldn’t be opened because you don’t have permission to view it." UserInfo={NSFilePath=/var, NSUserStringVariant=(
+             Folder
+             ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
+             */
+            NSArray *array = nil;
+            if ([directoryPath isEqualToString:@"/System"]) {
+                array = @[@"Library"];
+            }
+            
+            if ([directoryPath isEqualToString:@"/Library"]) {
+                array = @[@"Preferences"];
+            }
+            
+            if ([directoryPath isEqualToString:@"/var"]) {
+                array = @[@"mobile"];
+            }
+            
+            if ([directoryPath isEqualToString:@"/usr"]) {
+                array = @[@"lib", @"libexec", @"bin"];
+            }
+            return array;
+        };
         NSError *error = nil;
-        NSArray *tempFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
+        NSArray *subFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
         if (error) {
-            NSLog(@"Error: %@", error);
+            subFiles = processFileBlock(directoryPath);
         }
-        NSArray *files = [self sortedFiles:tempFiles];
+        NSArray *files = [self sortedFiles:subFiles];
         NSMutableArray *array = [NSMutableArray arrayWithCapacity:files.count];
         [files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *fullPath = [directoryPath stringByAppendingPathComponent:obj];
-            OSFileAttributeItem *model = [[OSFileAttributeItem alloc] initWithPath:fullPath];
+            NSError *error = nil;
+            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_displayHiddenFiles error:&error];
             if (model) {
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
                 }
-                NSError *error = nil;
-                NSArray *subFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fullPath error:&error];
-                if (!error) {
-                    if (!_displayHiddenFiles) {
-                        subFiles = [self removeHiddenFilesFromFiles:subFiles];
-                    }
-                    model.subFileCount = subFiles.count;
+                if (error) {
+                    model.subFiles = processFileBlock(model.path);
                 }
                 
                 [array addObject:model];
@@ -514,7 +527,7 @@ static const CGFloat windowHeight = 49.0;
         NSMutableArray *tempFiles = [files mutableCopy];
         NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[OSFileAttributeItem class]]) {
-                return [obj.fullPath.lastPathComponent hasPrefix:@"."];
+                return [obj.path.lastPathComponent hasPrefix:@"."];
             } else if ([obj isKindOfClass:[NSString class]]) {
                 NSString *path = (NSString *)obj;
                 return [path.lastPathComponent hasPrefix:@"."];
@@ -657,7 +670,7 @@ static const CGFloat windowHeight = 49.0;
 ////////////////////////////////////////////////////////////////////////
 
 - (void)jumpToDetailControllerToViewController:(UIViewController *)viewController atIndexPath:(NSIndexPath *)indexPath {
-    NSString *newPath = self.files[indexPath.row].fullPath;
+    NSString *newPath = self.files[indexPath.row].path;
     BOOL isDirectory;
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:newPath isDirectory:&isDirectory];
     NSURL *url = [NSURL fileURLWithPath:newPath];
@@ -712,7 +725,7 @@ static const CGFloat windowHeight = 49.0;
     if (!indexPath || !self.files.count) {
         return nil;
     }
-    NSString *newPath = self.files[indexPath.row].fullPath;
+    NSString *newPath = self.files[indexPath.row].path;
     NSURL *url = [NSURL fileURLWithPath:newPath];
     BOOL isDirectory;
     BOOL fileExists = [[NSFileManager defaultManager ] fileExistsAtPath:newPath isDirectory:&isDirectory];
@@ -757,7 +770,7 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger) index {
-    NSString *newPath = self.files[self.indexPath.row].fullPath;
+    NSString *newPath = self.files[self.indexPath.row].path;
     
     return [NSURL fileURLWithPath:newPath];
 }
@@ -1036,7 +1049,7 @@ static const CGFloat windowHeight = 49.0;
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell fileAttributeChange:(OSFileAttributeItem *)fileModel {
     NSUInteger foudIdx = [self.files indexOfObject:fileModel];
     if (foudIdx != NSNotFound) {
-        OSFileAttributeItem *item = [OSFileAttributeItem fileWithPath:fileModel.fullPath];
+        OSFileAttributeItem *item = [OSFileAttributeItem fileWithPath:fileModel.path];
         NSMutableArray *files = self.files.mutableCopy;
         [files replaceObjectAtIndex:foudIdx withObject:item];
         self.files = files;
@@ -1074,8 +1087,8 @@ completionHandler:(void (^)(NSError *error))completion {
     NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
         [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.fullPath lastPathComponent]];
-            if ([desPath isEqualToString:obj.fullPath]) {
+            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
+            if ([desPath isEqualToString:obj.path]) {
                 NSLog(@"路径相同");
                 dispatch_main_safe_async(^{
                     self.hud.labelText = @"路径相同";
@@ -1111,7 +1124,7 @@ completionHandler:(void (^)(NSError *error))completion {
         __block NSInteger completionCopyNum = fileItems.count;
         [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [hudDetailTextArray addObject:@(idx).stringValue];
-            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.fullPath lastPathComponent]];
+            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
             NSURL *desURL = [NSURL fileURLWithPath:desPath];
             
             void (^ progressBlock)(NSProgress *progress) = ^ (NSProgress *progress) {
@@ -1132,7 +1145,7 @@ completionHandler:(void (^)(NSError *error))completion {
                     }
                 });
             };
-            NSURL *orgURL = [NSURL fileURLWithPath:obj.fullPath];
+            NSURL *orgURL = [NSURL fileURLWithPath:obj.path];
             if (self.mode == OSFileCollectionViewControllerModeCopy) {
                 [_fileManager copyItemAtURL:orgURL
                                       toURL:desURL

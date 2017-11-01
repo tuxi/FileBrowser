@@ -57,72 +57,132 @@
 @synthesize modificationDate            = _modificationDate;
 //@synthesize icon                        = _icon;
 @synthesize targetFile                  = _targetFile;
+@synthesize hideDisplayFiles            = _hideDisplayFiles;
 
 + (instancetype)fileWithPath:(NSString *)filePath {
-    OSFile * fileInfos;
-    
-    fileInfos = [[self alloc] initWithPath:filePath];
-    return fileInfos;
-    
+    return [self fileWithPath:filePath error:NULL];
+}
+
++ (instancetype)fileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error {
+    return [self fileWithPath:filePath hideDisplayFiles:YES error:error];
+}
+
++ (instancetype)fileWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error {
+    return [[self alloc] initWithPath:filePath hideDisplayFiles:hideDisplayFiles error:error];
 }
 
 - (instancetype)initWithPath:(NSString *)filePath {
-    NSString *symLinkTarget;
-    NSError  *e;
+    return [self initWithPath:filePath error:NULL];
+}
+
+- (instancetype)initWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error {
+    return [self initWithPath:filePath hideDisplayFiles:YES error:error];
+}
+
+- (instancetype)initWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error {
     
     if (self = [super init ]) {
+        _hideDisplayFiles = hideDisplayFiles;
         _path        = [ filePath copy ];
         _fileManager = [ NSFileManager defaultManager ];
-        
-        if ([ _fileManager fileExistsAtPath: _path ] == NO) {
-            return nil;
-        }
-        
-        e = nil;
-        _attributes = [ _fileManager attributesOfItemAtPath: _path error: &e ];
-        
-        if (_attributes == nil || e != nil) {
-            return nil;
-        }
-        
-        [self getPathInfos];
-        [self getFileType];
-        [self getOwnership];
-        [self getPermissions];
-        [self getFlags ];
-        [ self getSize ];
-        [ self getDates ];
-        [ self getFileSystemAttributes ];
-        
-        if( _isDirectory == YES )
-        {
-            _numberOfSubFiles = [ [ _fileManager contentsOfDirectoryAtPath: _path error: NULL ] count ];
-        }
-        
-        if( _isSymbolicLink == YES )
-        {
-            symLinkTarget = [ _fileManager destinationOfSymbolicLinkAtPath: _path error: NULL ];
-            
-            if( [ symLinkTarget characterAtIndex: 0 ] != '/' )
-            {
-                if( [ _parentDirectoryPath characterAtIndex: [ _parentDirectoryPath length ] - 1 ] == '/' )
-                {
-                    symLinkTarget = [ _parentDirectoryPath stringByAppendingString: symLinkTarget ];
-                }
-                else
-                {
-                    symLinkTarget = [ NSString stringWithFormat: @"%@/%@", _parentDirectoryPath, symLinkTarget ];
-                }
-            }
-            
-            _targetFile = [[OSFile alloc] initWithPath:symLinkTarget];
-        }
-        
-        [ self getSubTypes];
-//        [ self getIcon ];
+        [self reloadFileWithError:error];
     }
     
     return self;
+}
+
+- (BOOL)reloadFile {
+    return [self reloadFileWithError:NULL];
+}
+
+- (BOOL)reloadFileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error {
+    _path        = [ filePath copy ];
+   return [self reloadFileWithError:error];
+}
+
+- (BOOL)reloadFileWithError:(NSError *__autoreleasing *)error {
+    NSError  *e = nil;
+    NSString *symLinkTarget = nil;
+    if ([ _fileManager fileExistsAtPath: _path ] == NO) {
+        return NO;
+    }
+    _attributes = [ _fileManager attributesOfItemAtPath: _path error: &e ];
+    
+    if (_attributes == nil || e != nil) {
+        if (error) {
+            *error = e;
+        }
+        return NO;
+    }
+    
+    [self getPathInfos];
+    [self getFileType];
+    [self getOwnership];
+    [self getPermissions];
+    [self getFlags ];
+    [ self getSize ];
+    [ self getDates ];
+    [ self getFileSystemAttributes ];
+    
+    if( _isDirectory == YES )
+    {
+        _subFiles = [ _fileManager contentsOfDirectoryAtPath: _path error: &e ];
+        if (error) {
+            *error = e;
+        }
+        else {
+            if (!_hideDisplayFiles) {
+                [self removeHideFiles];
+            }
+        }
+    }
+    
+    if( _isSymbolicLink == YES )
+    {
+        symLinkTarget = [ _fileManager destinationOfSymbolicLinkAtPath: _path error: &e ];
+        if (error) {
+            *error = e;
+        }
+        
+        if( [ symLinkTarget characterAtIndex: 0 ] != '/' )
+        {
+            if( [ _parentDirectoryPath characterAtIndex: [ _parentDirectoryPath length ] - 1 ] == '/' )
+            {
+                symLinkTarget = [ _parentDirectoryPath stringByAppendingString: symLinkTarget ];
+            }
+            else
+            {
+                symLinkTarget = [ NSString stringWithFormat: @"%@/%@", _parentDirectoryPath, symLinkTarget ];
+            }
+        }
+        
+        _targetFile = [[OSFile alloc] initWithPath:symLinkTarget];
+    }
+    
+    [ self getSubTypes];
+    //        [ self getIcon ];
+    return YES;
+}
+
+- (void)removeHideFiles {
+    if (!self.subFiles.count) {
+        return;
+    }
+    @synchronized (self) {
+        NSMutableArray *tempFiles = [self.subFiles mutableCopy];
+        NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(OSFile * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[OSFile class]]) {
+                return [obj.path.lastPathComponent hasPrefix:@"."];
+            }
+            return NO;
+        }];
+        [tempFiles removeObjectsAtIndexes:indexSet];
+        _subFiles = tempFiles.copy;
+    }
+}
+
+- (NSUInteger)numberOfSubFiles {
+    return _subFiles.count;
 }
 
 
