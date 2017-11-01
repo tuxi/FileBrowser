@@ -23,7 +23,6 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 
 @interface OSFileCollectionViewController : UIViewController <QLPreviewControllerDataSource>
 
-@property (nonatomic, strong) NSString *rootDirectory;
 @property (nonatomic, strong) NSArray<OSFileAttributeItem *> *files;
 @property (nonatomic, assign) BOOL hideDisplayFiles;
 

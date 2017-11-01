@@ -73,7 +73,6 @@ OSFileFlags;
     NSFileManager * _fileManager;
     OSFile        * _targetFile;
     BOOL            _hideDisplayFiles;
-    
 @private
     
     id __OSFile_Reserved[ 5 ] __attribute__( ( unused ) );
@@ -131,7 +130,7 @@ OSFileFlags;
 
 /// 初始化方法，根据文件路径创建一个OSFile对象
 /// @param filePath 文件完整路径
-/// @param hideDisplayFiles 是否显示隐藏文件，默认显示的
+/// @param hideDisplayFiles 是否显示隐藏文件，默认显示的,
 /// @param error 返回错误信息
 /// @return OSFile对象，当文件不存在获取读取文件失败时，return nil
 + (instancetype)fileWithPath:(NSString *)filePath hideDisplayFiles:(BOOL)hideDisplayFiles error:(NSError *__autoreleasing *)error;

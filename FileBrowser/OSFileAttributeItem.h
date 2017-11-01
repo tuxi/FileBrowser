@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, OSFileAttributeItemStatus) {
 
 /// 指的是展示在主页的文件夹
 - (BOOL)isRootDirectory;
+- (BOOL)isDownloadBrowser;
 
 @end
 

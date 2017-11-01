@@ -120,14 +120,41 @@
     [self getOwnership];
     [self getPermissions];
     [self getFlags ];
-    [ self getSize ];
-    [ self getDates ];
-    [ self getFileSystemAttributes ];
+    [self getSize];
+    [self getDates];
+    [self getFileSystemAttributes];
+    
+    NSArray *(^processFileBlock)(NSString *path) = ^(NSString *path) {
+        /*
+         系统中某些文件没有权限加载
+         Error Domain=NSCocoaErrorDomain Code=257 "The file “var” couldn’t be opened because you don’t have permission to view it." UserInfo={NSFilePath=/var, NSUserStringVariant=(
+         Folder
+         ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
+         */
+        NSArray *array = nil;
+        if ([path isEqualToString:@"/System"]) {
+            array = @[@"Library"];
+        }
+        
+        if ([path isEqualToString:@"/Library"]) {
+            array = @[@"Preferences"];
+        }
+        
+        if ([path isEqualToString:@"/var"]) {
+            array = @[@"mobile"];
+        }
+        
+        if ([path isEqualToString:@"/usr"]) {
+            array = @[@"lib", @"libexec", @"bin"];
+        }
+        return array;
+    };
     
     if( _isDirectory == YES )
     {
         _subFiles = [ _fileManager contentsOfDirectoryAtPath: _path error: &e ];
         if (e) {
+            _subFiles = processFileBlock(_path);
             if (error) {
                 *error = e;
             }
@@ -162,6 +189,7 @@
     }
     
     [ self getSubTypes];
+    [self sortedSubFiles];
     //        [ self getIcon ];
     return YES;
 }
@@ -359,6 +387,23 @@
     _systemFileNumber = ( [ _attributes objectForKey: NSFileSystemFileNumber ] == nil ) ? 0 : ( NSUInteger )[ [ _attributes objectForKey: NSFileSystemFileNumber ] integerValue ];
     _HFSCreatorCode   = ( [ _attributes objectForKey: NSFileHFSCreatorCode ]   == nil ) ? 0 : ( NSUInteger )[ [ _attributes objectForKey: NSFileHFSCreatorCode ]   integerValue ];
     _HFSTypeCode      = ( [ _attributes objectForKey: NSFileHFSTypeCode ]      == nil ) ? 0 : ( NSUInteger )[ [ _attributes objectForKey: NSFileHFSTypeCode ]      integerValue ];
+}
+
+- (void)sortedSubFiles {
+    _subFiles =  [_subFiles sortedArrayWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(NSString* file1, NSString* file2) {
+        NSString *newPath1 = [self.path stringByAppendingPathComponent:file1];
+        NSString *newPath2 = [self.path stringByAppendingPathComponent:file2];
+        
+        BOOL isDirectory1, isDirectory2;
+        [[NSFileManager defaultManager ] fileExistsAtPath:newPath1 isDirectory:&isDirectory1];
+        [[NSFileManager defaultManager ] fileExistsAtPath:newPath2 isDirectory:&isDirectory2];
+        
+        if (isDirectory1 && !isDirectory2) {
+            return NSOrderedAscending;
+        }
+        
+        return  NSOrderedDescending;
+    }];
 }
 
 - ( void )getSubTypes {

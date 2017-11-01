@@ -36,5 +36,9 @@
     return NO;
 }
 
+- (BOOL)isDownloadBrowser {
+    return [self.path isEqualToString:[NSString getDownloadLocalFolderPath]];
+}
+
 @end
 
