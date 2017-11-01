@@ -8,7 +8,6 @@
 
 #import "UIImageView+XYExtension.h"
 #import "UIImage+XYImage.h"
-#import "OSFileUtils.h"
 
 @implementation UIImageView (XYExtension)
 
@@ -16,7 +15,7 @@
     
     // 取出缓存的图片
     NSString *cachePath = [[self class] getCacheImageFolderPath];
-    NSString *imageName = [OSFileUtils MD5HashWithString:vidoURL.path];
+    NSString *imageName = vidoURL.path;
     NSString *fullPath = [cachePath stringByAppendingPathComponent:imageName];
     UIImage *image = [UIImage imageWithContentsOfFile:fullPath];
     if (image) {

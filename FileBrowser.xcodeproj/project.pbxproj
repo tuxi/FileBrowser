@@ -37,7 +37,6 @@
 		18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */; };
 		18E3C7E21FAA20BE00567350 /* OSFileManager.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C21FAA20BE00567350 /* OSFileManager.h */; };
 		18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */; };
-		18E3C7E71FAA217800567350 /* OSFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7E61FAA217800567350 /* OSFileUtils.m */; };
 		28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */; };
 		D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */; };
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
@@ -77,8 +76,6 @@
 		18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewController.h; path = OSFileBrowser/OSFileCollectionViewController.h; sourceTree = "<group>"; };
 		18E3C7C21FAA20BE00567350 /* OSFileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileManager.h; path = OSFileBrowser/OSFileManager.h; sourceTree = "<group>"; };
 		18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileBottomHUD.m; path = OSFileBrowser/OSFileBottomHUD.m; sourceTree = "<group>"; };
-		18E3C7E51FAA217800567350 /* OSFileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileUtils.h; sourceTree = "<group>"; };
-		18E3C7E61FAA217800567350 /* OSFileUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileUtils.m; sourceTree = "<group>"; };
 		74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FileBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE31FA9735C0082508D /* FileBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,8 +112,6 @@
 				18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */,
 				18E3C7A81FAA20B900567350 /* OSFile.h */,
 				18E3C7AD1FAA20BA00567350 /* OSFile.m */,
-				18E3C7E51FAA217800567350 /* OSFileUtils.h */,
-				18E3C7E61FAA217800567350 /* OSFileUtils.m */,
 				18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */,
 				18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */,
 				18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */,
@@ -337,7 +332,6 @@
 				18E3C7D51FAA20BE00567350 /* NSObject+XYHUD.m in Sources */,
 				18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */,
 				18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */,
-				18E3C7E71FAA217800567350 /* OSFileUtils.m in Sources */,
 				18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */,
 				18E3C7D91FAA20BE00567350 /* DirectoryWatcher.m in Sources */,
 				18E3C7DA1FAA20BE00567350 /* NSDate+ESUtilities.m in Sources */,
