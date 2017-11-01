@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 
 @property (nonatomic, strong) NSString *rootDirectory;
 @property (nonatomic, strong) NSArray<OSFileAttributeItem *> *files;
-@property (nonatomic, assign) BOOL displayHiddenFiles;
+@property (nonatomic, assign) BOOL hideDisplayFiles;
 
 /// 通过文件目录路径，读取里面所有的文件并展示
 - (instancetype)initWithRootDirectory:(NSString *)path;

@@ -104,7 +104,7 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)commonInit {
     _fileManager = [OSFileManager defaultManager];
-    _displayHiddenFiles = NO;
+    _hideDisplayFiles = YES;
     _loadFileQueue = [NSOperationQueue new];
     __weak typeof(self) weakSelf = self;
     NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
@@ -407,7 +407,7 @@ static const CGFloat windowHeight = 49.0;
         NSMutableArray *array = @[].mutableCopy;
         [directoryArray enumerateObjectsUsingBlock:^(NSString * _Nonnull fullPath, NSUInteger idx, BOOL * _Nonnull stop) {
             NSError *error = nil;
-            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_displayHiddenFiles error:&error];
+            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_hideDisplayFiles error:&error];
             if (model) {
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
@@ -417,7 +417,7 @@ static const CGFloat windowHeight = 49.0;
         }];
         
         
-        if (!_displayHiddenFiles) {
+        if (_hideDisplayFiles) {
             array = [[self removeHiddenFilesFromFiles:array] mutableCopy];
         }
         if (completion) {
@@ -470,7 +470,7 @@ static const CGFloat windowHeight = 49.0;
         [files enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *fullPath = [directoryPath stringByAppendingPathComponent:obj];
             NSError *error = nil;
-            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_displayHiddenFiles error:&error];
+            OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_hideDisplayFiles error:&error];
             if (model) {
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
@@ -484,7 +484,7 @@ static const CGFloat windowHeight = 49.0;
             
         }];
         
-        if (!_displayHiddenFiles) {
+        if (_hideDisplayFiles) {
             array = [[self removeHiddenFilesFromFiles:array] mutableCopy];
         }
         if (completion) {
@@ -495,11 +495,11 @@ static const CGFloat windowHeight = 49.0;
     }];
 }
 
-- (void)setDisplayHiddenFiles:(BOOL)displayHiddenFiles {
-    if (_displayHiddenFiles == displayHiddenFiles) {
+- (void)sethideDisplayFiles:(BOOL)hideDisplayFiles {
+    if (_hideDisplayFiles == hideDisplayFiles) {
         return;
     }
-    _displayHiddenFiles = displayHiddenFiles;
+    _hideDisplayFiles = hideDisplayFiles;
     __weak typeof(self) weakSelf = self;
     switch (self.fileLoadType) {
         case OSFileLoadTypeCurrentDirectory: {

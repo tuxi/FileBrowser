@@ -127,11 +127,13 @@
     if( _isDirectory == YES )
     {
         _subFiles = [ _fileManager contentsOfDirectoryAtPath: _path error: &e ];
-        if (error) {
-            *error = e;
+        if (e) {
+            if (error) {
+                *error = e;
+            }
         }
         else {
-            if (!_hideDisplayFiles) {
+            if (_hideDisplayFiles) {
                 [self removeHideFiles];
             }
         }
@@ -169,9 +171,9 @@
         return;
     }
     NSMutableArray *tempFiles = [self.subFiles mutableCopy];
-    NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(OSFile * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[OSFile class]]) {
-            return [obj.path.lastPathComponent hasPrefix:@"."];
+    NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(NSString * _Nonnull fileName, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([fileName isKindOfClass:[NSString class]]) {
+            return [fileName hasPrefix:@"."];
         }
         return NO;
     }];
