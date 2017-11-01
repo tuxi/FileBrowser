@@ -7,5 +7,5 @@ target 'FileBrowser' do
 
   # Pods for FileBrowser
 	pod 'MBProgressHUD', '~> 1.0.0'
-	pod 'NODataPlaceholderView', '~> 0.0.3'
+	pod 'NODataPlaceholderView', '~> 1.0.1'
 end

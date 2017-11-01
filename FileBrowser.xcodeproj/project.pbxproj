@@ -128,6 +128,8 @@
 		D0353DE51FA9735C0082508D /* FileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				D0353E4B1FA9BB320082508D /* Utils */,
+				D0353E4A1FA9BAE10082508D /* Category */,
 				D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */,
 				D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */,
 				D0353DFF1FA9735C0082508D /* OSFileCollectionViewController.h */,
@@ -144,26 +146,6 @@
 				D0353E0F1FA9735C0082508D /* OSFileCollectionViewFlowLayout.m */,
 				D0353E111FA9735C0082508D /* OSFile.h */,
 				D0353E121FA9735C0082508D /* OSFile.m */,
-				D0353E141FA9735C0082508D /* NSString+OSFile.h */,
-				D0353E151FA9735C0082508D /* NSString+OSFile.m */,
-				D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */,
-				D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */,
-				D0353E1A1FA9735C0082508D /* UIImageView+XYExtension.h */,
-				D0353E1B1FA9735C0082508D /* UIImageView+XYExtension.m */,
-				D0353E3D1FA9735C0082508D /* UIImage+XYImage.h */,
-				D0353E3E1FA9735C0082508D /* UIImage+XYImage.m */,
-				D0353E201FA9735C0082508D /* OSFileManager.h */,
-				D0353E211FA9735C0082508D /* OSFileManager.m */,
-				D0353E241FA9735C0082508D /* NSString+MD5.h */,
-				D0353E231FA9735C0082508D /* NSString+MD5.m */,
-				D0353E371FA9735C0082508D /* DirectoryWatcher.h */,
-				D0353E381FA9735C0082508D /* DirectoryWatcher.m */,
-				D0353E401FA9735C0082508D /* NSDate+Utilities.h */,
-				D0353E411FA9735C0082508D /* NSDate+Utilities.m */,
-				D0353E431FA9735C0082508D /* UIViewController+XYExtensions.h */,
-				D0353E441FA9735C0082508D /* UIViewController+XYExtensions.m */,
-				D0353E461FA9735C0082508D /* NSObject+XYHUD.h */,
-				D0353E471FA9735C0082508D /* NSObject+XYHUD.m */,
 				D0353DFE1FA9735C0082508D /* Supporting Files */,
 			);
 			path = FileBrowser;
@@ -178,6 +160,40 @@
 				D0353DF51FA9735C0082508D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D0353E4A1FA9BAE10082508D /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				D0353E1A1FA9735C0082508D /* UIImageView+XYExtension.h */,
+				D0353E1B1FA9735C0082508D /* UIImageView+XYExtension.m */,
+				D0353E431FA9735C0082508D /* UIViewController+XYExtensions.h */,
+				D0353E441FA9735C0082508D /* UIViewController+XYExtensions.m */,
+				D0353E3D1FA9735C0082508D /* UIImage+XYImage.h */,
+				D0353E3E1FA9735C0082508D /* UIImage+XYImage.m */,
+				D0353E241FA9735C0082508D /* NSString+MD5.h */,
+				D0353E231FA9735C0082508D /* NSString+MD5.m */,
+				D0353E401FA9735C0082508D /* NSDate+Utilities.h */,
+				D0353E411FA9735C0082508D /* NSDate+Utilities.m */,
+				D0353E461FA9735C0082508D /* NSObject+XYHUD.h */,
+				D0353E471FA9735C0082508D /* NSObject+XYHUD.m */,
+				D0353E141FA9735C0082508D /* NSString+OSFile.h */,
+				D0353E151FA9735C0082508D /* NSString+OSFile.m */,
+				D0353E181FA9735C0082508D /* NSString+OSDrawingAdditions.h */,
+				D0353E171FA9735C0082508D /* NSString+OSDrawingAdditions.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		D0353E4B1FA9BB320082508D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D0353E201FA9735C0082508D /* OSFileManager.h */,
+				D0353E211FA9735C0082508D /* OSFileManager.m */,
+				D0353E371FA9735C0082508D /* DirectoryWatcher.h */,
+				D0353E381FA9735C0082508D /* DirectoryWatcher.m */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

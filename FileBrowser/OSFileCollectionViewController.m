@@ -1197,12 +1197,11 @@ completionHandler:(void (^)(NSError *error))completion {
     [self noDataPlaceholder:scrollView didTapOnContentView:tap];
 }
 
-
-- (CGFloat)contentOffsetYForNoDataPlaceholder:(UIScrollView *)scrollView {
+- (CGPoint)contentOffsetForNoDataPlaceholder:(UIScrollView *)scrollView {
     if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
-        return 120.0;
+        return CGPointMake(0, 120.0);
     }
-    return 80.0;
+    return CGPointMake(0, 80.0);
 }
 
 - (void)noDataPlaceholderWillAppear:(UIScrollView *)scrollView {
