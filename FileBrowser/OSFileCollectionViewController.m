@@ -68,7 +68,7 @@ static const CGFloat windowHeight = 49.0;
 @implementation OSFileCollectionViewController
 
 ////////////////////////////////////////////////////////////////////////
-#pragma mark - Initialize
+#pragma mark - Initializer
 ////////////////////////////////////////////////////////////////////////
 
 - (instancetype)initWithRootDirectory:(NSString *)path {
@@ -122,7 +122,7 @@ static const CGFloat windowHeight = 49.0;
     BOOL displayEdit = YES;
     if (self.directoryArray && self.directoryArray.count <= 2) {
         NSIndexSet *set = [self.directoryArray indexesOfObjectsPassingTest:^BOOL(NSString * _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [path isEqualToString:[NSString getDownloadLocalFolderPath]] || [path isEqualToString:[NSString getDocumentPath]];
+            return [path isEqualToString:[NSString getRootPath]] || [path isEqualToString:[NSString getDocumentPath]];
         }];
         if (set.count == self.directoryArray.count) {
             displayEdit = NO;

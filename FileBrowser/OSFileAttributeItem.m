@@ -7,6 +7,7 @@
 //
 
 #import "OSFileAttributeItem.h"
+#import "NSString+OSFile.h"
 
 @implementation OSFileAttributeItem
 
@@ -16,6 +17,23 @@
         self.status = OSFileAttributeItemStatusDefault;
     }
     return self;
+}
+
+- (NSString *)displayName {
+    if ([self.path isEqualToString:[NSString getDocumentPath]]) {
+        return @"iTunes文件";
+    }
+    return [super displayName];
+}
+
+- (BOOL)isRootDirectory {
+    if ([self.path isEqualToString:[NSString getDocumentPath]]) {
+        return YES;
+    }
+    else if ([self.path isEqualToString:[NSString getRootPath]]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

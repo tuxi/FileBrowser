@@ -103,7 +103,7 @@
 - (BOOL)reloadFileWithError:(NSError *__autoreleasing *)error {
     NSError  *e = nil;
     NSString *symLinkTarget = nil;
-    if ([ _fileManager fileExistsAtPath: _path ] == NO) {
+    if ([ _fileManager fileExistsAtPath: _path isDirectory:&_isDirectory] == NO) {
         return NO;
     }
     _attributes = [ _fileManager attributesOfItemAtPath: _path error: &e ];
@@ -168,17 +168,15 @@
     if (!self.subFiles.count) {
         return;
     }
-    @synchronized (self) {
-        NSMutableArray *tempFiles = [self.subFiles mutableCopy];
-        NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(OSFile * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[OSFile class]]) {
-                return [obj.path.lastPathComponent hasPrefix:@"."];
-            }
-            return NO;
-        }];
-        [tempFiles removeObjectsAtIndexes:indexSet];
-        _subFiles = tempFiles.copy;
-    }
+    NSMutableArray *tempFiles = [self.subFiles mutableCopy];
+    NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(OSFile * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[OSFile class]]) {
+            return [obj.path.lastPathComponent hasPrefix:@"."];
+        }
+        return NO;
+    }];
+    [tempFiles removeObjectsAtIndexes:indexSet];
+    _subFiles = tempFiles.copy;
 }
 
 - (NSUInteger)numberOfSubFiles {
@@ -202,7 +200,10 @@
 
 - ( void )getFileType
 {
-    _isDirectory        = [ _attributes objectForKey: NSFileType ] == NSFileTypeDirectory;
+    if (!_isDirectory) {
+        // mark: _attributes 中获取的有时不是对的，所以如果_isDirectory是YES，就不再获取了
+        _isDirectory        = [ _attributes objectForKey: NSFileType ] == NSFileTypeDirectory;
+    }
     _isRegularFile      = [ _attributes objectForKey: NSFileType ] == NSFileTypeRegular;
     _isSymbolicLink     = [ _attributes objectForKey: NSFileType ] == NSFileTypeSymbolicLink;
     _isSocket           = [ _attributes objectForKey: NSFileType ] == NSFileTypeSocket;

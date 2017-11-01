@@ -106,12 +106,15 @@
     
     if (fileModel.path) {
         if ([fileModel.path isEqualToString:[NSString getDocumentPath]]) {
-            self.titleLabel.text  = @"iTunes文件";
+//            self.titleLabel.text  = @"iTunes文件";
             self.iconView.image = [UIImage imageNamed:@"table-folder-itunes-files-sharing"];
-            self.optionBtn.hidden = YES;
+//            self.optionBtn.hidden = YES;
         }
-        else if ([fileModel.path isEqualToString:[NSString getDownloadLocalFolderPath]]) {
-            self.titleLabel.text  = @"下载";
+        else if ([fileModel.path isEqualToString:[NSString getRootPath]]) {
+//            self.titleLabel.text  = @"下载";
+//            self.optionBtn.hidden = YES;
+        }
+        if ([self.fileModel isRootDirectory]) {
             self.optionBtn.hidden = YES;
         }
     }
