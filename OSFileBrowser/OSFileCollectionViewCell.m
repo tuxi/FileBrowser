@@ -14,6 +14,7 @@
 #import "NSDate+ESUtilities.h"
 #import "UIViewController+XYExtensions.h"
 #import "NSObject+XYHUD.h"
+#import "UIImage+XYImage.h"
 
 @interface OSFileCollectionViewCell ()
 
@@ -53,16 +54,16 @@
     self.contentView.layer.borderColor = [UIColor colorWithWhite:0.75 alpha:1.0].CGColor;
     switch (status) {
         case OSFileAttributeItemStatusDefault: {
-            [self.optionBtn setImage:[UIImage imageNamed:@"grid-options"] forState:UIControlStateNormal];
+            [self.optionBtn setImage:[UIImage OSFileBrowserImageNamed:@"grid-options"] forState:UIControlStateNormal];
             self.optionBtn.userInteractionEnabled = YES;
             break;
         }
         case OSFileAttributeItemStatusEdit: {
-            [self.optionBtn setImage:[UIImage imageNamed:@"grid-selection"] forState:UIControlStateNormal];
+            [self.optionBtn setImage:[UIImage OSFileBrowserImageNamed:@"grid-selection"] forState:UIControlStateNormal];
             break;
         }
         case OSFileAttributeItemStatusChecked: {
-            [self.optionBtn setImage:[UIImage imageNamed:@"grid-selected"] forState:UIControlStateNormal];
+            [self.optionBtn setImage:[UIImage OSFileBrowserImageNamed:@"grid-selected"] forState:UIControlStateNormal];
             self.contentView.layer.borderColor = [UIColor blueColor].CGColor;
             break;
         }
@@ -79,7 +80,7 @@
     /// 根据文件类型显示
     self.titleLabel.text = fileModel.displayName;
     if (fileModel.isDirectory) {
-        self.iconView.image = [UIImage imageNamed:@"table-folder"];
+        self.iconView.image = [UIImage OSFileBrowserImageNamed:@"table-folder"];
         self.subTitleLabel.text = [NSString stringWithFormat:@"%ld个文件", fileModel.numberOfSubFiles];
     }
     else {
@@ -89,25 +90,25 @@
             self.iconView.image = [UIImage imageWithContentsOfFile:fileModel.path];
         } else if (fileModel.isVideo) {
             NSURL *videoURL = [NSURL fileURLWithPath:fileModel.path];
-            [self.iconView xy_imageWithMediaURL:videoURL placeholderImage:[UIImage imageNamed:@"table-fileicon-images"] completionHandlder:^(UIImage *image) {
+            [self.iconView xy_imageWithMediaURL:videoURL placeholderImage:[UIImage OSFileBrowserImageNamed:@"table-fileicon-images"] completionHandlder:^(UIImage *image) {
                 
             }];
         }
         else if (fileModel.isArchive) {
-            self.iconView.image = [UIImage imageNamed:@"table-fileicon-archive"];
+            self.iconView.image = [UIImage OSFileBrowserImageNamed:@"table-fileicon-archive"];
         }
         else if (fileModel.isWindows) {
-            self.iconView.image = [UIImage imageNamed:@"table-foder-windows-smb"];
+            self.iconView.image = [UIImage OSFileBrowserImageNamed:@"table-foder-windows-smb"];
         }
         else {
-            self.iconView.image = [UIImage imageNamed:@"table-fileicon-c-source"];
+            self.iconView.image = [UIImage OSFileBrowserImageNamed:@"table-fileicon-c-source"];
         }
     }
     
     if (fileModel.path) {
         if ([fileModel.path isEqualToString:[NSString getDocumentPath]]) {
 //            self.titleLabel.text  = @"iTunes文件";
-            self.iconView.image = [UIImage imageNamed:@"table-folder-itunes-files-sharing"];
+            self.iconView.image = [UIImage OSFileBrowserImageNamed:@"table-folder-itunes-files-sharing"];
 //            self.optionBtn.hidden = YES;
         }
         else if ([fileModel.path isEqualToString:[NSString getRootPath]]) {

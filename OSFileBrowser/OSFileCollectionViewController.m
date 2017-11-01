@@ -19,6 +19,7 @@
 #import "MBProgressHUD.h"
 #import "NSObject+XYHUD.h"
 #import "UIViewController+XYExtensions.h"
+#import "UIImage+XYImage.h"
 
 #define dispatch_main_safe_async(block)\
     if ([NSThread isMainThread]) {\
@@ -1158,7 +1159,7 @@ completionHandler:(void (^)(NSError *error))completion {
 
 - (UIImage *)noDataImageViewImage {
     
-    return [UIImage imageNamed:@"file_noData"];
+    return [UIImage OSFileBrowserImageNamed:@"file_noData"];
 }
 
 

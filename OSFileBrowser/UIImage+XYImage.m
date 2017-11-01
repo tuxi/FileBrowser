@@ -15,6 +15,11 @@
 
 @implementation UIImage (XYImage)
 
++ (UIImage *)OSFileBrowserImageNamed:(NSString *)name {
+    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"OSFileBrowser.bundle/%@", name]];
+    return image;
+}
+
 + (UIImage *)xy_imageWithColor:(UIColor *)color {
     
     // 描述矩形
