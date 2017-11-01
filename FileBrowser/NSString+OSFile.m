@@ -12,6 +12,17 @@
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 #endif
 
+#if TARGET_OS_SIMULATOR
+    #if !TARGET_OS_TV
+        static NSString * const rootPath = @"/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk";
+        #else
+        static NSString * const rootPath = @"/Applications/Xcode-beta.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator.sdk";
+    #endif
+
+    #else
+        static NSString * const rootPath = @"/";
+#endif
+
 @implementation NSString (OSFile)
 
 + (NSString *)transformedFileSizeValue:(NSNumber *)value {
@@ -185,6 +196,10 @@
         [[NSFileManager defaultManager] createDirectoryAtPath:localFolderPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     return localFolderPath;
+}
+
++ (NSString *)getRootPath {
+    return rootPath;
 }
 
 + (NSString *)getDocumentPath {

@@ -23,7 +23,7 @@
 + (NSString *)percentageString:(float)percent;
 
 + (NSString *)getDownloadLocalFolderPath;
-
++ (NSString *)getRootPath;
 + (NSString *)getDocumentPath;
 + (NSString *)getLibraryPath;
 + (NSString *)getCachesPath;
