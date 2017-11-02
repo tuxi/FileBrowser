@@ -8,4 +8,5 @@ target 'FileBrowser' do
   # Pods for FileBrowser
 	pod 'MBProgressHUD', '~> 1.0.0'
 	pod 'NODataPlaceholderView', '~> 1.0.2'
+    pod 'OSFileManager', '~>0.0.1'
 end
