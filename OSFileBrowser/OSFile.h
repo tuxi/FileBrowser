@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum
-{
+typedef enum {
     OSFileFlagsArchived         = 0x01,
     OSFileFlagsHidden           = 0x02,
     OSFileFlagsNoDump           = 0x04,
@@ -75,58 +74,58 @@ OSFileFlags;
     BOOL            _hideDisplayFiles;
 @private
     
-    id __OSFile_Reserved[ 5 ] __attribute__( ( unused ) );
+    id __OSFile_Reserved[ 5 ] __attribute__((unused));
 }
 
 
-@property( atomic, readonly ) BOOL          isDirectory;
-@property( atomic, readonly ) BOOL          isRegularFile;
-@property( atomic, readonly ) BOOL          isSymbolicLink;
-@property( atomic, readonly ) BOOL          isSocket;
-@property( atomic, readonly ) BOOL          isCharacterSpecial;
-@property( atomic, readonly ) BOOL          isBlockSpecial;
-@property( atomic, readonly ) BOOL          isUnknown;
-@property( atomic, readonly ) BOOL          isImmutable;
-@property( atomic, readonly ) BOOL          isAppendOnly;
-@property( atomic, readonly ) BOOL          isBusy;
-@property( atomic, readonly ) BOOL          extensionIsHidden;
-@property( atomic, readonly ) BOOL          isReadable;
-@property( atomic, readonly ) BOOL          isWriteable;
-@property( atomic, readonly ) BOOL          isExecutable;
-@property( atomic, readonly ) BOOL          isImage;
-@property( atomic, readonly ) BOOL          isAudio;
-@property( atomic, readonly ) BOOL          isVideo;
-@property( atomic, readonly ) BOOL          isArchive;
-@property( atomic, readonly ) BOOL          isWindows;
-@property( atomic, readonly ) OSFileFlags   flags;
-@property( atomic, readonly ) NSUInteger    size;
-@property( atomic, readonly ) NSUInteger    referenceCount;
-@property( atomic, readonly ) NSUInteger    deviceIdentifier;
-@property( atomic, readonly ) NSUInteger    ownerID;
-@property( atomic, readonly ) NSUInteger    groupID;
-@property( atomic, readonly ) NSUInteger    permissions;
-@property( atomic, readonly ) NSUInteger    octalPermissions;
-@property( atomic, readonly ) NSUInteger    systemNumber;
-@property( atomic, readonly ) NSUInteger    systemFileNumber;
-@property( atomic, readonly ) NSUInteger    HFSCreatorCode;
-@property( atomic, readonly ) NSUInteger    HFSTypeCode;
-@property( atomic, readonly ) NSUInteger    numberOfSubFiles;
-@property( atomic, readonly ) NSString    * path;
-@property( atomic, readonly ) NSString    * filename;
-@property( atomic, readonly ) NSString    * displayName;
-@property( atomic, readonly ) NSString    * fileExtension;
-@property( atomic, readonly ) NSString    * parentDirectoryPath;
-@property( atomic, readonly ) NSString    * type;
-@property( atomic, readonly ) NSString    * owner;
-@property( atomic, readonly ) NSString    * group;
-@property( atomic, readonly ) NSString    * humanReadableSize;
-@property( atomic, readonly ) NSString    * humanReadablePermissions;
-@property( atomic, readonly ) NSDate      * creationDate;
-@property( atomic, readonly ) NSDate      * modificationDate;
-//@property( atomic, readonly ) UIImage     * icon;
-@property( atomic, readonly ) OSFile      * targetFile;
-@property( atomic, readwrite ) NSArray     * subFiles;
-@property( atomic, readonly ) BOOL          hideDisplayFiles;
+@property (atomic, readonly) BOOL          isDirectory;
+@property (atomic, readonly) BOOL          isRegularFile;
+@property (atomic, readonly) BOOL          isSymbolicLink;
+@property (atomic, readonly) BOOL          isSocket;
+@property (atomic, readonly) BOOL          isCharacterSpecial;
+@property (atomic, readonly) BOOL          isBlockSpecial;
+@property (atomic, readonly) BOOL          isUnknown;
+@property (atomic, readonly) BOOL          isImmutable;
+@property (atomic, readonly) BOOL          isAppendOnly;
+@property (atomic, readonly) BOOL          isBusy;
+@property (atomic, readonly) BOOL          extensionIsHidden;
+@property (atomic, readonly) BOOL          isReadable;
+@property (atomic, readonly) BOOL          isWriteable;
+@property (atomic, readonly) BOOL          isExecutable;
+@property (atomic, readonly) BOOL          isImage;
+@property (atomic, readonly) BOOL          isAudio;
+@property (atomic, readonly) BOOL          isVideo;
+@property (atomic, readonly) BOOL          isArchive;
+@property (atomic, readonly) BOOL          isWindows;
+@property (atomic, readonly) OSFileFlags   flags;
+@property (atomic, readonly) NSUInteger    size;
+@property (atomic, readonly) NSUInteger    referenceCount;
+@property (atomic, readonly) NSUInteger    deviceIdentifier;
+@property (atomic, readonly) NSUInteger    ownerID;
+@property (atomic, readonly) NSUInteger    groupID;
+@property (atomic, readonly) NSUInteger    permissions;
+@property (atomic, readonly) NSUInteger    octalPermissions;
+@property (atomic, readonly) NSUInteger    systemNumber;
+@property (atomic, readonly) NSUInteger    systemFileNumber;
+@property (atomic, readonly) NSUInteger    HFSCreatorCode;
+@property (atomic, readonly) NSUInteger    HFSTypeCode;
+@property (atomic, readonly) NSUInteger    numberOfSubFiles;
+@property (atomic, readonly) NSString    * path;
+@property (atomic, readonly) NSString    * filename;
+@property (atomic, readonly) NSString    * displayName;
+@property (atomic, readonly) NSString    * fileExtension;
+@property (atomic, readonly) NSString    * parentDirectoryPath;
+@property (atomic, readonly) NSString    * type;
+@property (atomic, readonly) NSString    * owner;
+@property (atomic, readonly) NSString    * group;
+@property (atomic, readonly) NSString    * humanReadableSize;
+@property (atomic, readonly) NSString    * humanReadablePermissions;
+@property (atomic, readonly) NSDate      * creationDate;
+@property (atomic, readonly) NSDate      * modificationDate;
+//@property (atomic, readonly) UIImage     * icon;
+@property (atomic, readonly) OSFile      * targetFile;
+@property (atomic, readwrite) NSArray     * subFiles;
+@property (atomic, readonly) BOOL          hideDisplayFiles;
 
 /// 初始化方法，根据文件路径创建一个OSFile对象
 /// @param filePath 文件完整路径

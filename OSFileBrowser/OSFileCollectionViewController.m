@@ -1007,30 +1007,28 @@ completionHandler:(void (^)(NSError *error))completion {
     if (!fileItems.count) {
         return;
     }
-    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-        [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
-            if ([desPath isEqualToString:obj.path]) {
-                NSLog(@"路径相同");
-                dispatch_main_safe_async(^{
-                    self.hud.labelText = @"路径相同";
-                    if (completion) {
-                        completion([NSError errorWithDomain:NSURLErrorDomain code:10000 userInfo:@{@"error": @"不能拷贝到自己的目录"}]);
-                    }
-                });
-            }
-            else if ([[NSFileManager defaultManager] fileExistsAtPath:desPath]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.hud.labelText = @"存在相同文件，正在移除原文件";
-                });
-                NSError *removeError = nil;
-                [[NSFileManager defaultManager] removeItemAtPath:desPath error:&removeError];
-                if (removeError) {
-                    NSLog(@"Error: %@", removeError.localizedDescription);
+    [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
+        if ([desPath isEqualToString:obj.path]) {
+            NSLog(@"路径相同");
+            dispatch_main_safe_async(^{
+                self.hud.labelText = @"路径相同";
+                if (completion) {
+                    completion([NSError errorWithDomain:NSURLErrorDomain code:10000 userInfo:@{@"error": @"不能拷贝到自己的目录"}]);
                 }
+            });
+        }
+        else if ([[NSFileManager defaultManager] fileExistsAtPath:desPath]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.hud.labelText = @"存在相同文件，正在移除原文件";
+            });
+            NSError *removeError = nil;
+            [[NSFileManager defaultManager] removeItemAtPath:desPath error:&removeError];
+            if (removeError) {
+                NSLog(@"Error: %@", removeError.localizedDescription);
             }
-        }];
+        }
     }];
     
     NSMutableArray *hudDetailTextArray = @[].mutableCopy;
@@ -1042,55 +1040,51 @@ completionHandler:(void (^)(NSError *error))completion {
     };
     
     
-    operation.completionBlock = ^{
-        /// 当completionCopyNum为0 时 全部拷贝完成
-        __block NSInteger completionCopyNum = fileItems.count;
-        [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [hudDetailTextArray addObject:@(idx).stringValue];
-            NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
-            NSURL *desURL = [NSURL fileURLWithPath:desPath];
-            
-            void (^ progressBlock)(NSProgress *progress) = ^ (NSProgress *progress) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSString *completionSize = [NSString transformedFileSizeValue:@(progress.completedUnitCount)];
-                    NSString *totalSize = [NSString transformedFileSizeValue:@(progress.totalUnitCount)];
-                    NSString *prcent = [NSString percentageString:progress.fractionCompleted];
-                    NSString *detailText = [NSString stringWithFormat:@"%@  %@/%@", prcent, completionSize, totalSize];
-                    hudDetailTextCallBack(detailText, idx);
-                });
-            };
-            
-            void (^ completionHandler)(id<OSFileOperation> fileOperation, NSError *error) = ^(id<OSFileOperation> fileOperation, NSError *error) {
-                completionCopyNum--;
-                dispatch_main_safe_async(^{
-                    if (completionCopyNum == 0 && completion) {
-                        completion(error);
-                    }
-                });
-            };
-            NSURL *orgURL = [NSURL fileURLWithPath:obj.path];
-            if (self.mode == OSFileCollectionViewControllerModeCopy) {
-                [_fileManager copyItemAtURL:orgURL
-                                      toURL:desURL
-                                   progress:progressBlock
-                          completionHandler:completionHandler];
-            }
-            else {
-                [_fileManager moveItemAtURL:orgURL
-                                      toURL:desURL
-                                   progress:progressBlock
-                          completionHandler:completionHandler];
-            }
-            
-        }];
-    };
-    
-    
-    
-    [_loadFileQueue addOperation:operation];
-    
+    /// 当completionCopyNum为0 时 全部拷贝完成
+    __block NSInteger completionCopyNum = fileItems.count;
+    [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [hudDetailTextArray addObject:@(idx).stringValue];
+        NSString *desPath = [rootPath stringByAppendingPathComponent:[obj.path lastPathComponent]];
+        NSURL *desURL = [NSURL fileURLWithPath:desPath];
+        
+        void (^ progressBlock)(NSProgress *progress) = ^ (NSProgress *progress) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *completionSize = [NSString transformedFileSizeValue:@(progress.completedUnitCount)];
+                NSString *totalSize = [NSString transformedFileSizeValue:@(progress.totalUnitCount)];
+                NSString *prcent = [NSString percentageString:progress.fractionCompleted];
+                NSString *detailText = [NSString stringWithFormat:@"%@  %@/%@", prcent, completionSize, totalSize];
+                hudDetailTextCallBack(detailText, idx);
+            });
+        };
+        
+        void (^ completionHandler)(id<OSFileOperation> fileOperation, NSError *error) = ^(id<OSFileOperation> fileOperation, NSError *error) {
+            completionCopyNum--;
+            dispatch_main_safe_async(^{
+                if (completionCopyNum == 0 && completion) {
+                    completion(error);
+                }
+            });
+        };
+        NSURL *orgURL = [NSURL fileURLWithPath:obj.path];
+        if (self.mode == OSFileCollectionViewControllerModeCopy) {
+            [_fileManager copyItemAtURL:orgURL
+                                  toURL:desURL
+                               progress:progressBlock
+                      completionHandler:completionHandler];
+        }
+        else {
+            [_fileManager moveItemAtURL:orgURL
+                                  toURL:desURL
+                               progress:progressBlock
+                      completionHandler:completionHandler];
+        }
+        
+    }];
+
+
+
     __weak typeof(self) weakSelf = self;
-    
+
     _fileManager.totalProgressBlock = ^(NSProgress *progress) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.hud.labelText = [NSString stringWithFormat:@"total:%@  %lld/%lld", [NSString percentageString:progress.fractionCompleted], progress.completedUnitCount, progress.totalUnitCount];
@@ -1098,7 +1092,7 @@ completionHandler:(void (^)(NSError *error))completion {
         @synchronized (hudDetailTextArray) {
             NSString *detailStr = [hudDetailTextArray componentsJoinedByString:@",\n"];
             strongSelf.hud.detailsLabel.text = detailStr;
-            
+        
         }
         if (progress.fractionCompleted >= 1.0 || progress.completedUnitCount >= progress.totalUnitCount) {
             strongSelf.hud.labelText = @"完成";
@@ -1108,7 +1102,7 @@ completionHandler:(void (^)(NSError *error))completion {
             });
         }
     };
-    
+
 }
 
 
