@@ -17,7 +17,10 @@
 
 @interface OSFileBottomHUDItem ()
 
-@property (nonatomic, assign) NSInteger buttonIdx;;
+@property (nonatomic, assign) NSInteger buttonIdx;
+@property (nonatomic, strong) NSMutableDictionary *buttonTitleDictionary;
+@property (nonatomic, strong) NSMutableDictionary *buttonImageDictionary;
+@property (nonatomic, weak) UIButton *button;
 
 @end
 
@@ -64,6 +67,7 @@
     NSInteger i = 0;
     for (OSFileBottomHUDItem *item in self.items) {
         OSFileBottomHUDButton *btn = [OSFileBottomHUDButton buttonWithType:UIButtonTypeSystem];
+        item.button = btn;
         btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         btn.contentMode = UIViewContentModeScaleAspectFit;
         [btn setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
@@ -161,6 +165,15 @@
     }
 }
 
+- (void)setItemTitle:(NSString *)title index:(NSInteger)index state:(UIControlState)state {
+    NSAssert(index < self.items.count, @"index 必须在items的范围内");
+    [self.items[index] setTitle:title state:state];
+}
+- (void)setItemImage:(UIImage *)image index:(NSInteger)index state:(UIControlState)state {
+    NSAssert(index < self.items.count, @"index 必须在items的范围内");
+    [self.items[index] setImage:image state:state];
+}
+
 @end
 
 
@@ -170,9 +183,67 @@
     if (self = [super init]) {
         self.title = title;
         self.image = image;
+        
     }
     return self;
 }
+
+- (void)setTitle:(NSString *)title {
+    _title = title;
+    if (title) {
+        self.buttonTitleDictionary[@(UIControlStateNormal)] = title;
+    }
+    else {
+        [self.buttonTitleDictionary removeObjectForKey:@(UIControlStateNormal)];
+    }
+    [self.button setTitle:title forState:UIControlStateNormal];
+}
+
+- (void)setImage:(UIImage *)image {
+    _image = image;
+    if (image) {
+        self.buttonImageDictionary[@(UIControlStateNormal)] = image;
+    }
+    else {
+        [self.buttonImageDictionary removeObjectForKey:@(UIControlStateNormal)];
+    }
+    [self.button setImage:image forState:UIControlStateNormal];
+}
+
+- (void)setImage:(UIImage *)image state:(UIControlState)state {
+    _image = image;
+    self.buttonImageDictionary[@(state)] = image;
+    [self.button setImage:image forState:state];
+}
+
+- (void)setTitle:(NSString *)title state:(UIControlState)state {
+    _title = title;
+    self.buttonTitleDictionary[@(state)] = title;
+    [self.button setTitle:title forState:state];
+}
+
+- (NSMutableDictionary *)buttonTitleDictionary {
+    if (!_buttonTitleDictionary) {
+        _buttonTitleDictionary = @{}.mutableCopy;
+    }
+    return _buttonTitleDictionary;
+}
+
+- (NSMutableDictionary *)buttonImageDictionary {
+    if (!_buttonImageDictionary) {
+        _buttonImageDictionary = @{}.mutableCopy;
+    }
+    return _buttonImageDictionary;
+}
+
+- (NSString *)titleForState:(UIControlState)state {
+    return self.buttonTitleDictionary[@(state)];
+}
+
+- (NSString *)imageForState:(UIControlState)state {
+    return self.buttonImageDictionary[@(state)];
+}
+
 @end
 
 
@@ -225,9 +296,9 @@
         NSDictionary *attributes = @{NSFontAttributeName : font, NSParagraphStyleAttributeName : style };
         
         CGRect rect = [string boundingRectWithSize:maxSize
-                                         options:opts
-                                      attributes:attributes
-                                         context:nil];
+                                           options:opts
+                                        attributes:attributes
+                                           context:nil];
         textSize = rect.size;
     }
     else{

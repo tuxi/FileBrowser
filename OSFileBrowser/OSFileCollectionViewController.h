@@ -40,3 +40,4 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 completionHandler:(void (^)(NSError *error))completion;
 
 @end
+

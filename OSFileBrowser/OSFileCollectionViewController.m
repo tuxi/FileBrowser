@@ -22,11 +22,11 @@
 #import "UIImage+XYImage.h"
 
 #define dispatch_main_safe_async(block)\
-    if ([NSThread isMainThread]) {\
-    block();\
-    } else {\
-    dispatch_async(dispatch_get_main_queue(), block);\
-    }
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 
@@ -253,6 +253,7 @@ static const CGFloat windowHeight = 49.0;
 - (OSFileBottomHUD *)bottomHUD {
     if (!_bottomHUD) {
         _bottomHUD = [[OSFileBottomHUD alloc] initWithItems:@[
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"全选" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"复制" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"移动" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"删除" image:nil],
@@ -485,6 +486,8 @@ static const CGFloat windowHeight = 49.0;
             break;
         }
         case OSFileLoadTypeSubDirectory: {
+            NSError *error = nil;
+            [self.rootDirectoryItem reloadFileWithError:&error];
             [self loadFileWithDirectoryItem:self.rootDirectoryItem completion:^(NSArray *fileItems) {
                 weakSelf.files = fileItems.copy;
                 [weakSelf reloadCollectionData];
@@ -561,6 +564,12 @@ static const CGFloat windowHeight = 49.0;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     OSFileCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     cell.fileModel = self.files[indexPath.row];
+    if (cell.fileModel.status == OSFileAttributeItemStatusChecked) {
+        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    }
+    else {
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    }
     cell.delegate = self;
     return cell;
 }
@@ -881,7 +890,41 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)fileBottomHUD:(OSFileBottomHUD *)hud didClickItem:(OSFileBottomHUDItem *)item {
     switch (item.buttonIdx) {
-        case 0: { // 复制
+        case 0: { // 全选
+            BOOL selectedAll = YES;
+            if ([[item titleForState:UIControlStateNormal] isEqualToString:@"全选"]) {
+                [item setTitle:@"取消全选" state:UIControlStateNormal];
+                //                self.selectorFiles = self.files.mutableCopy;
+                [self.selectorFiles removeAllObjects];
+                [self.selectorFiles addObjectsFromArray:self.files];
+                selectedAll = YES;
+            }
+            else {
+                [item setTitle:@"全选" state:UIControlStateNormal];
+                [self.selectorFiles removeAllObjects];
+                selectedAll = NO;
+            }
+            
+            [self.files enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (!selectedAll) {
+                    obj.status = OSFileAttributeItemStatusEdit;
+                }
+                else {
+                    obj.status = OSFileAttributeItemStatusChecked;
+                }
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+                if (obj.status == OSFileAttributeItemStatusChecked) {
+                    [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                }
+                else {
+                    [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+                }
+                
+            }];
+            [self reloadCollectionData];
+            break;
+        }
+        case 1: { // 复制
             if (!self.selectorFiles.count) {
                 [self showInfo:@"请选择需要复制的文件"];
             }
@@ -891,7 +934,7 @@ static const CGFloat windowHeight = 49.0;
             
             break;
         }
-        case 1: { // 移动
+        case 2: { // 移动
             if (!self.selectorFiles.count) {
                 [self showInfo:@"请选择需要移动的文件"];
             }
@@ -900,7 +943,7 @@ static const CGFloat windowHeight = 49.0;
             }
             break;
         }
-        case 2: { // 删除
+        case 3: { // 删除
             if (!self.selectorFiles.count) {
                 [self showInfo:@"请选择需要删除的文件"];
             }
@@ -1080,11 +1123,11 @@ completionHandler:(void (^)(NSError *error))completion {
         }
         
     }];
-
-
-
+    
+    
+    
     __weak typeof(self) weakSelf = self;
-
+    
     _fileManager.totalProgressBlock = ^(NSProgress *progress) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         strongSelf.hud.labelText = [NSString stringWithFormat:@"total:%@  %lld/%lld", [NSString percentageString:progress.fractionCompleted], progress.completedUnitCount, progress.totalUnitCount];
@@ -1092,7 +1135,7 @@ completionHandler:(void (^)(NSError *error))completion {
         @synchronized (hudDetailTextArray) {
             NSString *detailStr = [hudDetailTextArray componentsJoinedByString:@",\n"];
             strongSelf.hud.detailsLabel.text = detailStr;
-        
+            
         }
         if (progress.fractionCompleted >= 1.0 || progress.completedUnitCount >= progress.totalUnitCount) {
             strongSelf.hud.labelText = @"完成";
@@ -1102,7 +1145,7 @@ completionHandler:(void (^)(NSError *error))completion {
             });
         }
     };
-
+    
 }
 
 
