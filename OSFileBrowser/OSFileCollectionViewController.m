@@ -22,13 +22,15 @@
 #import "UIImage+XYImage.h"
 
 #define dispatch_main_safe_async(block)\
-if ([NSThread isMainThread]) {\
-block();\
-} else {\
-dispatch_async(dispatch_get_main_queue(), block);\
-}
+    if ([NSThread isMainThread]) {\
+        block();\
+        } else {\
+        dispatch_async(dispatch_get_main_queue(), block);\
+    }
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
+NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
+NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification = @"OptionSelectedFileForMoveNotification";
 
 typedef NS_ENUM(NSInteger, OSFileLoadType) {
     OSFileLoadTypeCurrentDirectory,
@@ -59,7 +61,7 @@ static const CGFloat windowHeight = 49.0;
 @property (nonatomic, strong) MBProgressHUD *hud;
 @property (nonatomic, strong) NSArray<NSString *> *directoryArray;
 @property (nonatomic, assign) OSFileLoadType fileLoadType;
-@property (nonatomic, strong) NSMutableArray<OSFileAttributeItem *> *selectorFiles;
+@property (nonatomic, strong) NSMutableArray<OSFileAttributeItem *> *selectedFiles;
 @property (nonatomic, strong) OSFileBottomHUD *bottomHUD;
 @property (nonatomic, assign) OSFileCollectionViewControllerMode mode;
 @property (nonatomic, weak) UIButton *bottomTipButton;
@@ -579,8 +581,8 @@ static const CGFloat windowHeight = 49.0;
     if (self.mode == OSFileCollectionViewControllerModeEdit) {
         OSFileAttributeItem *item = self.files[indexPath.row];
         item.status = OSFileAttributeItemStatusChecked;
-        if (![self.selectorFiles containsObject:item]) {
-            [self.selectorFiles addObject:item];
+        if (![self.selectedFiles containsObject:item]) {
+            [self.selectedFiles addObject:item];
         }
         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
         
@@ -598,7 +600,7 @@ static const CGFloat windowHeight = 49.0;
     if (self.mode == OSFileCollectionViewControllerModeEdit) {
         OSFileAttributeItem *item = self.files[indexPath.row];
         item.status = OSFileAttributeItemStatusEdit;
-        [self.selectorFiles removeObject:item];
+        [self.selectedFiles removeObject:item];
         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [collectionView deselectItemAtIndexPath:indexPath animated:YES];
@@ -684,7 +686,7 @@ static const CGFloat windowHeight = 49.0;
             if (self.mode == OSFileCollectionViewControllerModeCopy ||
                 self.mode == OSFileCollectionViewControllerModeMove) {
                 OSFileCollectionViewController *viewController = (OSFileCollectionViewController *)vc;
-                viewController.selectorFiles = self.selectorFiles.mutableCopy;
+                viewController.selectedFiles = self.selectedFiles.mutableCopy;
             }
             
         } else if (![QLPreviewController canPreviewItem:url]) {
@@ -746,9 +748,8 @@ static const CGFloat windowHeight = 49.0;
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////
-#pragma mark -
+#pragma mark - Layout
 ////////////////////////////////////////////////////////////////////////
 
 - (void)makeCollectionViewConstr {
@@ -758,6 +759,10 @@ static const CGFloat windowHeight = 49.0;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
 }
 
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - Lazy
+////////////////////////////////////////////////////////////////////////
 
 - (OSFileCollectionViewFlowLayout *)flowLayout {
     
@@ -823,12 +828,16 @@ static const CGFloat windowHeight = 49.0;
     return _bottomTipButton;
 }
 
-- (NSMutableArray<OSFileAttributeItem *> *)selectorFiles {
-    if (!_selectorFiles) {
-        _selectorFiles = @[].mutableCopy;
+- (NSMutableArray<OSFileAttributeItem *> *)selectedFiles {
+    if (!_selectedFiles) {
+        _selectedFiles = @[].mutableCopy;
     }
-    return _selectorFiles;
+    return _selectedFiles;
 }
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - 
+////////////////////////////////////////////////////////////////////////
 
 - (void)showBottomTip {
     if ((self.mode != OSFileCollectionViewControllerModeCopy &&
@@ -847,7 +856,7 @@ static const CGFloat windowHeight = 49.0;
     /// 检测已选择的文件是否在当前文件中，如果在就提示用户
     NSMutableArray *containFileArray = @[].mutableCopy;
     if (self.files) {
-        [self.selectorFiles enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull seleFile, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.selectedFiles enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull seleFile, NSUInteger idx, BOOL * _Nonnull stop) {
             NSUInteger foundIdx = [self.files indexOfObjectPassingTest:^BOOL(OSFileAttributeItem * _Nonnull file, NSUInteger idx, BOOL * _Nonnull stop) {
                 BOOL res = NO;
                 if ([seleFile.path isEqualToString:file.path]) {
@@ -874,9 +883,9 @@ static const CGFloat windowHeight = 49.0;
 /// 将选择的文件拷贝到目标目录中
 - (void)chooseCompletion {
     __weak typeof(self) weakSelf = self;
-    [self copyFiles:self.selectorFiles toRootDirectory:self.rootDirectoryItem.path completionHandler:^(NSError *error) {
+    [self copyFiles:self.selectedFiles toRootDirectory:self.rootDirectoryItem.path completionHandler:^(NSError *error) {
         if (!error) {
-            [weakSelf.selectorFiles removeAllObjects];
+            [weakSelf.selectedFiles removeAllObjects];
             [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil userInfo:@{@"OSFileCollectionViewControllerMode": @(weakSelf.mode)}];
             [weakSelf backButtonClick];
         }
@@ -894,14 +903,14 @@ static const CGFloat windowHeight = 49.0;
             BOOL selectedAll = YES;
             if ([[item titleForState:UIControlStateNormal] isEqualToString:@"全选"]) {
                 [item setTitle:@"取消全选" state:UIControlStateNormal];
-                //                self.selectorFiles = self.files.mutableCopy;
-                [self.selectorFiles removeAllObjects];
-                [self.selectorFiles addObjectsFromArray:self.files];
+                //                self.selectedFiles = self.files.mutableCopy;
+                [self.selectedFiles removeAllObjects];
+                [self.selectedFiles addObjectsFromArray:self.files];
                 selectedAll = YES;
             }
             else {
                 [item setTitle:@"全选" state:UIControlStateNormal];
-                [self.selectorFiles removeAllObjects];
+                [self.selectedFiles removeAllObjects];
                 selectedAll = NO;
             }
             
@@ -925,7 +934,7 @@ static const CGFloat windowHeight = 49.0;
             break;
         }
         case 1: { // 复制
-            if (!self.selectorFiles.count) {
+            if (!self.selectedFiles.count) {
                 [self showInfo:@"请选择需要复制的文件"];
             }
             else {
@@ -935,7 +944,7 @@ static const CGFloat windowHeight = 49.0;
             break;
         }
         case 2: { // 移动
-            if (!self.selectorFiles.count) {
+            if (!self.selectedFiles.count) {
                 [self showInfo:@"请选择需要移动的文件"];
             }
             else {
@@ -944,7 +953,7 @@ static const CGFloat windowHeight = 49.0;
             break;
         }
         case 3: { // 删除
-            if (!self.selectorFiles.count) {
+            if (!self.selectedFiles.count) {
                 [self showInfo:@"请选择需要删除的文件"];
             }
             else {
@@ -959,32 +968,55 @@ static const CGFloat windowHeight = 49.0;
 
 /// 选择文件最终复制的目标目录
 - (void)chooseDesDirectoryToCopy {
-    OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
-                                                                                                          [NSString getRootPath],
-                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeCopy];
-    UINavigationController *nac = [[[self.navigationController class] alloc] initWithRootViewController:vc];
-    vc.selectorFiles = self.selectorFiles.mutableCopy;
-    [self showDetailViewController:nac sender:self];
+    [self optionSelectedFiles:OSFileCollectionViewControllerModeCopy];
+   
 }
 
 - (void)chooseDesDirectoryToMove {
-    OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
-                                                                                                          [NSString getRootPath],
-                                                                                                          [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeMove];
-    UINavigationController *nac = [[[self.navigationController class] alloc] initWithRootViewController:vc];
-    vc.selectorFiles = self.selectorFiles.mutableCopy;
-    [self showDetailViewController:nac sender:self];
+    [self optionSelectedFiles:OSFileCollectionViewControllerModeMove];
+}
+
+- (void)optionSelectedFiles:(OSFileCollectionViewControllerMode)mode {
+    switch (mode) {
+        case OSFileCollectionViewControllerModeMove:
+            [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionSelectedFileForMoveNotification object:self userInfo:@{@"OSSelectedFilesKey": self.selectedFiles?:@[]}];
+            break;
+        case OSFileCollectionViewControllerModeCopy:
+            [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionSelectedFileForCopyNotification object:self userInfo:@{@"OSSelectedFilesKey": self.selectedFiles?:@[]}];
+            break;
+        default:
+            break;
+    }
+    
+    if (self.class.fileOperationDelegate && [self.class.fileOperationDelegate respondsToSelector:@selector(fileCollectionViewController:selectedFiles:optionMode:)]) {
+        [self.class.fileOperationDelegate fileCollectionViewController:self selectedFiles:self.selectedFiles optionMode:mode];
+    }
+    else {
+        NSArray *desDirectors = nil;
+        if (self.class.fileOperationDelegate && [self.class.fileOperationDelegate respondsToSelector:@selector(desDirectorsForOption:selectedFiles:fileCollectionViewController:)]) {
+            desDirectors = [self.class.fileOperationDelegate desDirectorsForOption:mode selectedFiles:self.selectedFiles fileCollectionViewController:self];
+        }
+        if (!desDirectors.count) {
+            desDirectors = @[
+                             [NSString getRootPath],
+                             [NSString getDocumentPath]];
+        }
+        OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:desDirectors controllerMode:mode];
+        UINavigationController *nac = [[[self.navigationController class] alloc] initWithRootViewController:vc];
+        vc.selectedFiles = self.selectedFiles.mutableCopy;
+        [self showDetailViewController:nac sender:self];
+    }
 }
 
 
 - (void)deleteSelectFiles {
-    if (!self.selectorFiles.count) {
+    if (!self.selectedFiles.count) {
         return;
     }
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定删除吗" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        for (OSFileAttributeItem *item in self.selectorFiles ) {
+        for (OSFileAttributeItem *item in self.selectedFiles ) {
             NSString *currentPath = item.path;
             NSError *error = nil;
             BOOL isSuccess = [[NSFileManager defaultManager] removeItemAtPath:currentPath error:&error];
@@ -1015,8 +1047,8 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell needCopyFile:(OSFileAttributeItem *)fileModel {
-    [self.selectorFiles removeAllObjects];
-    [self.selectorFiles addObject:fileModel];
+    [self.selectedFiles removeAllObjects];
+    [self.selectedFiles addObject:fileModel];
     [self chooseDesDirectoryToCopy];
 }
 
@@ -1034,7 +1066,7 @@ static const CGFloat windowHeight = 49.0;
 ////////////////////////////////////////////////////////////////////////
 /// 文件操作文件，比如复制、移动文件完成
 - (void)optionFileCompletion:(NSNotification *)notification {
-    [self.selectorFiles removeAllObjects];
+    [self.selectedFiles removeAllObjects];
     self.mode = OSFileCollectionViewControllerModeDefault;
     [self reloadFiles];
 }
@@ -1155,6 +1187,19 @@ completionHandler:(void (^)(NSError *error))completion {
         [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].delegate.window animated:YES];
         self.hud = nil;
     });
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - _fileOperationDelegate
+////////////////////////////////////////////////////////////////////////
+__weak id _fileOperationDelegate;
+
++ (id<OSFileCollectionViewControllerFileOptionDelegate>)fileOperationDelegate {
+    return _fileOperationDelegate;
+}
+
++ (void)setFileOperationDelegate:(id<OSFileCollectionViewControllerFileOptionDelegate>)fileOperationDelegate {
+    _fileOperationDelegate = fileOperationDelegate;
 }
 
 

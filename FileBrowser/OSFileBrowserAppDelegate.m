@@ -10,7 +10,7 @@
 #import "../OSFileBrowser/OSFileCollectionViewController.h"
 #import "../OSFileBrowser/NSString+OSFile.h"
 
-@interface OSFileBrowserAppDelegate ()
+@interface OSFileBrowserAppDelegate () <OSFileCollectionViewControllerFileOptionDelegate>
 
 @end
 
@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [OSFileCollectionViewController setFileOperationDelegate:self];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc]
@@ -63,5 +63,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+////////////////////////////////////////////////////////////////////////
+#pragma mark - OSFileCollectionViewControllerFileOptionDelegate
+////////////////////////////////////////////////////////////////////////
+
+- (NSArray<NSString *> *)desDirectorsForOption:(OSFileCollectionViewControllerMode)mode selectedFiles:(NSArray<OSFileAttributeItem *> *)selectedFiles fileCollectionViewController:(OSFileCollectionViewController *)fileCollectionViewController {
+    
+    return @[NSHomeDirectory()];
+}
 
 @end
