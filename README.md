@@ -13,7 +13,7 @@
 Add the next string in your project's Podfile:
 
 ```sh
-pod 'OSFileBrowser', '0.1.0'
+pod 'OSFileBrowser', '0.1.1'
 ```
 
 then run in Terminal:

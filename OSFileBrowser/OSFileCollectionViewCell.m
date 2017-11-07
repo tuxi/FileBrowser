@@ -166,7 +166,8 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self.renameNewName containsString:@"/"]) {
-            [self showInfo:@"名称中不符合的字符"];
+            [self xy_showMessage:@"名称中不符合的字符"];
+            
             return;
         }
         
@@ -175,7 +176,7 @@
         NSString *newPath = [currentDirectory stringByAppendingPathComponent:self.renameNewName];
         BOOL res = [[NSFileManager defaultManager] fileExistsAtPath:newPath];
         if (res) {
-            [self showInfo:@"存在同名的文件"];
+            [self xy_showMessage:@"存在同名的文件"];
             return;
         }
         NSError *moveError = nil;
@@ -235,7 +236,6 @@
 ////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////
-
 
 - (void)makeConstraints {
     NSDictionary *viewDict = @{@"iconView": self.iconView, @"titleLabel": self.titleLabel, @"subTitleLabel": self.subTitleLabel, @"optionBtn": self.optionBtn};

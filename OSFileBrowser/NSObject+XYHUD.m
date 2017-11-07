@@ -15,15 +15,6 @@ static const void *hudKey = &hudKey;
 
 @implementation NSObject (XYHUD)
 
-- (void)showInfo:(NSString *)info {
-
-    if ([self isKindOfClass:[UIViewController class]] || [self isKindOfClass:[UIView class]]) {
-    
-        [[[UIAlertView alloc] initWithTitle:nil message:info delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
-    }
-}
-
-
 - (void)setHud:(MBProgressHUD *)hud {
     
     objc_setAssociatedObject(self, hudKey, hud, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

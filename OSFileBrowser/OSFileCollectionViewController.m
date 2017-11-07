@@ -16,7 +16,6 @@
 #import "UIScrollView+NoDataExtend.h"
 #import "OSFileBottomHUD.h"
 #import "NSString+OSFile.h"
-#import "MBProgressHUD.h"
 #import "NSObject+XYHUD.h"
 #import "UIViewController+XYExtensions.h"
 #import "UIImage+XYImage.h"
@@ -889,7 +888,7 @@ static const CGFloat windowHeight = 49.0;
         }
         case 1: { // 复制
             if (!self.selectedFiles.count) {
-                [self showInfo:@"请选择需要复制的文件"];
+                [self xy_showMessage:@"请选择需要复制的文件"];
             }
             else {
                 [self chooseDesDirectoryToCopy];
@@ -899,7 +898,7 @@ static const CGFloat windowHeight = 49.0;
         }
         case 2: { // 移动
             if (!self.selectedFiles.count) {
-                [self showInfo:@"请选择需要移动的文件"];
+                [self xy_showMessage:@"请选择需要移动的文件"];
             }
             else {
                 [self chooseDesDirectoryToMove];
@@ -908,7 +907,7 @@ static const CGFloat windowHeight = 49.0;
         }
         case 3: { // 删除
             if (!self.selectedFiles.count) {
-                [self showInfo:@"请选择需要删除的文件"];
+                [self xy_showMessage:@"请选择需要删除的文件"];
             }
             else {
                 [self deleteSelectFiles];
@@ -1042,7 +1041,7 @@ static const CGFloat windowHeight = 49.0;
     NSError *error = nil;
     BOOL res = [[NSFileManager defaultManager] removeItemAtPath:fileModel.path error:&error];
     if (!res || error) {
-        [self showInfo:[NSString stringWithFormat:@"删除出错%@", error.localizedDescription]];
+        [self xy_showMessage:[NSString stringWithFormat:@"删除出错%@", error.localizedDescription]];
     }
     [self reloadCollectionData];
 }
@@ -1258,6 +1257,5 @@ __weak id _fileOperationDelegate;
     return attributedString;
     
 }
-
 @end
 

@@ -14,14 +14,12 @@
 		18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; };
 		18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */; };
 		18E3C7CA1FAA20BE00567350 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
-		18E3C7CB1FAA20BE00567350 /* NSObject+XYHUD.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AB1FAA20B900567350 /* NSObject+XYHUD.h */; };
 		18E3C7CD1FAA20BE00567350 /* OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AD1FAA20BA00567350 /* OSFile.m */; };
 		18E3C7CE1FAA20BE00567350 /* OSFileCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */; };
 		18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */; };
 		18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; };
 		18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */; };
 		18E3C7D41FAA20BE00567350 /* OSFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */; };
-		18E3C7D51FAA20BE00567350 /* NSObject+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B51FAA20BB00567350 /* NSObject+XYHUD.m */; };
 		18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */; };
 		18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */; };
 		18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */; };
@@ -41,6 +39,7 @@
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
+		D048DFC31FB1B06C00BCE059 /* NSObject+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,14 +51,12 @@
 		18E3C7A81FAA20B900567350 /* OSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFile.h; path = OSFileBrowser/OSFile.h; sourceTree = "<group>"; };
 		18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+XYExtensions.h"; path = "OSFileBrowser/UIViewController+XYExtensions.h"; sourceTree = "<group>"; };
 		18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+XYExtensions.m"; path = "OSFileBrowser/UIViewController+XYExtensions.m"; sourceTree = "<group>"; };
-		18E3C7AB1FAA20B900567350 /* NSObject+XYHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSObject+XYHUD.h"; path = "OSFileBrowser/NSObject+XYHUD.h"; sourceTree = "<group>"; };
 		18E3C7AD1FAA20BA00567350 /* OSFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFile.m; path = OSFileBrowser/OSFile.m; sourceTree = "<group>"; };
 		18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewFlowLayout.m; path = OSFileBrowser/OSFileCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewFlowLayout.h; path = OSFileBrowser/OSFileCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+OSFile.h"; path = "OSFileBrowser/NSString+OSFile.h"; sourceTree = "<group>"; };
 		18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewCell.h; path = OSFileBrowser/OSFileCollectionViewCell.h; sourceTree = "<group>"; };
 		18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewController.m; path = OSFileBrowser/OSFileCollectionViewController.m; sourceTree = "<group>"; };
-		18E3C7B51FAA20BB00567350 /* NSObject+XYHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSObject+XYHUD.m"; path = "OSFileBrowser/NSObject+XYHUD.m"; sourceTree = "<group>"; };
 		18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileAttributeItem.m; path = OSFileBrowser/OSFileAttributeItem.m; sourceTree = "<group>"; };
 		18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFilePreviewViewController.m; path = OSFileBrowser/OSFilePreviewViewController.m; sourceTree = "<group>"; };
 		18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+XYImage.m"; path = "OSFileBrowser/UIImage+XYImage.m"; sourceTree = "<group>"; };
@@ -83,6 +80,8 @@
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+XYHUD.m"; path = "OSFileBrowser/NSObject+XYHUD.m"; sourceTree = "<group>"; };
+		D048DFC21FB1B06C00BCE059 /* NSObject+XYHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+XYHUD.h"; path = "OSFileBrowser/NSObject+XYHUD.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +99,12 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				D048DFC21FB1B06C00BCE059 /* NSObject+XYHUD.h */,
+				D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */,
 				18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */,
 				18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */,
 				18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */,
 				18E3C7BA1FAA20BC00567350 /* NSDate+ESUtilities.m */,
-				18E3C7AB1FAA20B900567350 /* NSObject+XYHUD.h */,
-				18E3C7B51FAA20BB00567350 /* NSObject+XYHUD.m */,
 				18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */,
 				18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */,
 				18E3C7A81FAA20B900567350 /* OSFile.h */,
@@ -319,14 +318,12 @@
 				18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */,
 				18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */,
 				18E3C7CA1FAA20BE00567350 /* UIViewController+XYExtensions.m in Sources */,
-				18E3C7CB1FAA20BE00567350 /* NSObject+XYHUD.h in Sources */,
 				18E3C7CD1FAA20BE00567350 /* OSFile.m in Sources */,
 				18E3C7CE1FAA20BE00567350 /* OSFileCollectionViewFlowLayout.m in Sources */,
 				18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */,
 				18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */,
 				18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */,
 				18E3C7D41FAA20BE00567350 /* OSFileCollectionViewController.m in Sources */,
-				18E3C7D51FAA20BE00567350 /* NSObject+XYHUD.m in Sources */,
 				18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */,
 				18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */,
 				18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */,
@@ -341,6 +338,7 @@
 				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
 				18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
+				D048DFC31FB1B06C00BCE059 /* NSObject+XYHUD.m in Sources */,
 				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
