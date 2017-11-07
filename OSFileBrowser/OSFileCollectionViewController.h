@@ -16,8 +16,8 @@ FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionS
 typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
     OSFileCollectionViewControllerModeDefault, // 默认模式
     OSFileCollectionViewControllerModeEdit,    // 编辑模式
-    OSFileCollectionViewControllerModeCopy,    // 复制模式，若是此种类型，此控制器的rootDirectory为最终复制的目录
-    OSFileCollectionViewControllerModeMove,    // 移动模式，若是此种类型，此控制器的rootDirectory为最终移动的目录
+    OSFileCollectionViewControllerModeCopy,    // 复制模式，此控制器的rootDirectory为最终复制的目录
+    OSFileCollectionViewControllerModeMove,    // 移动模式，此控制器的rootDirectory为最终移动的目录
     
 };
 
@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 
 @property (nonatomic, strong) NSArray<OSFileAttributeItem *> *files;
 @property (nonatomic, assign) BOOL hideDisplayFiles;
+/// 用于操作文件的全局代理，对整个类有效
 @property (nonatomic, class) id<OSFileCollectionViewControllerFileOptionDelegate> fileOperationDelegate;
 
 /// 通过文件目录路径，读取里面所有的文件并展示
@@ -61,6 +62,12 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 - (void)copyFiles:(NSArray<OSFileAttributeItem *> *)fileItems
   toRootDirectory:(NSString *)rootPath
 completionHandler:(void (^)(NSError *error))completion;
+
+/// 重新加载本地文件，并刷新
+- (void)reloadFilesWithCallBack:(void (^)(void))callBack;
+- (void)reloadFiles;
+/// 刷新已读取的文件
+- (void)reloadCollectionData;
 
 @end
 

@@ -36,8 +36,8 @@
 @property (nonatomic, weak) id<OSFileBottomHUDDelegate> delegate;
 
 - (instancetype)initWithItems:(NSArray<OSFileBottomHUDItem *> *)items toView:(UIView *)view;
-- (void)hideHudCompletion:(void (^)(void))completion;
-- (void)showHUDWithFrame:(CGRect)frame completion:(void (^)(void))completion;
+- (void)hideHudCompletion:(void (^)(OSFileBottomHUD *hud))completion;
+- (void)showHUDWithFrame:(CGRect)frame completion:(void (^)(OSFileBottomHUD *hud))completion;
 - (void)setItemTitle:(NSString *)title index:(NSInteger)index state:(UIControlState)state;
 - (void)setItemImage:(UIImage *)image index:(NSInteger)index state:(UIControlState)state;
 

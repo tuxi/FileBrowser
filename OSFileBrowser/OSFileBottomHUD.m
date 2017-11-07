@@ -124,7 +124,7 @@
     }];
 }
 
-- (void)showHUDWithFrame:(CGRect)frame completion:(void (^)(void))completion {
+- (void)showHUDWithFrame:(CGRect)frame completion:(void (^)(OSFileBottomHUD *))completion {
     [UIView animateWithDuration:0.2 animations:^{
         self.xy_parentWindow.hidden = NO;
         CGRect hudFrame = self.xy_parentWindow.frame;
@@ -138,13 +138,13 @@
         self.xy_parentWindow.frame = hudFrame;
     } completion:^(BOOL finished) {
         if (completion) {
-            completion();
+            completion(self);
         }
     }];
     
 }
 
-- (void)hideHudCompletion:(void (^)(void))completion {
+- (void)hideHudCompletion:(void (^)(OSFileBottomHUD *hud))completion {
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.xy_parentWindow.frame;
         frame.origin.y = self.toView.frame.size.height;
@@ -152,7 +152,7 @@
     } completion:^(BOOL finished) {
         self.xy_parentWindow.hidden = YES;
         if (completion) {
-            completion();
+            completion(self);
         }
     }];
     

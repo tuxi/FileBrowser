@@ -71,9 +71,7 @@ static const CGFloat windowHeight = 49.0;
 
 @implementation OSFileCollectionViewController
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Initializer
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** Initializer ***
 
 - (instancetype)initWithRootDirectory:(NSString *)path {
     return [self initWithRootDirectory:path controllerMode:OSFileCollectionViewControllerModeDefault];
@@ -129,10 +127,143 @@ static const CGFloat windowHeight = 49.0;
     
 }
 
-- (void)reloadCollectionData {
-    [self.collectionView reloadData];
-    [self setupNavigationBar];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    [self setupViews];
+    
+    __weak typeof(self) weakSelf = self;
+    [self reloadFilesWithCallBack:^{
+        [weakSelf showBottomTip];
+    }];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self check3DTouch];
+    
+    if ((self.mode == OSFileCollectionViewControllerModeCopy ||
+         self.mode == OSFileCollectionViewControllerModeMove) &&
+        self.rootDirectoryItem) {
+        [self bottomTipButton].hidden = NO;
+    }
+    else {
+        [self bottomTipButton].hidden = YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.bottomHUD hideHudCompletion:^(OSFileBottomHUD *hud) {
+        
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        _bottomHUD = nil;
+        UIEdgeInsets contentInset = self.collectionView.contentInset;
+        contentInset.bottom = 20.0;
+        self.collectionView.contentInset = contentInset;
+    }];
+    if (self.mode == OSFileCollectionViewControllerModeEdit) {
+        [self rightBarButtonClick];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self bottomTipButton].hidden = YES;
+}
+
+- (void)dealloc {
+    self.bottomHUD = nil;
+    [_bottomTipButton removeFromSuperview];
+    _bottomTipButton = nil;
+    self.directoryArray = nil;
+    [_currentFolderHelper invalidate];
+    [_documentFolderHelper invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupViews {
+    self.navigationItem.title = @"文件管理";
+    if (self.rootDirectoryItem) {
+        self.navigationItem.title = self.rootDirectoryItem.displayName;
+    }
+    self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
+    
+    [self.view addSubview:self.collectionView];
+    [self makeCollectionViewConstr];
+    [self setupNodataView];
+}
+
+- (void)setupNodataView {
+    __weak typeof(self) weakSelf = self;
+    
+    self.collectionView.noDataPlaceholderDelegate = self;
+    self.collectionView.customNoDataView = ^UIView * _Nonnull{
+        if (weakSelf.collectionView.xy_loading) {
+            UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [activityView startAnimating];
+            return activityView;
+        }
+        else {
+            return nil;
+        }
+        
+    };
+    
+    if ([self.rootDirectoryItem isDownloadBrowser]) {
+        self.collectionView.noDataDetailTextLabelBlock = ^(UILabel * _Nonnull detailTextLabel) {
+            NSAttributedString *string = [weakSelf noDataDetailLabelAttributedString];
+            if (!string.length) {
+                return;
+            }
+            detailTextLabel.backgroundColor = [UIColor clearColor];
+            detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+            detailTextLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+            detailTextLabel.textAlignment = NSTextAlignmentCenter;
+            detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            detailTextLabel.numberOfLines = 0;
+            detailTextLabel.attributedText = string;
+        };
+        self.collectionView.noDataImageViewBlock = ^(UIImageView * _Nonnull imageView) {
+            imageView.backgroundColor = [UIColor clearColor];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.userInteractionEnabled = NO;
+            imageView.image = [weakSelf noDataImageViewImage];
+            
+        };
+        
+        self.collectionView.noDataReloadButtonBlock = ^(UIButton * _Nonnull reloadButton) {
+            reloadButton.backgroundColor = [UIColor clearColor];
+            reloadButton.layer.borderWidth = 0.5;
+            reloadButton.layer.borderColor = [UIColor colorWithRed:49/255.0 green:194/255.0 blue:124/255.0 alpha:1.0].CGColor;
+            reloadButton.layer.cornerRadius = 2.0;
+            [reloadButton.layer setMasksToBounds:YES];
+            [reloadButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [reloadButton setAttributedTitle:[weakSelf noDataReloadButtonAttributedStringWithState:UIControlStateNormal] forState:UIControlStateNormal];
+        };
+        
+        self.collectionView.noDataButtonEdgeInsets = UIEdgeInsetsMake(20, 100, 11, 100);
+    }
+    self.collectionView.noDataTextLabelBlock = ^(UILabel * _Nonnull textLabel) {
+        NSAttributedString *string = [weakSelf noDataTextLabelAttributedString];
+        if (!string.length) {
+            return;
+        }
+        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.font = [UIFont systemFontOfSize:27.0];
+        textLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        textLabel.numberOfLines = 0;
+        textLabel.attributedText = string;
+    };
+    
+    self.collectionView.noDataTextEdgeInsets = UIEdgeInsetsMake(20, 0, 20, 0);
+    
+    
+}
+
+#pragma mark *** NavigationBar ***
 
 - (void)setupNavigationBar {
     // 如果数组中只有下载文件夹和iTunes文件夹，就不能显示编辑
@@ -222,9 +353,13 @@ static const CGFloat windowHeight = 49.0;
     [self.collectionView reloadData];
     self.navigationItem.rightBarButtonItem.title = @"编辑";
     
-    [self.bottomHUD hideHudCompletion:^{
+    [self.bottomHUD hideHudCompletion:^(OSFileBottomHUD *hud) {
+        
         self.navigationItem.rightBarButtonItem.enabled = YES;
-        self.bottomHUD = nil;
+        _bottomHUD = nil;
+        UIEdgeInsets contentInset = self.collectionView.contentInset;
+        contentInset.bottom = 20.0;
+        self.collectionView.contentInset = contentInset;
     }];
 }
 
@@ -236,8 +371,11 @@ static const CGFloat windowHeight = 49.0;
     [self.collectionView reloadData];
     self.navigationItem.rightBarButtonItem.title = @"完成";
     
-    [self.bottomHUD showHUDWithFrame:CGRectMake(0, self.view.frame.size.height - windowHeight, self.view.frame.size.width, windowHeight) completion:^{
+    [self.bottomHUD showHUDWithFrame:CGRectMake(0, self.view.frame.size.height - windowHeight, self.view.frame.size.width, windowHeight) completion:^(OSFileBottomHUD *hud) {
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        UIEdgeInsets contentInset = self.collectionView.contentInset;
+        contentInset.bottom = contentInset.bottom + hud.frame.size.height;
+        self.collectionView.contentInset = contentInset;
     }];
 }
 
@@ -251,170 +389,7 @@ static const CGFloat windowHeight = 49.0;
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
-
-- (OSFileBottomHUD *)bottomHUD {
-    if (!_bottomHUD) {
-        _bottomHUD = [[OSFileBottomHUD alloc] initWithItems:@[
-                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"全选" image:nil],
-                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"复制" image:nil],
-                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"移动" image:nil],
-                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"删除" image:nil],
-                                                              ] toView:self.view];
-        _bottomHUD.delegate = self;
-    }
-    return _bottomHUD;
-}
-
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    [self setupViews];
-    __weak typeof(self) weakSelf = self;
-    switch (self.fileLoadType) {
-        case OSFileLoadTypeCurrentDirectory: {
-            [self loadFileWithDirectoryArray:self.directoryArray completion:^(NSArray *fileItems) {
-                weakSelf.files = fileItems.copy;
-                [weakSelf reloadCollectionData];
-                [weakSelf showBottomTip];
-            }];
-            break;
-        }
-        case OSFileLoadTypeSubDirectory: {
-            [self loadFileWithDirectoryItem:self.rootDirectoryItem completion:^(NSArray *fileItems) {
-                weakSelf.files = fileItems.copy;
-                [weakSelf reloadCollectionData];
-                [weakSelf showBottomTip];
-            }];
-            break;
-        }
-        default:
-            break;
-    }
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self check3DTouch];
-    
-    if ((self.mode == OSFileCollectionViewControllerModeCopy ||
-         self.mode == OSFileCollectionViewControllerModeMove) &&
-        self.rootDirectoryItem) {
-        [self bottomTipButton].hidden = NO;
-    }
-    else {
-        [self bottomTipButton].hidden = YES;
-    }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.bottomHUD hideHudCompletion:^{
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-        self.bottomHUD = nil;
-    }];
-    if (self.mode == OSFileCollectionViewControllerModeEdit) {
-        [self rightBarButtonClick];
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self bottomTipButton].hidden = YES;
-}
-
-- (void)dealloc {
-    self.bottomHUD = nil;
-    [_bottomTipButton removeFromSuperview];
-    _bottomTipButton = nil;
-    self.directoryArray = nil;
-    [_currentFolderHelper invalidate];
-    [_documentFolderHelper invalidate];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)setupViews {
-    self.navigationItem.title = @"文件管理";
-    if (self.rootDirectoryItem) {
-        self.navigationItem.title = self.rootDirectoryItem.displayName;
-    }
-    self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
-    
-    [self.view addSubview:self.collectionView];
-    [self makeCollectionViewConstr];
-    [self setupNodataView];
-}
-
-- (void)setupNodataView {
-    __weak typeof(self) weakSelf = self;
-    
-    self.collectionView.noDataPlaceholderDelegate = self;
-    if ([self.rootDirectoryItem isDownloadBrowser]) {
-        self.collectionView.customNoDataView = ^UIView * _Nonnull{
-            if (weakSelf.collectionView.xy_loading) {
-                UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                [activityView startAnimating];
-                return activityView;
-            }
-            else {
-                return nil;
-            }
-            
-        };
-        
-        
-        self.collectionView.noDataDetailTextLabelBlock = ^(UILabel * _Nonnull detailTextLabel) {
-            NSAttributedString *string = [weakSelf noDataDetailLabelAttributedString];
-            if (!string.length) {
-                return;
-            }
-            detailTextLabel.backgroundColor = [UIColor clearColor];
-            detailTextLabel.font = [UIFont systemFontOfSize:17.0];
-            detailTextLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
-            detailTextLabel.textAlignment = NSTextAlignmentCenter;
-            detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-            detailTextLabel.numberOfLines = 0;
-            detailTextLabel.attributedText = string;
-        };
-        self.collectionView.noDataImageViewBlock = ^(UIImageView * _Nonnull imageView) {
-            imageView.backgroundColor = [UIColor clearColor];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
-            imageView.userInteractionEnabled = NO;
-            imageView.image = [weakSelf noDataImageViewImage];
-            
-        };
-        
-        self.collectionView.noDataReloadButtonBlock = ^(UIButton * _Nonnull reloadButton) {
-            reloadButton.backgroundColor = [UIColor clearColor];
-            reloadButton.layer.borderWidth = 0.5;
-            reloadButton.layer.borderColor = [UIColor colorWithRed:49/255.0 green:194/255.0 blue:124/255.0 alpha:1.0].CGColor;
-            reloadButton.layer.cornerRadius = 2.0;
-            [reloadButton.layer setMasksToBounds:YES];
-            [reloadButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [reloadButton setAttributedTitle:[weakSelf noDataReloadButtonAttributedStringWithState:UIControlStateNormal] forState:UIControlStateNormal];
-        };
-        
-        self.collectionView.noDataButtonEdgeInsets = UIEdgeInsetsMake(20, 100, 11, 100);
-    }
-    self.collectionView.noDataTextLabelBlock = ^(UILabel * _Nonnull textLabel) {
-        NSAttributedString *string = [weakSelf noDataTextLabelAttributedString];
-        if (!string.length) {
-            return;
-        }
-        textLabel.backgroundColor = [UIColor clearColor];
-        textLabel.font = [UIFont systemFontOfSize:27.0];
-        textLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
-        textLabel.textAlignment = NSTextAlignmentCenter;
-        textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        textLabel.numberOfLines = 0;
-        textLabel.attributedText = string;
-    };
-    
-    self.collectionView.noDataTextEdgeInsets = UIEdgeInsetsMake(20, 0, 20, 0);
-    
-    
-}
+#pragma mark *** Load file ***
 
 - (void)loadFileWithDirectoryArray:(NSArray<NSString *> *)directoryArray completion:(void (^)(NSArray *fileItems))completion {
     [_loadFileQueue cancelAllOperations];
@@ -467,33 +442,32 @@ static const CGFloat windowHeight = 49.0;
     }];
 }
 
-- (void)setHideDisplayFiles:(BOOL)hideDisplayFiles {
-    if (_hideDisplayFiles == hideDisplayFiles) {
-        return;
-    }
-    _hideDisplayFiles = hideDisplayFiles;
-    [self reloadFiles];
-    
+- (void)reloadFiles {
+    [self reloadFilesWithCallBack:NULL];
 }
 
-
-- (void)reloadFiles {
+- (void)reloadFilesWithCallBack:(void (^)(void))callBack {
+    self.files = nil;
+    self.collectionView.xy_loading = YES;
     __weak typeof(self) weakSelf = self;
+    void (^ reloadCallBack)(NSArray *fileItems) = ^ (NSArray *fileItems){
+        weakSelf.files = fileItems.copy;
+        [weakSelf reloadCollectionData];
+        if (callBack) {
+            callBack();
+        }
+        self.collectionView.xy_loading = NO;
+    };
+    
     switch (self.fileLoadType) {
         case OSFileLoadTypeCurrentDirectory: {
-            [self loadFileWithDirectoryArray:self.directoryArray completion:^(NSArray *fileItems) {
-                weakSelf.files = fileItems.copy;
-                [weakSelf reloadCollectionData];
-            }];
+            [self loadFileWithDirectoryArray:self.directoryArray completion:reloadCallBack];
             break;
         }
         case OSFileLoadTypeSubDirectory: {
             NSError *error = nil;
             [self.rootDirectoryItem reloadFileWithError:&error];
-            [self loadFileWithDirectoryItem:self.rootDirectoryItem completion:^(NSArray *fileItems) {
-                weakSelf.files = fileItems.copy;
-                [weakSelf reloadCollectionData];
-            }];
+            [self loadFileWithDirectoryItem:self.rootDirectoryItem completion:reloadCallBack];
             break;
         }
         default:
@@ -502,26 +476,29 @@ static const CGFloat windowHeight = 49.0;
     
 }
 
+- (void)reloadCollectionData {
+    [self.collectionView reloadData];
+    [self setupNavigationBar];
+}
+
+#pragma mark *** check3DTouch ***
+
 - (void)check3DTouch {
     /// 检测是否有3d touch 功能
-    if ([self respondsToSelector:@selector(traitCollection)]) {
-        if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-            if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-                // 支持3D Touch
-                if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)]) {
-                    [self registerForPreviewingWithDelegate:self sourceView:self.view];
-                    self.longPress.enabled = NO;
-                }
-            } else {
-                // 不支持3D Touch
-                self.longPress.enabled = YES;
+    if (@available(iOS 9.0, *)) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            // 支持3D Touch
+            if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)]) {
+                [self registerForPreviewingWithDelegate:self sourceView:self.view];
+                self.longPress.enabled = NO;
             }
+        } else {
+            // 不支持3D Touch
+            self.longPress.enabled = YES;
         }
     }
 }
-////////////////////////////////////////////////////////////////////////
-#pragma mark - 3D Touch Delegate
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** 3D Touch Delegate ***
 
 #ifdef __IPHONE_9_0
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
@@ -548,11 +525,7 @@ static const CGFloat windowHeight = 49.0;
 
 #endif
 
-
-
-////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** UICollectionViewDataSource ***
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -700,9 +673,7 @@ static const CGFloat windowHeight = 49.0;
     return vc;
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - QLPreviewControllerDataSource
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** QLPreviewControllerDataSource ***
 
 - (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
     
@@ -719,9 +690,7 @@ static const CGFloat windowHeight = 49.0;
     return [NSURL fileURLWithPath:newPath];
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Actions
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** Actions ***
 
 - (UILongPressGestureRecognizer *)longPress {
     
@@ -747,10 +716,7 @@ static const CGFloat windowHeight = 49.0;
     }
 }
 
-
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Layout
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** Layout ***
 
 - (void)makeCollectionViewConstr {
     
@@ -759,10 +725,31 @@ static const CGFloat windowHeight = 49.0;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
 }
 
+#pragma mark *** Setter getter ***
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Lazy
-////////////////////////////////////////////////////////////////////////
+- (void)setHideDisplayFiles:(BOOL)hideDisplayFiles {
+    if (_hideDisplayFiles == hideDisplayFiles) {
+        return;
+    }
+    _hideDisplayFiles = hideDisplayFiles;
+    [self reloadFiles];
+    
+}
+
+
+- (OSFileBottomHUD *)bottomHUD {
+    if (!_bottomHUD) {
+        _bottomHUD = [[OSFileBottomHUD alloc] initWithItems:@[
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"全选" image:nil],
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"复制" image:nil],
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"移动" image:nil],
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"删除" image:nil],
+                                                              ] toView:self.view];
+        _bottomHUD.delegate = self;
+    }
+    return _bottomHUD;
+}
+
 
 - (OSFileCollectionViewFlowLayout *)flowLayout {
     
@@ -892,45 +879,12 @@ static const CGFloat windowHeight = 49.0;
     }];
     
 }
-
-////////////////////////////////////////////////////////////////////////
-#pragma mark - OSFileBottomHUDDelegate
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** OSFileBottomHUDDelegate ***
 
 - (void)fileBottomHUD:(OSFileBottomHUD *)hud didClickItem:(OSFileBottomHUDItem *)item {
     switch (item.buttonIdx) {
         case 0: { // 全选
-            BOOL selectedAll = YES;
-            if ([[item titleForState:UIControlStateNormal] isEqualToString:@"全选"]) {
-                [item setTitle:@"取消全选" state:UIControlStateNormal];
-                //                self.selectedFiles = self.files.mutableCopy;
-                [self.selectedFiles removeAllObjects];
-                [self.selectedFiles addObjectsFromArray:self.files];
-                selectedAll = YES;
-            }
-            else {
-                [item setTitle:@"全选" state:UIControlStateNormal];
-                [self.selectedFiles removeAllObjects];
-                selectedAll = NO;
-            }
-            
-            [self.files enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (!selectedAll) {
-                    obj.status = OSFileAttributeItemStatusEdit;
-                }
-                else {
-                    obj.status = OSFileAttributeItemStatusChecked;
-                }
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
-                if (obj.status == OSFileAttributeItemStatusChecked) {
-                    [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-                }
-                else {
-                    [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
-                }
-                
-            }];
-            [self reloadCollectionData];
+            [self selectAllFilesWithHUDItem:item];
             break;
         }
         case 1: { // 复制
@@ -1031,9 +985,41 @@ static const CGFloat windowHeight = 49.0;
     [[UIViewController xy_topViewController] presentViewController:alert animated:true completion:nil];
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - OSFileCollectionViewCellDelegate
-////////////////////////////////////////////////////////////////////////
+- (void)selectAllFilesWithHUDItem:(OSFileBottomHUDItem *)item {
+    BOOL selectedAll = YES;
+    if ([[item titleForState:UIControlStateNormal] isEqualToString:@"全选"]) {
+        [item setTitle:@"取消全选" state:UIControlStateNormal];
+        //                self.selectedFiles = self.files.mutableCopy;
+        [self.selectedFiles removeAllObjects];
+        [self.selectedFiles addObjectsFromArray:self.files];
+        selectedAll = YES;
+    }
+    else {
+        [item setTitle:@"全选" state:UIControlStateNormal];
+        [self.selectedFiles removeAllObjects];
+        selectedAll = NO;
+    }
+    
+    [self.files enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!selectedAll) {
+            obj.status = OSFileAttributeItemStatusEdit;
+        }
+        else {
+            obj.status = OSFileAttributeItemStatusChecked;
+        }
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
+        if (obj.status == OSFileAttributeItemStatusChecked) {
+            [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+        }
+        else {
+            [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        }
+        
+    }];
+    [self reloadCollectionData];
+}
+
+#pragma mark *** OSFileCollectionViewCellDelegate ***
 
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell fileAttributeChange:(OSFileAttributeItem *)fileModel {
     NSUInteger foudIdx = [self.files indexOfObject:fileModel];
@@ -1061,9 +1047,7 @@ static const CGFloat windowHeight = 49.0;
     [self reloadCollectionData];
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - Notification
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** Notification ***
 /// 文件操作文件，比如复制、移动文件完成
 - (void)optionFileCompletion:(NSNotification *)notification {
     [self.selectedFiles removeAllObjects];
@@ -1071,9 +1055,7 @@ static const CGFloat windowHeight = 49.0;
     [self reloadFiles];
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - 文件操作
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** File operation ***
 
 /// copy 文件
 - (void)copyFiles:(NSArray<OSFileAttributeItem *> *)fileItems
@@ -1088,15 +1070,15 @@ completionHandler:(void (^)(NSError *error))completion {
         if ([desPath isEqualToString:obj.path]) {
             NSLog(@"路径相同");
             dispatch_main_safe_async(^{
-                self.hud.labelText = @"路径相同";
+                self.hud.label.text = @"路径相同";
                 if (completion) {
                     completion([NSError errorWithDomain:NSURLErrorDomain code:10000 userInfo:@{@"error": @"不能拷贝到自己的目录"}]);
                 }
             });
         }
         else if ([[NSFileManager defaultManager] fileExistsAtPath:desPath]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.hud.labelText = @"存在相同文件，正在移除原文件";
+            dispatch_main_safe_async(^{
+                self.hud.label.text = @"存在相同文件，正在移除原文件";
             });
             NSError *removeError = nil;
             [[NSFileManager defaultManager] removeItemAtPath:desPath error:&removeError];
@@ -1123,11 +1105,11 @@ completionHandler:(void (^)(NSError *error))completion {
         NSURL *desURL = [NSURL fileURLWithPath:desPath];
         
         void (^ progressBlock)(NSProgress *progress) = ^ (NSProgress *progress) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString *completionSize = [NSString transformedFileSizeValue:@(progress.completedUnitCount)];
-                NSString *totalSize = [NSString transformedFileSizeValue:@(progress.totalUnitCount)];
-                NSString *prcent = [NSString percentageString:progress.fractionCompleted];
-                NSString *detailText = [NSString stringWithFormat:@"%@  %@/%@", prcent, completionSize, totalSize];
+            NSString *completionSize = [NSString transformedFileSizeValue:@(progress.completedUnitCount)];
+            NSString *totalSize = [NSString transformedFileSizeValue:@(progress.totalUnitCount)];
+            NSString *prcent = [NSString percentageString:progress.fractionCompleted];
+            NSString *detailText = [NSString stringWithFormat:@"%@  %@/%@", prcent, completionSize, totalSize];
+            dispatch_main_safe_async(^{
                 hudDetailTextCallBack(detailText, idx);
             });
         };
@@ -1162,7 +1144,7 @@ completionHandler:(void (^)(NSError *error))completion {
     
     _fileManager.totalProgressBlock = ^(NSProgress *progress) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.hud.labelText = [NSString stringWithFormat:@"total:%@  %lld/%lld", [NSString percentageString:progress.fractionCompleted], progress.completedUnitCount, progress.totalUnitCount];
+        strongSelf.hud.label.text = [NSString stringWithFormat:@"total:%@  %lld/%lld", [NSString percentageString:progress.fractionCompleted], progress.completedUnitCount, progress.totalUnitCount];
         strongSelf.hud.progress = progress.fractionCompleted;
         @synchronized (hudDetailTextArray) {
             NSString *detailStr = [hudDetailTextArray componentsJoinedByString:@",\n"];
@@ -1170,11 +1152,9 @@ completionHandler:(void (^)(NSError *error))completion {
             
         }
         if (progress.fractionCompleted >= 1.0 || progress.completedUnitCount >= progress.totalUnitCount) {
-            strongSelf.hud.labelText = @"完成";
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].delegate.window animated:YES];
-                strongSelf.hud = nil;
-            });
+            strongSelf.hud.label.text = @"完成";
+            [strongSelf.hud hideAnimated:YES afterDelay:2.0];
+            strongSelf.hud = nil;
         }
     };
     
@@ -1183,15 +1163,11 @@ completionHandler:(void (^)(NSError *error))completion {
 
 - (void)cancelFileOperation:(id)sender {
     [_fileManager cancelAllOperation];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].delegate.window animated:YES];
-        self.hud = nil;
-    });
+    [self.hud hideAnimated:YES afterDelay:2.0];
+    self.hud = nil;
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - _fileOperationDelegate
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** _fileOperationDelegate ***
 __weak id _fileOperationDelegate;
 
 + (id<OSFileCollectionViewControllerFileOptionDelegate>)fileOperationDelegate {
@@ -1202,10 +1178,7 @@ __weak id _fileOperationDelegate;
     _fileOperationDelegate = fileOperationDelegate;
 }
 
-
-////////////////////////////////////////////////////////////////////////
-#pragma mark - NoDataPlaceholderDelegate
-////////////////////////////////////////////////////////////////////////
+#pragma mark *** NoDataPlaceholderDelegate ***
 
 - (BOOL)noDataPlaceholderShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
