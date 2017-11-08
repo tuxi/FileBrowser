@@ -223,6 +223,9 @@
     _filename            = [[NSString alloc] initWithString: [_path lastPathComponent]];
     _displayName         = [[NSString alloc] initWithString: [_fileManager displayNameAtPath: _path]];
     _fileExtension       = [[NSString alloc] initWithString: [_path pathExtension]];
+    if ([_fileExtension containsString:@"?"]) {
+        _fileExtension = [_fileExtension substringWithRange:NSRangeFromString(@"?")];
+    }
     _parentDirectoryPath = [[NSString alloc] initWithString: [_path stringByDeletingLastPathComponent]];
 }
 

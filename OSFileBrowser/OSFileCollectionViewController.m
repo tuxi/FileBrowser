@@ -662,28 +662,27 @@ static const CGFloat windowHeight = 49.0;
     if (!indexPath || !self.files.count) {
         return nil;
     }
-    NSString *newPath = self.files[indexPath.row].path;
-    NSURL *url = [NSURL fileURLWithPath:newPath];
+    OSFileAttributeItem *newItem = self.files[indexPath.row];
     BOOL isDirectory;
-    BOOL fileExists = [[NSFileManager defaultManager ] fileExistsAtPath:newPath isDirectory:&isDirectory];
+    BOOL fileExists = [[NSFileManager defaultManager ] fileExistsAtPath:newItem.path isDirectory:&isDirectory];
     UIViewController *vc = nil;
     if (fileExists) {
-        if (isDirectory) {
+        if (newItem.isDirectory) {
             /// 如果当前界面是OSFileCollectionViewControllerModeCopy，那么下一个界面也要是同样的模式
             OSFileCollectionViewControllerMode mode = OSFileCollectionViewControllerModeDefault;
             if (self.mode == OSFileCollectionViewControllerModeCopy ||
                 self.mode == OSFileCollectionViewControllerModeMove) {
                 mode = self.mode;
             }
-            vc = [[OSFileCollectionViewController alloc] initWithRootDirectory:newPath controllerMode:mode];
+            vc = [[OSFileCollectionViewController alloc] initWithRootDirectory:newItem.path controllerMode:mode];
             if (self.mode == OSFileCollectionViewControllerModeCopy ||
                 self.mode == OSFileCollectionViewControllerModeMove) {
                 OSFileCollectionViewController *viewController = (OSFileCollectionViewController *)vc;
                 viewController.selectedFiles = self.selectedFiles.mutableCopy;
             }
             
-        } else if (![QLPreviewController canPreviewItem:url]) {
-            vc = [[OSFilePreviewViewController alloc] initWithPath:newPath];
+        } else if (![QLPreviewController canPreviewItem:[NSURL fileURLWithPath:newItem.path]]) {
+            vc = [[OSFilePreviewViewController alloc] initWithPath:newItem.path];
         } else {
             QLPreviewController *preview= [[QLPreviewController alloc] init];
             preview.dataSource = self;
