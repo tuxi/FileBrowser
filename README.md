@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/OSFileBrowser.svg?style=flat)](http://cocoapods.org/pods/OSFileBrowser)
 [![License](https://img.shields.io/cocoapods/l/OSFileBrowser.svg?style=flat)](http://cocoapods.org/pods/OSFileBrowser)
 
-它是一个iOS设备浏览本地文件的工具
+一个iOS设备浏览本地文件的工具
 
 ## Installation
 ### CocoaPods:
@@ -13,7 +13,7 @@
 Add the next string in your project's Podfile:
 
 ```sh
-pod 'OSFileBrowser', '0.1.1'
+pod 'OSFileBrowser', '0.1.2'
 ```
 
 then run in Terminal:
