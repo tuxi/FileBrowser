@@ -1183,10 +1183,6 @@ __weak id _fileOperationDelegate;
     return YES;
 }
 
-- (void)noDataPlaceholder:(UIScrollView *)scrollView didTapOnContentView:(UITapGestureRecognizer *)tap {
-    [self noDataPlaceholder:scrollView didTapOnContentView:tap];
-}
-
 - (CGPoint)contentOffsetForNoDataPlaceholder:(UIScrollView *)scrollView {
     if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
         return CGPointMake(0, 120.0);
@@ -1222,8 +1218,10 @@ __weak id _fileOperationDelegate;
 }
 
 - (void)noDataPlaceholder:(UIScrollView *)scrollView didClickReloadButton:(UIButton *)button {
-    self.tabBarController.selectedIndex = 1;
-    self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
+    if ([self.rootDirectoryItem isDownloadBrowser]) {
+        self.tabBarController.selectedIndex = 1;
+        self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
+    }
 }
 
 
