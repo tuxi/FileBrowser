@@ -1255,5 +1255,14 @@ __weak id _fileOperationDelegate;
     return attributedString;
     
 }
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    /// 屏幕旋转时重新布局item
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
 @end
 
