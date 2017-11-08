@@ -50,8 +50,10 @@
 }
 
 - (void)setStatus:(OSFileAttributeItemStatus)status {
+    
     self.optionBtn.userInteractionEnabled = NO;
     self.contentView.layer.borderColor = [UIColor colorWithWhite:0.75 alpha:1.0].CGColor;
+    
     switch (status) {
         case OSFileAttributeItemStatusDefault: {
             [self.optionBtn setImage:[UIImage OSFileBrowserImageNamed:@"grid-options"] forState:UIControlStateNormal];
@@ -64,7 +66,9 @@
         }
         case OSFileAttributeItemStatusChecked: {
             [self.optionBtn setImage:[UIImage OSFileBrowserImageNamed:@"grid-selected"] forState:UIControlStateNormal];
-            self.contentView.layer.borderColor = [UIColor blueColor].CGColor;
+            if (!self.fileModel.isRootDirectory) {
+                self.contentView.layer.borderColor = [UIColor colorWithRed:92/255.0 green:183/255.0 blue:235/255.0 alpha:1.0].CGColor;
+            }
             break;
         }
         default:

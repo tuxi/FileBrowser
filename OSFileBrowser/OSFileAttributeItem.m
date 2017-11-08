@@ -33,7 +33,7 @@
     else if ([self.path isEqualToString:[NSString getRootPath]]) {
         return YES;
     }
-    return NO;
+    return _isRootDirectory;
 }
 
 - (BOOL)isDownloadBrowser {

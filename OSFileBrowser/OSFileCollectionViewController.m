@@ -45,11 +45,6 @@ static const CGFloat windowHeight = 49.0;
 @interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate>
 #endif
 
-{
-    DirectoryWatcher *_currentFolderHelper;
-    DirectoryWatcher *_documentFolderHelper;
-}
-
 @property (nonatomic, strong) OSFileCollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
@@ -65,6 +60,7 @@ static const CGFloat windowHeight = 49.0;
 @property (nonatomic, assign) OSFileCollectionViewControllerMode mode;
 @property (nonatomic, weak) UIButton *bottomTipButton;
 @property (nonatomic, strong) OSFileAttributeItem *rootDirectoryItem;
+@property (nonatomic, strong) NSMutableArray<DirectoryWatcher *> *directoryWatcherArray;
 
 @end
 
@@ -108,22 +104,46 @@ static const CGFloat windowHeight = 49.0;
 - (void)commonInit {
     _fileManager = [OSFileManager defaultManager];
     _loadFileQueue = [NSOperationQueue new];
-    __weak typeof(self) weakSelf = self;
-    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    _currentFolderHelper = [DirectoryWatcher watchFolderWithPath:self.rootDirectoryItem.path directoryDidChange:^(DirectoryWatcher *folderWatcher) {
-        [weakSelf reloadFiles];
-    }];
+    _directoryWatcherArray = [NSMutableArray array];
     
-    if (![self.rootDirectoryItem.path isEqualToString:documentPath]) {
-        _documentFolderHelper = [DirectoryWatcher watchFolderWithPath:documentPath directoryDidChange:^(DirectoryWatcher *folderWatcher) {
-            [weakSelf reloadFiles];
-        }];
-    }
+    [self initWatcherFolder];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionFileCompletion:) name:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil];
     
     [self setupNavigationBar];
     
+}
+
+/// 初始化需要监听的目录
+- (void)initWatcherFolder {
+    __weak typeof(self) weakSelf = self;
+    NSMutableArray *needWatchPathArray = [NSMutableArray array];
+    
+    if (self.rootDirectoryItem.path.length) {
+        [needWatchPathArray addObject:self.rootDirectoryItem.path];
+    }
+    
+    NSString *documentPath = [NSString getDocumentPath];
+    if (![self.rootDirectoryItem.path isEqualToString:documentPath]) {
+        [needWatchPathArray addObject:documentPath];
+    }
+    
+    for (NSString *path in self.directoryArray) {
+        NSUInteger foundIdx = [needWatchPathArray indexOfObjectPassingTest:^BOOL(NSString *  _Nonnull needWatchPath, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [path isEqualToString:needWatchPath];
+        }];
+        if (foundIdx == NSNotFound) {
+            [needWatchPathArray addObject:path];
+        }
+    }
+    
+    for (NSString *path in needWatchPathArray) {
+        DirectoryWatcher *watcher = [DirectoryWatcher watchFolderWithPath:path directoryDidChange:^(DirectoryWatcher *folderWatcher) {
+            [weakSelf reloadFiles];
+        }];
+        [self.directoryWatcherArray addObject:watcher];
+    }
 }
 
 - (void)viewDidLoad {
@@ -176,8 +196,10 @@ static const CGFloat windowHeight = 49.0;
     [_bottomTipButton removeFromSuperview];
     _bottomTipButton = nil;
     self.directoryArray = nil;
-    [_currentFolderHelper invalidate];
-    [_documentFolderHelper invalidate];
+    for (DirectoryWatcher *watcher in self.directoryWatcherArray) {
+        [watcher invalidate];
+    }
+    self.directoryWatcherArray = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -398,6 +420,7 @@ static const CGFloat windowHeight = 49.0;
             NSError *error = nil;
             OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_hideDisplayFiles error:&error];
             if (model) {
+                model.isRootDirectory = YES;
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
                 }
@@ -553,9 +576,7 @@ static const CGFloat windowHeight = 49.0;
     if (self.mode == OSFileCollectionViewControllerModeEdit) {
         OSFileAttributeItem *item = self.files[indexPath.row];
         item.status = OSFileAttributeItemStatusChecked;
-        if (![self.selectedFiles containsObject:item]) {
-            [self.selectedFiles addObject:item];
-        }
+        [self addSelectedFile:item];
         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -821,6 +842,12 @@ static const CGFloat windowHeight = 49.0;
     return _selectedFiles;
 }
 
+- (void)addSelectedFile:(OSFileAttributeItem *)item {
+    if (![self.selectedFiles containsObject:item] && !item.isRootDirectory) {
+        [self.selectedFiles addObject:item];
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - 
 ////////////////////////////////////////////////////////////////////////
@@ -988,9 +1015,10 @@ static const CGFloat windowHeight = 49.0;
     BOOL selectedAll = YES;
     if ([[item titleForState:UIControlStateNormal] isEqualToString:@"全选"]) {
         [item setTitle:@"取消全选" state:UIControlStateNormal];
-        //                self.selectedFiles = self.files.mutableCopy;
         [self.selectedFiles removeAllObjects];
-        [self.selectedFiles addObjectsFromArray:self.files];
+        for (OSFileAttributeItem *item in self.files) {
+            [self addSelectedFile:item];
+        }
         selectedAll = YES;
     }
     else {
@@ -1033,7 +1061,7 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell needCopyFile:(OSFileAttributeItem *)fileModel {
     [self.selectedFiles removeAllObjects];
-    [self.selectedFiles addObject:fileModel];
+    [self addSelectedFile:fileModel];
     [self chooseDesDirectoryToCopy];
 }
 
@@ -1259,7 +1287,7 @@ __weak id _fileOperationDelegate;
 ////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)rotateToInterfaceOrientation {
     /// 屏幕旋转时重新布局item
     [self.collectionView.collectionViewLayout invalidateLayout];
 }

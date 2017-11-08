@@ -21,8 +21,9 @@ typedef NS_ENUM(NSInteger, OSFileAttributeItemStatus) {
 
 @property (nonatomic, assign) OSFileAttributeItemStatus status;
 
-/// 指的是展示在主页的文件夹
-- (BOOL)isRootDirectory;
+/// 指的是展示在主页的文件夹, 是否是根目录，当是根目录时不允许编辑
+@property (nonatomic, assign) BOOL isRootDirectory;
+
 - (BOOL)isDownloadBrowser;
 
 @end
