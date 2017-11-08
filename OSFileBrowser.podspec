@@ -8,15 +8,8 @@
 
 Pod::Spec.new do |s|
 
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  These will help people to find your library, and whilst it
-  #  can feel like a chore to fill in it's definitely to your advantage. The
-  #  summary should be tweet-length, and the description more in depth.
-  #
-
   s.name         = "OSFileBrowser"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "一个很实用的文件浏览器."
   s.description  = "一个很实用的本地浏览器，平时开发时，你可以很简单的访问沙盒，查看信息"
 
