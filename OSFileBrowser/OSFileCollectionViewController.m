@@ -23,7 +23,7 @@
 #define dispatch_main_safe_async(block)\
     if ([NSThread isMainThread]) {\
         block();\
-        } else {\
+    } else {\
         dispatch_async(dispatch_get_main_queue(), block);\
     }
 
@@ -289,9 +289,9 @@ static const CGFloat windowHeight = 49.0;
 - (void)setupNavigationBar {
     // 如果数组中只有下载文件夹和iTunes文件夹，就不能显示编辑
     BOOL displayEdit = YES;
-    if (self.directoryArray && self.directoryArray.count <= 2) {
-        NSIndexSet *set = [self.directoryArray indexesOfObjectsPassingTest:^BOOL(NSString * _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [path isEqualToString:[NSString getRootPath]] || [path isEqualToString:[NSString getDocumentPath]];
+    if (self.directoryArray) {
+        NSIndexSet *set = [self.files indexesOfObjectsPassingTest:^BOOL(OSFileAttributeItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [item isRootDirectory];
         }];
         if (set.count == self.directoryArray.count) {
             displayEdit = NO;
@@ -848,7 +848,7 @@ static const CGFloat windowHeight = 49.0;
 }
 
 ////////////////////////////////////////////////////////////////////////
-#pragma mark - 
+#pragma mark -
 ////////////////////////////////////////////////////////////////////////
 
 - (void)showBottomTip {
@@ -948,7 +948,7 @@ static const CGFloat windowHeight = 49.0;
 /// 选择文件最终复制的目标目录
 - (void)chooseDesDirectoryToCopy {
     [self optionSelectedFiles:OSFileCollectionViewControllerModeCopy];
-   
+    
 }
 
 - (void)chooseDesDirectoryToMove {
