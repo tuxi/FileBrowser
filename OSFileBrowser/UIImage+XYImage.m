@@ -225,14 +225,24 @@
     return videoScreen;
 }
 
-/**
- *  通过音乐地址，读取音乐数据，获得图片
- *
- *  @param url 音乐地址
- *
- *  @return音乐图片
- */
-- (UIImage *)musicImageWithMusicURL:(NSURL *)url {
+/// 更改图片的颜色
+- (UIImage *)xy_changeImageColorWithColor:(UIColor *)color {
+    
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, self.scale);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, 0, self.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextSetBlendMode(context, kCGBlendModeNormal);
+    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
+    CGContextClipToMask(context, rect, self.CGImage);
+    [color setFill];
+    CGContextFillRect(context, rect);
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
++ (UIImage *)xy_musicImageWithMusicURL:(NSURL *)url {
     NSData *data = nil;
     // 初始化媒体文件
     AVURLAsset *mp3Asset = [AVURLAsset URLAssetWithURL:url options:nil];
@@ -255,7 +265,7 @@
 
 
 
-//返回渐变的image
+// 返回渐变的image
 + (UIImage*)xy_gradientImageFromColors:(NSArray*)colors ByGradientType:(GradientType)gradientType inSize:(CGSize)size {
     NSMutableArray *ar = [NSMutableArray array];
     for(UIColor *c in colors) {
