@@ -9,9 +9,9 @@
 Pod::Spec.new do |s|
 
   s.name         = "OSFileBrowser"
-  s.version      = "0.1.5"
+  s.version      = "0.1.6"
   s.summary      = "一个很实用的文件浏览器."
-  s.description  = "一个很实用的本地浏览器，平时开发时，你可以很简单的访问沙盒，查看信息"
+  s.description  = "使用此示例你可以很方便的：查看文件、管理文件、操作文件."
 
   s.homepage     = "https://github.com/Ossey/FileBrowser"
   s.license      = "MIT"
