@@ -22,10 +22,10 @@
     [OSFileCollectionViewController setFileOperationDelegate:self];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc]
-                                          initWithDirectoryArray:@[                                                                                                            [NSString getRootPath],[NSString getDocumentPath]]
-                                                                                                            
-                                                                                                                                                                                        controllerMode:OSFileCollectionViewControllerModeDefault];
+    OSFileCollectionViewController *vc =
+    [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
+                                                                   [NSString getRootPath],
+                                                                   [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeDefault];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     
