@@ -45,6 +45,10 @@ static const CGFloat windowHeight = 49.0;
 @interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate>
 #endif
 
+{
+    NSString *_newFolderName;
+}
+
 @property (nonatomic, strong) OSFileCollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
@@ -142,7 +146,9 @@ static const CGFloat windowHeight = 49.0;
         DirectoryWatcher *watcher = [DirectoryWatcher watchFolderWithPath:path directoryDidChange:^(DirectoryWatcher *folderWatcher) {
             [weakSelf reloadFiles];
         }];
-        [self.directoryWatcherArray addObject:watcher];
+        if (watcher) {
+            [self.directoryWatcherArray addObject:watcher];
+        }
     }
 }
 
@@ -204,7 +210,7 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (void)setupViews {
-    self.navigationItem.title = @"文件管理";
+    self.navigationItem.title = @"文件浏览";
     if (self.rootDirectoryItem) {
         self.navigationItem.title = self.rootDirectoryItem.displayName;
     }
@@ -585,7 +591,7 @@ static const CGFloat windowHeight = 49.0;
     } else {
         self.indexPath = indexPath;
         UIViewController *vc = [self previewControllerByIndexPath:indexPath];
-        [self jumpToDetailControllerToViewController:vc atIndexPath:indexPath];
+        [self showDetailController:vc atIndexPath:indexPath];
     }
 }
 
@@ -606,11 +612,10 @@ static const CGFloat windowHeight = 49.0;
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////
 
-- (void)jumpToDetailControllerToViewController:(UIViewController *)viewController atIndexPath:(NSIndexPath *)indexPath {
-    NSString *newPath = self.files[indexPath.row].path;
+- (void)showDetailController:(UIViewController *)viewController parentPath:(NSString *)parentPath {
     BOOL isDirectory;
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:newPath isDirectory:&isDirectory];
-    NSURL *url = [NSURL fileURLWithPath:newPath];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:parentPath isDirectory:&isDirectory];
+    NSURL *url = [NSURL fileURLWithPath:parentPath];
     if (fileExists) {
         if (isDirectory) {
             OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
@@ -630,6 +635,14 @@ static const CGFloat windowHeight = 49.0;
             [self.navigationController showDetailViewController:detailNavController sender:self];
         }
     }
+}
+
+- (void)showDetailController:(UIViewController *)viewController atIndexPath:(NSIndexPath *)indexPath {
+    NSString *newPath = self.files[indexPath.row].path;
+    if (!newPath.length) {
+        return;
+    }
+    [self showDetailController:viewController parentPath:newPath];
 }
 
 - (void)backButtonClick {
@@ -657,39 +670,70 @@ static const CGFloat windowHeight = 49.0;
     
 }
 
+- (UIViewController *)previewControllerWithFilePath:(NSString *)filePath {
+    OSFileAttributeItem *newItem = [self getFileItemByPath:filePath];
+    return [self previewControllerWithFileItem:newItem];
+}
+
+- (UIViewController *)previewControllerWithFileItem:(OSFileAttributeItem *)newItem {
+    if (newItem) {
+        BOOL isDirectory;
+        BOOL fileExists = [[NSFileManager defaultManager ] fileExistsAtPath:newItem.path isDirectory:&isDirectory];
+        UIViewController *vc = nil;
+        if (fileExists) {
+            if (newItem.isDirectory) {
+                /// 如果当前界面是OSFileCollectionViewControllerModeCopy，那么下一个界面也要是同样的模式
+                OSFileCollectionViewControllerMode mode = OSFileCollectionViewControllerModeDefault;
+                if (self.mode == OSFileCollectionViewControllerModeCopy ||
+                    self.mode == OSFileCollectionViewControllerModeMove) {
+                    mode = self.mode;
+                }
+                vc = [[OSFileCollectionViewController alloc] initWithRootDirectory:newItem.path controllerMode:mode];
+                if (self.mode == OSFileCollectionViewControllerModeCopy ||
+                    self.mode == OSFileCollectionViewControllerModeMove) {
+                    OSFileCollectionViewController *viewController = (OSFileCollectionViewController *)vc;
+                    viewController.selectedFiles = self.selectedFiles.mutableCopy;
+                }
+                
+            } else if (![QLPreviewController canPreviewItem:[NSURL fileURLWithPath:newItem.path]]) {
+                vc = [[OSFilePreviewViewController alloc] initWithPath:newItem.path];
+            } else {
+                QLPreviewController *preview= [[QLPreviewController alloc] init];
+                preview.dataSource = self;
+                vc = preview;
+            }
+        }
+        return vc;
+    }
+    return nil;
+}
+
+- (OSFileAttributeItem *)getFileItemByPath:(NSString *)path {
+    NSUInteger foundIdx = [self.files indexOfObjectPassingTest:^BOOL(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL res = [obj.path isEqualToString:path];
+        if (res) {
+            *stop = YES;
+        }
+        return res;
+    }];
+    
+    OSFileAttributeItem *newItem = nil;
+    if (foundIdx != NSNotFound) {
+        newItem = self.files[foundIdx];
+    }
+    else {
+        NSError *error = nil;
+        newItem = [OSFileAttributeItem fileWithPath:path error:&error];
+    }
+    return newItem;
+}
 
 - (UIViewController *)previewControllerByIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath || !self.files.count) {
         return nil;
     }
     OSFileAttributeItem *newItem = self.files[indexPath.row];
-    BOOL isDirectory;
-    BOOL fileExists = [[NSFileManager defaultManager ] fileExistsAtPath:newItem.path isDirectory:&isDirectory];
-    UIViewController *vc = nil;
-    if (fileExists) {
-        if (newItem.isDirectory) {
-            /// 如果当前界面是OSFileCollectionViewControllerModeCopy，那么下一个界面也要是同样的模式
-            OSFileCollectionViewControllerMode mode = OSFileCollectionViewControllerModeDefault;
-            if (self.mode == OSFileCollectionViewControllerModeCopy ||
-                self.mode == OSFileCollectionViewControllerModeMove) {
-                mode = self.mode;
-            }
-            vc = [[OSFileCollectionViewController alloc] initWithRootDirectory:newItem.path controllerMode:mode];
-            if (self.mode == OSFileCollectionViewControllerModeCopy ||
-                self.mode == OSFileCollectionViewControllerModeMove) {
-                OSFileCollectionViewController *viewController = (OSFileCollectionViewController *)vc;
-                viewController.selectedFiles = self.selectedFiles.mutableCopy;
-            }
-            
-        } else if (![QLPreviewController canPreviewItem:[NSURL fileURLWithPath:newItem.path]]) {
-            vc = [[OSFilePreviewViewController alloc] initWithPath:newItem.path];
-        } else {
-            QLPreviewController *preview= [[QLPreviewController alloc] init];
-            preview.dataSource = self;
-            vc = preview;
-        }
-    }
-    return vc;
+    return [self previewControllerWithFileItem:newItem];
 }
 
 #pragma mark *** QLPreviewControllerDataSource ***
@@ -731,7 +775,7 @@ static const CGFloat windowHeight = 49.0;
         
         self.longPress.enabled = NO;
         UIViewController *vc = [self previewControllerByIndexPath:indexPath];
-        [self jumpToDetailControllerToViewController:vc atIndexPath:indexPath];
+        [self showDetailController:vc atIndexPath:indexPath];
     }
 }
 
@@ -763,8 +807,10 @@ static const CGFloat windowHeight = 49.0;
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"复制" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"移动" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"删除" image:nil],
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"新建文件夹" image:nil],
                                                               ] toView:self.view];
         _bottomHUD.delegate = self;
+        _bottomHUD.backgroundColor = [UIColor colorWithRed:78/255.0 green:93/255.0 blue:115/255.0 alpha:1.0];
     }
     return _bottomHUD;
 }
@@ -822,7 +868,7 @@ static const CGFloat windowHeight = 49.0;
         bottomTipButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[bottomTipButton]|" options:kNilOptions metrics:nil views:@{@"bottomTipButton": bottomTipButton}]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomTipButton(==49.0)]|" options:kNilOptions metrics:nil views:@{@"bottomTipButton": bottomTipButton}]];
-        [bottomTipButton setBackgroundColor:[UIColor blueColor]];
+        _bottomTipButton.backgroundColor = [UIColor colorWithRed:78/255.0 green:93/255.0 blue:115/255.0 alpha:1.0];
         [bottomTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         bottomTipButton.titleLabel.numberOfLines = 3;
         bottomTipButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -884,7 +930,7 @@ static const CGFloat windowHeight = 49.0;
         
         if (containFileArray.count) {
             string = [containFileArray componentsJoinedByString:@","];
-            string = [NSString stringWithFormat:@"请确认，已存在的文件会被替换:(%@)", string];
+            string = [NSString stringWithFormat:@"请确认：已存在的文件会被替换:(%@)", string];
             [_bottomTipButton setTitle:string forState:UIControlStateNormal];
         }
     }
@@ -894,13 +940,12 @@ static const CGFloat windowHeight = 49.0;
 
 /// 将选择的文件拷贝到目标目录中
 - (void)chooseCompletion {
-    __weak typeof(self) weakSelf = self;
-    [self copyFiles:self.selectedFiles toRootDirectory:self.rootDirectoryItem.path completionHandler:^(NSError *error) {
-        if (!error) {
-            [weakSelf.selectedFiles removeAllObjects];
-            [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil userInfo:@{@"OSFileCollectionViewControllerMode": @(weakSelf.mode)}];
-            [weakSelf backButtonClick];
-        }
+    __weak typeof(&*self) weakSelf = self;
+    [self copyFiles:self.selectedFiles toRootDirectory:self.rootDirectoryItem.path completionHandler:^(void) {
+        __strong typeof(&*weakSelf) self = weakSelf;
+        [self.selectedFiles removeAllObjects];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil userInfo:@{@"OSFileCollectionViewControllerMode": @(weakSelf.mode)}];
+        [self backButtonClick];
     }];
     
 }
@@ -940,9 +985,60 @@ static const CGFloat windowHeight = 49.0;
             }
             break;
         }
+        case 4: { // 新建文件夹
+            [self createNewFolderPath];
+            break;
+        }
         default:
             break;
     }
+}
+
+- (void)alertViewTextFieldtextChange:(UITextField *)tf {
+    _newFolderName = tf.text;
+}
+
+- (void)createNewFolderPath {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"新建文件" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入文件夹名称";
+        [textField addTarget:self action:@selector(alertViewTextFieldtextChange:) forControlEvents:UIControlEventEditingChanged];
+    }];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([_newFolderName containsString:@"/"]) {
+            [self xy_showMessage:@"名称中包含不符合的字符"];
+            
+            return;
+        }
+        
+        NSString *currentDirectory = self.rootDirectoryItem.path;
+        NSString *newPath = [currentDirectory stringByAppendingPathComponent:_newFolderName];
+        BOOL res = [[NSFileManager defaultManager] fileExistsAtPath:newPath];
+        if (res) {
+            [self xy_showMessage:@"存在同名的文件"];
+            return;
+        }
+        NSError *moveError = nil;
+        [[NSFileManager defaultManager] createDirectoryAtPath:newPath withIntermediateDirectories:YES attributes:nil error:&moveError];
+        if (!moveError) {
+            // 将选中的文件移动到创建的目录中
+            __weak typeof(&*self) weakSelf = self;
+            [self copyFiles:self.selectedFiles toRootDirectory:newPath completionHandler:^(void) {
+                __strong typeof(&*weakSelf) self = weakSelf;
+                [self.selectedFiles removeAllObjects];
+                [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil userInfo:@{@"OSFileCollectionViewControllerMode": @(weakSelf.mode)}];
+                [self reloadFiles];
+            }];
+        } else {
+            NSLog(@"%@", moveError.localizedDescription);
+        }
+        _newFolderName = nil;
+    }]];
+    [[UIViewController xy_topViewController] presentViewController:alert animated:true completion:nil];
 }
 
 /// 选择文件最终复制的目标目录
@@ -1086,7 +1182,7 @@ static const CGFloat windowHeight = 49.0;
 /// copy 文件
 - (void)copyFiles:(NSArray<OSFileAttributeItem *> *)fileItems
   toRootDirectory:(NSString *)rootPath
-completionHandler:(void (^)(NSError *error))completion {
+completionHandler:(void (^)(void))completion {
     if (!fileItems.count) {
         return;
     }
@@ -1098,7 +1194,7 @@ completionHandler:(void (^)(NSError *error))completion {
             dispatch_main_safe_async(^{
                 self.hud.label.text = @"路径相同";
                 if (completion) {
-                    completion([NSError errorWithDomain:NSURLErrorDomain code:10000 userInfo:@{@"error": @"不能拷贝到自己的目录"}]);
+                    completion();
                 }
             });
         }
@@ -1142,11 +1238,7 @@ completionHandler:(void (^)(NSError *error))completion {
         
         void (^ completionHandler)(id<OSFileOperation> fileOperation, NSError *error) = ^(id<OSFileOperation> fileOperation, NSError *error) {
             completionCopyNum--;
-            dispatch_main_safe_async(^{
-                if (completionCopyNum == 0 && completion) {
-                    completion(error);
-                }
-            });
+            NSLog(@"剩余文件个数%ld", completionCopyNum);
         };
         NSURL *orgURL = [NSURL fileURLWithPath:obj.path];
         if (self.mode == OSFileCollectionViewControllerModeCopy) {
@@ -1175,16 +1267,21 @@ completionHandler:(void (^)(NSError *error))completion {
         @synchronized (hudDetailTextArray) {
             NSString *detailStr = [hudDetailTextArray componentsJoinedByString:@",\n"];
             strongSelf.hud.detailsLabel.text = detailStr;
-            
-        }
-        if (progress.fractionCompleted >= 1.0 || progress.completedUnitCount >= progress.totalUnitCount) {
-            strongSelf.hud.label.text = @"完成";
-            [strongSelf.hud hideAnimated:YES afterDelay:2.0];
-            strongSelf.hud = nil;
         }
     };
     
+    [_fileManager setCurrentOperationsFinishedBlock:^{
+        if (completion) {
+            completion();
+        }
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.hud.label.text = @"完成";
+        [strongSelf.hud hideAnimated:YES afterDelay:2.0];
+        strongSelf.hud = nil;
+    }];
+    
 }
+
 
 
 - (void)cancelFileOperation:(id)sender {
@@ -1241,7 +1338,7 @@ __weak id _fileOperationDelegate;
 
 
 - (NSAttributedString *)noDataReloadButtonAttributedStringWithState:(UIControlState)state {
-    return [self attributedStringWithText:@"查看下载页" color:[UIColor colorWithRed:49/255.0 green:194/255.0 blue:124/255.0 alpha:1.0] fontSize:15.0];
+    return [self attributedStringWithText:@"查看缓存页" color:[UIColor colorWithRed:49/255.0 green:194/255.0 blue:124/255.0 alpha:1.0] fontSize:15.0];
 }
 
 - (void)noDataPlaceholder:(UIScrollView *)scrollView didClickReloadButton:(UIButton *)button {
@@ -1255,7 +1352,7 @@ __weak id _fileOperationDelegate;
 - (NSAttributedString *)noDataTextLabelAttributedString {
     NSString *string = nil;
     if ([self.rootDirectoryItem isDownloadBrowser]) {
-        string = @"下载完成的文件在这显示";
+        string = @"缓存完成的文件在这显示";
     }
     else {
         string = @"没有文件";

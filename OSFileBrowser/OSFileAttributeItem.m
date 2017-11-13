@@ -23,6 +23,9 @@
     if ([self.path isEqualToString:[NSString getDocumentPath]]) {
         return @"iTunes文件";
     }
+    else if ([self isDownloadBrowser]) {
+        return @"缓存";
+    }
     return [super displayName];
 }
 
@@ -37,7 +40,7 @@
 }
 
 - (BOOL)isDownloadBrowser {
-    return [self.path isEqualToString:[NSString getDownloadLocalFolderPath]];
+    return [self.path isEqualToString:[NSString getDownloadDisplayFolderPath]];
 }
 
 @end
