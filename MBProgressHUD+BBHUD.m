@@ -93,10 +93,37 @@ static const CGFloat BBToastDefaultDuration = 2.0;
     [self bb_showActivityHudWithMessage:message toView:nil actionCallBack:callBack];
 }
 
++ (void)bb_showProgressHudWithMessage:(NSString *)message
+                       actionCallBack:(BBHUDActionCallBack)callBack {
+    [self bb_showProgressHudWithMessage:message
+                                 toView:nil
+                         actionCallBack:callBack];
+}
+
++ (void)bb_showProgressHudWithMessage:(NSString *)message
+                               toView:(UIView *)view
+                       actionCallBack:(BBHUDActionCallBack)callBack {
+    [self bb_showHudWithMessage:message
+                         toView:view
+                           mode:MBProgressHUDModeDeterminate
+                 actionCallBack:callBack];
+}
+
 + (void)bb_showActivityHudWithMessage:(NSString *)message
                                toView:(UIView *)view
                        actionCallBack:(BBHUDActionCallBack)callBack {
+    [self bb_showHudWithMessage:message
+                         toView:view
+                           mode:MBProgressHUDModeIndeterminate
+                 actionCallBack:callBack];;
+}
+
++ (void)bb_showHudWithMessage:(NSString *)message
+                       toView:(UIView *)view
+                         mode:(MBProgressHUDMode)mode
+               actionCallBack:(BBHUDActionCallBack)callBack {
     MBProgressHUD *hud = [self bb_hudWithMessage:message toView:view offset:CGPointZero];
+    hud.mode = mode;
     view = BB_HUD_NULL_VIEW;
     view.bb_hudCancelOption = callBack;
     [hud.button setTitle:@"Cancel" forState:UIControlStateNormal];
@@ -105,7 +132,6 @@ static const CGFloat BBToastDefaultDuration = 2.0;
                    action:@selector(bb_cancelOperationAction:)
          forControlEvents:UIControlEventTouchUpInside];
 }
-
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -120,8 +146,8 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 }
 
 + (void)bb_showCustomImage:(UIImage *)image
-                message:(NSString *)message
-               isWindow:(BOOL)isWindow {
+                   message:(NSString *)message
+                  isWindow:(BOOL)isWindow {
     [self bb_showCustomImage:image
                      message:message
                       toView:BB_DEFAULT_TO_VIEW(isWindow)];
@@ -175,8 +201,8 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 }
 
 + (void)bb_showMessage:(NSString *)message
-          delayTime:(NSInteger)delayTime
-           isWindow:(BOOL)isWindow {
+             delayTime:(NSInteger)delayTime
+              isWindow:(BOOL)isWindow {
     [self bb_showMessage:message
                delayTime:delayTime
                   toView:BB_DEFAULT_TO_VIEW(isWindow)];
@@ -199,7 +225,7 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 ////////////////////////////////////////////////////////////////////////
 
 + (MBProgressHUD *)bb_hudWithMessage:(NSString *)message
-                                         isWindow:(BOOL)isWindow {
+                            isWindow:(BOOL)isWindow {
     MBProgressHUD *hud = [self bb_hudWithMessage:message toView:BB_DEFAULT_TO_VIEW(isWindow) offset:CGPointZero];
     return hud;
 }
@@ -233,7 +259,7 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 @implementation UIView (BBHUDExtension)
 
 - (MBProgressHUD *)bb_hud {
-   return [MBProgressHUD HUDForView:self];
+    return [MBProgressHUD HUDForView:self];
 }
 
 #pragma mark *** Text hud ***
@@ -243,7 +269,7 @@ static const CGFloat BBToastDefaultDuration = 2.0;
     [self bb_showMessage:message delayTime:0];
 }
 - (void)bb_showMessage:(NSString *)message
-                        delayTime:(NSInteger)delayTime {
+             delayTime:(NSInteger)delayTime {
     [self bb_showMessage:message
                delayTime:delayTime
                   offset:CGPointZero];
@@ -292,6 +318,15 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 - (void)bb_showActivityHudWithMessage:(NSString *)message
                        actionCallBack:(BBHUDActionCallBack)callBack {
     [MBProgressHUD bb_showActivityHudWithMessage:message toView:self actionCallBack:callBack];
+}
+
+- (void)bb_showProgressHudWithActionCallBack:(BBHUDActionCallBack)callBack {
+    [self bb_showProgressHudWithMessage:nil actionCallBack:callBack];
+}
+
+- (void)bb_showProgressHudWithMessage:(NSString *)message
+                       actionCallBack:(BBHUDActionCallBack)callBack {
+    [MBProgressHUD bb_showProgressHudWithMessage:message actionCallBack:callBack];
 }
 
 
@@ -357,4 +392,3 @@ static const CGFloat BBToastDefaultDuration = 2.0;
 }
 
 @end
-
