@@ -1178,11 +1178,12 @@ completionHandler:(void (^)(void))completion {
     UIView *view = (UIView *)[UIApplication sharedApplication].delegate.window;
     __weak typeof(&*self) weakSelf = self;
     [view bb_showActivityHudWithActionCallBack:^(MBProgressHUD *hud) {
-        [_fileManager cancelAllOperation];
         __strong typeof(&*weakSelf) self = weakSelf;
-        [self.selectedFiles removeAllObjects];
-        [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil userInfo:@{@"OSFileCollectionViewControllerMode": @(weakSelf.mode)}];
-        [self reloadFiles];
+        [self.fileManager cancelAllOperation];
+        hud.label.text = @"已取消";
+        if (completion) {
+            completion();
+        }
     }];
     
     [fileItems enumerateObjectsUsingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
