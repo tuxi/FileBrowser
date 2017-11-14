@@ -54,7 +54,7 @@
     return nil;
 }
 
-//获取当前屏幕显示的viewcontroller
+// 获取当前屏幕显示的viewcontroller
 + (UIViewController *)getCurrentWindowVC {
     UIViewController *result = nil;
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];

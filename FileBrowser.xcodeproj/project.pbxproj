@@ -40,7 +40,6 @@
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
-		D048DFC31FB1B06C00BCE059 /* NSObject+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,8 +82,6 @@
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+XYHUD.m"; path = "OSFileBrowser/NSObject+XYHUD.m"; sourceTree = "<group>"; };
-		D048DFC21FB1B06C00BCE059 /* NSObject+XYHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+XYHUD.h"; path = "OSFileBrowser/NSObject+XYHUD.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +99,6 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				D048DFC21FB1B06C00BCE059 /* NSObject+XYHUD.h */,
-				D048DFC11FB1B06C00BCE059 /* NSObject+XYHUD.m */,
 				18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */,
 				18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */,
 				18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */,
@@ -344,7 +339,6 @@
 				D012309D1FBB06D300F88859 /* MBProgressHUD+BBHUD.m in Sources */,
 				18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
-				D048DFC31FB1B06C00BCE059 /* NSObject+XYHUD.m in Sources */,
 				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
