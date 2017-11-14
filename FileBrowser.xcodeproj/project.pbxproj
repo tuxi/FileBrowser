@@ -35,6 +35,7 @@
 		18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */; };
 		18E3C7E91FAA393B00567350 /* OSFileBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */; };
 		28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */; };
+		D012309D1FBB06D300F88859 /* MBProgressHUD+BBHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D012309B1FBB06D200F88859 /* MBProgressHUD+BBHUD.m */; };
 		D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */; };
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
@@ -73,6 +74,8 @@
 		18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = OSFileBrowser.bundle; path = OSFileBrowser/OSFileBrowser.bundle; sourceTree = "<group>"; };
 		74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FileBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D012309B1FBB06D200F88859 /* MBProgressHUD+BBHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+BBHUD.m"; sourceTree = "<group>"; };
+		D012309C1FBB06D200F88859 /* MBProgressHUD+BBHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+BBHUD.h"; sourceTree = "<group>"; };
 		D0353DE31FA9735C0082508D /* FileBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBrowserAppDelegate.h; sourceTree = "<group>"; };
 		D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileBrowserAppDelegate.m; sourceTree = "<group>"; };
@@ -127,6 +130,8 @@
 				18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */,
 				18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */,
 				18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */,
+				D012309C1FBB06D200F88859 /* MBProgressHUD+BBHUD.h */,
+				D012309B1FBB06D200F88859 /* MBProgressHUD+BBHUD.m */,
 				18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */,
 			);
 			name = OSFileBrowser;
@@ -336,6 +341,7 @@
 				18E3C7DF1FAA20BE00567350 /* NSString+OSFile.m in Sources */,
 				18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */,
 				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
+				D012309D1FBB06D300F88859 /* MBProgressHUD+BBHUD.m in Sources */,
 				18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
 				D048DFC31FB1B06C00BCE059 /* NSObject+XYHUD.m in Sources */,
