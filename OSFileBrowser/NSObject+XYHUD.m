@@ -87,7 +87,7 @@ static const void *hudKey = &hudKey;
     if (self.xy_hudCancelOption) {
         self.xy_hudCancelOption(sender);
     }
-    [sender hideAnimated:YES afterDelay:0.5];
+    [self.xy_hud hideAnimated:YES afterDelay:0.5];
     self.xy_hud = nil;
 }
 
