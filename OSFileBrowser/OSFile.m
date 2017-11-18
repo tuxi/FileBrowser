@@ -10,6 +10,7 @@
 #import "NSString+OSFile.h"
 #include <sys/stat.h>
 #import "NSDate+ESUtilities.h"
+#import "OSMimeTypeMap.h"
 
 @implementation OSFile
 @synthesize isDirectory                 = _isDirectory;
@@ -59,6 +60,7 @@
 //@synthesize icon                        = _icon;
 @synthesize targetFile                  = _targetFile;
 @synthesize hideDisplayFiles            = _hideDisplayFiles;
+@synthesize mimeType                    = _mimeType;
 
 + (instancetype)fileWithPath:(NSString *)filePath {
     return [self fileWithPath:filePath error:NULL];
@@ -98,7 +100,7 @@
 
 - (BOOL)reloadFileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error {
     _path        = [filePath copy];
-   return [self reloadFileWithError:error];
+    return [self reloadFileWithError:error];
 }
 
 - (BOOL)reloadFileWithError:(NSError *__autoreleasing *)error {
@@ -130,7 +132,7 @@
          系统中某些文件没有权限加载
          Error Domain=NSCocoaErrorDomain Code=257 "The file “var” couldn’t be opened because you don’t have permission to view it." UserInfo={NSFilePath=/var, NSUserStringVariant=(
          Folder
-        ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
+         ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
          */
         NSArray *array = nil;
         if ([path isEqualToString:@"/System"]) {
@@ -212,7 +214,6 @@
     return _subFiles.count;
 }
 
-
 #pragma mark *** Private methods ***
 - (void)getPathInfos
 {
@@ -223,6 +224,9 @@
         _fileExtension = [_fileExtension substringWithRange:NSRangeFromString(@"?")];
     }
     _parentDirectoryPath = [[NSString alloc] initWithString: [_path stringByDeletingLastPathComponent]];
+    if (_fileExtension.length) {
+        _mimeType = [OSMimeTypeMap mimeTypeForExtension:_fileExtension];
+    }
 }
 
 - (void)getFileType
@@ -247,6 +251,7 @@
     {
         _type = [[NSString alloc] initWithString: [_attributes objectForKey: NSFileType]];
     }
+    
 }
 
 - (void)getOwnership
@@ -419,7 +424,7 @@
           || [[infos.fileExtension lowercaseString] isEqualToString: @"m4r"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"3gp"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"wav"])
-        )
+         )
     {
         _isAudio = YES;
     }
@@ -434,7 +439,7 @@
           || [[infos.fileExtension lowercaseString] isEqualToString: @"mp4"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"mov"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"wmv"])
-        )
+         )
     {
         _isVideo = YES;
     }
@@ -454,7 +459,7 @@
           || [[infos.fileExtension lowercaseString] isEqualToString: @"cur"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"xbm"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"webp"])
-        )
+         )
     {
         _isImage = YES;
     }
@@ -470,7 +475,7 @@
           || [[infos.fileExtension lowercaseString] isEqualToString: @"dmg"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"app"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"ipa"])
-        )
+         )
     {
         _isArchive = YES;
     }
@@ -479,7 +484,7 @@
         (
          infos.isRegularFile &&
          ([[infos.fileExtension lowercaseString] isEqualToString: @"exe"])
-        )
+         )
     {
         _isWindows = YES;
     }
@@ -549,7 +554,7 @@
           || [infos.filename isEqualToString: @"Weather.app"]
           || [infos.filename isEqualToString: @"Web.app"]
           || [infos.filename isEqualToString: @"YouTube.app"])
-        )
+         )
     {
         emblem = [UIImage imageNamed: [NSString stringWithFormat: @"App-%@.png", infos.filename]];
         
@@ -607,7 +612,7 @@
           || [infos.filename isEqualToString: @"Tools"]
           || [infos.filename isEqualToString: @"tmp"]
           || [infos.filename isEqualToString: @"Wallpaper"])
-        )
+         )
     {
         emblem = [UIImage imageNamed: [NSString stringWithFormat: @"Directory-%@.png", [infos.filename capitalizedString]]];
         
@@ -655,7 +660,7 @@
           || [[infos.fileExtension lowercaseString] isEqualToString: @"tcsh"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"zsc"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"csh"])
-        )
+         )
     {
         emblem = [UIImage imageNamed: @"File-Script.png"];
         
@@ -673,7 +678,7 @@
          infos.isRegularFile &&
          ([[infos.fileExtension lowercaseString] isEqualToString: @"ttf"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"otf"])
-        )
+         )
     {
         emblem = [UIImage imageNamed: @"File-Fonts.png"];
         
@@ -704,7 +709,7 @@
          infos.isDirectory &&
          ([[infos.fileExtension lowercaseString] isEqualToString: @"kext"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"plugin"])
-        )
+         )
     {
         emblem = [UIImage imageNamed: @"Directory-Plugins.png"];
         
@@ -790,9 +795,9 @@
 //- (void)getIcon {
 //    OSFile  * infos;
 //    UIImage * baseIcon;
-//    
+//
 //    infos = (_isSymbolicLink) ? _targetFile : self;
-//    
+//
 //    if(infos.isDirectory == YES) {
 //        baseIcon = [UIImage imageNamed: @"Directory.png"];
 //    }
@@ -811,7 +816,7 @@
 //    else {
 //        baseIcon = [UIImage imageNamed: @"File.png"];
 //    }
-//    
+//
 //    _icon = [self iconByAddingEmblemsToImage: baseIcon];
 //}
 

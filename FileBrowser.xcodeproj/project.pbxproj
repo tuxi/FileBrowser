@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18DD4F7B1FC0828B002C6E27 /* OSMimeTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DD4F791FC0828A002C6E27 /* OSMimeTypeMap.m */; };
 		18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */; };
 		18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */; };
 		18E3C7C61FAA20BE00567350 /* OSFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */; };
@@ -44,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		18DD4F791FC0828A002C6E27 /* OSMimeTypeMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMimeTypeMap.m; sourceTree = "<group>"; };
+		18DD4F7A1FC0828A002C6E27 /* OSMimeTypeMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMimeTypeMap.h; sourceTree = "<group>"; };
 		18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFilePreviewViewController.h; path = OSFileBrowser/OSFilePreviewViewController.h; sourceTree = "<group>"; };
 		18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+XYImage.h"; path = "OSFileBrowser/UIImage+XYImage.h"; sourceTree = "<group>"; };
 		18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewCell.m; path = OSFileBrowser/OSFileCollectionViewCell.m; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				18DD4F7A1FC0828A002C6E27 /* OSMimeTypeMap.h */,
+				18DD4F791FC0828A002C6E27 /* OSMimeTypeMap.m */,
 				18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */,
 				18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */,
 				18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */,
@@ -313,6 +318,7 @@
 			files = (
 				18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */,
 				18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */,
+				18DD4F7B1FC0828B002C6E27 /* OSMimeTypeMap.m in Sources */,
 				18E3C7C61FAA20BE00567350 /* OSFileCollectionViewCell.m in Sources */,
 				18E3C7C71FAA20BE00567350 /* UIImageView+XYExtension.m in Sources */,
 				18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */,

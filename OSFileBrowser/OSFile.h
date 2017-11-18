@@ -67,11 +67,12 @@ OSFileFlags;
     NSString      * _humanReadablePermissions;
     NSDate        * _creationDate;
     NSDate        * _modificationDate;
-//    UIImage       * _icon;
+    //    UIImage       * _icon;
     NSDictionary  * _attributes;
     NSFileManager * _fileManager;
     OSFile        * _targetFile;
     BOOL            _hideDisplayFiles;
+    NSString      * _mimeType;
 @private
     
     id __OSFile_Reserved[ 5 ] __attribute__((unused));
@@ -126,6 +127,7 @@ OSFileFlags;
 @property (atomic, readonly) OSFile      * targetFile;
 @property (atomic, readwrite) NSArray     * subFiles;
 @property (atomic, readonly) BOOL          hideDisplayFiles;
+@property (atomic, readonly) NSString    * mimeType;
 
 /// 初始化方法，根据文件路径创建一个OSFile对象
 /// @param filePath 文件完整路径

@@ -12,7 +12,6 @@
 #import "DirectoryWatcher.h"
 #import "OSFileManager.h"
 #import "OSFileAttributeItem.h"
-#import "OSFilePreviewViewController.h"
 #import "UIScrollView+NoDataExtend.h"
 #import "OSFileBottomHUD.h"
 #import "NSString+OSFile.h"
@@ -21,10 +20,10 @@
 #import "MBProgressHUD+BBHUD.h"
 
 #define dispatch_main_safe_async(block)\
-    if ([NSThread isMainThread]) {\
-        block();\
-    } else {\
-        dispatch_async(dispatch_get_main_queue(), block);\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
 }
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
@@ -209,10 +208,6 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (void)setupViews {
-    self.navigationItem.title = @"文件浏览";
-    if (self.rootDirectoryItem) {
-        self.navigationItem.title = self.rootDirectoryItem.displayName;
-    }
     self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     
     [self.view addSubview:self.collectionView];
@@ -292,6 +287,25 @@ static const CGFloat windowHeight = 49.0;
 #pragma mark *** NavigationBar ***
 
 - (void)setupNavigationBar {
+    self.navigationItem.title = @"文件浏览";
+    if (@available(iOS 11.0, *)) {
+        if (!self.directoryArray.count) {
+            // 导航大标题, 上滑到顶部时动态切换大小标题样式 (导航栏高度UINavigationBar = 44/96)
+            self.navigationController.navigationBar.prefersLargeTitles = YES;
+            // 自动模式,依赖于上一个item的设置; 上一个item设置为自动并且当前导航栏prefersLargeTitles=YES,则显示大标题样式;
+            self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+            // prefersLargeTitles=YES,滚动到顶部时,当前总是显示大标题样式
+            //        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+            // prefersLargeTitles=YES,滚动到顶部时,当前也总不会显示大标题样式
+            //        self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+        }
+        
+        
+    }
+    if (self.rootDirectoryItem) {
+        self.navigationItem.title = self.rootDirectoryItem.displayName;
+    }
+    
     // 如果数组中只有下载文件夹和iTunes文件夹，就不能显示编辑
     BOOL displayEdit = YES;
     if (self.directoryArray) {
@@ -591,6 +605,10 @@ static const CGFloat windowHeight = 49.0;
         self.indexPath = indexPath;
         UIViewController *vc = [self previewControllerByIndexPath:indexPath];
         [self showDetailController:vc atIndexPath:indexPath];
+        if ([vc isKindOfClass:[OSPreviewViewController class]]) {
+            OSPreviewViewController *pvc = (OSPreviewViewController *)vc;
+            pvc.currentPreviewItemIndex = indexPath.item;
+        }
     }
 }
 
@@ -612,27 +630,18 @@ static const CGFloat windowHeight = 49.0;
 ////////////////////////////////////////////////////////////////////////
 
 - (void)showDetailController:(UIViewController *)viewController parentPath:(NSString *)parentPath {
-    BOOL isDirectory;
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:parentPath isDirectory:&isDirectory];
-    NSURL *url = [NSURL fileURLWithPath:parentPath];
-    if (fileExists) {
-        if (isDirectory) {
-            OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
-            [self.navigationController showViewController:vc sender:self];
-            
-        } else if (![QLPreviewController canPreviewItem:url]) {
-            OSFilePreviewViewController *preview = (OSFilePreviewViewController *)viewController;
-            preview.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
-            UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:preview];
-            
-            [self.navigationController showDetailViewController:detailNavController sender:self];
-        } else {
-            
-            QLPreviewController *preview = (QLPreviewController *)viewController;
-            preview.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
-            UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:preview];
-            [self.navigationController showDetailViewController:detailNavController sender:self];
-        }
+    if (!viewController) {
+        return;
+    }
+    if ([viewController isKindOfClass:[OSFileCollectionViewController class]]) {
+        OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
+        [self.navigationController showViewController:vc sender:self];
+    }
+    else {
+        
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
+        UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        [self.navigationController showDetailViewController:detailNavController sender:self];
     }
 }
 
@@ -646,6 +655,10 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)backButtonClick {
     UIViewController *rootViewController = (UINavigationController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [self backButtonClickWithRootViewController:rootViewController];
+}
+
+- (void)backButtonClickWithRootViewController:(UIViewController *)rootViewController {
     if ([rootViewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController *nac = (UINavigationController *)rootViewController;
         if (self.presentedViewController || nac.topViewController.presentedViewController) {
@@ -666,7 +679,6 @@ static const CGFloat windowHeight = 49.0;
         }
         
     }
-    
 }
 
 - (UIViewController *)previewControllerWithFilePath:(NSString *)filePath {
@@ -694,12 +706,18 @@ static const CGFloat windowHeight = 49.0;
                     viewController.selectedFiles = self.selectedFiles.mutableCopy;
                 }
                 
-            } else if (![QLPreviewController canPreviewItem:[NSURL fileURLWithPath:newItem.path]]) {
-                vc = [[OSFilePreviewViewController alloc] initWithPath:newItem.path];
-            } else {
-                QLPreviewController *preview= [[QLPreviewController alloc] init];
+            }
+            else if ([OSFilePreviewViewController canOpenFile:newItem.path]) {
+                vc = [[OSFilePreviewViewController alloc] initWithFileItem:newItem];
+            }
+            else if ([OSPreviewViewController canPreviewItem:[NSURL fileURLWithPath:newItem.path]]) {
+                OSPreviewViewController *preview= [[OSPreviewViewController alloc] init];
                 preview.dataSource = self;
+                preview.delegate = self;
                 vc = preview;
+            }
+            else {
+                [self.view bb_showMessage:@"无法识别的文件"];
             }
         }
         return vc;
@@ -743,11 +761,11 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
-    return 1;
+    return self.files.count;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger) index {
-    NSString *newPath = self.files[self.indexPath.row].path;
+    NSString *newPath = self.files[index].path;
     
     return [NSURL fileURLWithPath:newPath];
 }
