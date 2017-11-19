@@ -1232,7 +1232,7 @@ static const CGFloat windowHeight = 49.0;
     }];
     [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof OSFileCollectionViewCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         [cell invalidateConstraints];
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.28 animations:^{
             [cell layoutIfNeeded];
         }];
     }];
@@ -1473,8 +1473,9 @@ __weak id _fileOperationDelegate;
         contentInset.right = 20.0;
         _collectionView.contentInset = contentInset;
         flowLayout.lineMultiplier = 1.19;
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+      
+        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+        if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
             flowLayout.lineItemCount = 5;
         }
         else {
