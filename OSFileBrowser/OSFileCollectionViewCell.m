@@ -459,10 +459,8 @@
         label.lineBreakMode = NSLineBreakByTruncatingTail;
         _titleLabel = label;
         label.translatesAutoresizingMaskIntoConstraints = NO;
-        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_4) {
-            if (@available(iOS 8.2, *)) {
-                [label setFont:[UIFont monospacedDigitSystemFontOfSize:13.0 weight:UIFontWeightRegular]];
-            }
+        if (@available(iOS 9.0, *)) {
+            [label setFont:[UIFont monospacedDigitSystemFontOfSize:13.0 weight:UIFontWeightRegular]];
         } else {
             [label setFont:[UIFont systemFontOfSize:13.0]];
         }
