@@ -137,4 +137,3 @@ typedef void(^BBHUDActionCallBack)(MBProgressHUD *hud);
 + (void)bb_hideHUD;
 
 @end
-

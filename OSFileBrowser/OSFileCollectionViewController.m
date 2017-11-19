@@ -18,13 +18,16 @@
 #import "UIViewController+XYExtensions.h"
 #import "UIImage+XYImage.h"
 #import "MBProgressHUD+BBHUD.h"
+#import "OSFileCollectionHeaderView.h"
 
 #define dispatch_main_safe_async(block)\
-if ([NSThread isMainThread]) {\
-block();\
-} else {\
-dispatch_async(dispatch_get_main_queue(), block);\
+    if ([NSThread isMainThread]) {\
+        block();\
+    } else {\
+    dispatch_async(dispatch_get_main_queue(), block);\
 }
+
+#define kFileViewerGlobleColor [UIColor colorWithRed:36/255.0 green:41/255.0 blue:46/255.0 alpha:1.0]
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
@@ -39,7 +42,7 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 static const CGFloat windowHeight = 49.0;
 
 #ifdef __IPHONE_9_0
-@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate>
+@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate>
 #else
 @interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate>
 #endif
@@ -52,7 +55,6 @@ static const CGFloat windowHeight = 49.0;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
 @property (nonatomic, copy) void (^longPressCallBack)(NSIndexPath *indexPath);
-@property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, strong) NSOperationQueue *loadFileQueue;
 @property (nonatomic, strong) OSFileManager *fileManager;
 @property (nonatomic, strong) NSArray<NSString *> *directoryArray;
@@ -112,9 +114,10 @@ static const CGFloat windowHeight = 49.0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionFileCompletion:) name:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionReLayoutStyle) name:OSFileCollectionLayoutStyleDidChangeNotification object:nil];
     
     [self setupNavigationBar];
-    
+
 }
 
 /// 初始化需要监听的目录
@@ -154,7 +157,6 @@ static const CGFloat windowHeight = 49.0;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setupViews];
-    
     __weak typeof(self) weakSelf = self;
     [self reloadFilesWithCallBack:^{
         [weakSelf showBottomTip];
@@ -546,8 +548,11 @@ static const CGFloat windowHeight = 49.0;
     // 需要将location在self.view上的坐标转换到tableView上，才能从tableView上获取到当前indexPath
     CGPoint targetLocation = [self.view convertPoint:location toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:targetLocation];
-    _indexPath = indexPath;
     UIViewController *vc = [self previewControllerByIndexPath:indexPath];
+    if ([vc isKindOfClass:[OSPreviewViewController class]]) {
+        OSPreviewViewController *pvc = (OSPreviewViewController *)vc;
+        pvc.currentPreviewItemIndex = indexPath.row;
+    }
     // 预览区域大小(可不设置)
     vc.preferredContentSize = CGSizeMake(0, 320);
     return vc;
@@ -602,7 +607,6 @@ static const CGFloat windowHeight = 49.0;
             [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         });
     } else {
-        self.indexPath = indexPath;
         UIViewController *vc = [self previewControllerByIndexPath:indexPath];
         [self showDetailController:vc atIndexPath:indexPath];
         if ([vc isKindOfClass:[OSPreviewViewController class]]) {
@@ -624,25 +628,34 @@ static const CGFloat windowHeight = 49.0;
     }
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        OSFileCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:OSFileCollectionHeaderViewDefaultIdentifier forIndexPath:indexPath];
+        headerView.delegate = self;
+        return headerView;
+    }
+    
+    return nil;
+}
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////
+
+#pragma mark *** Show detail controller ***
 
 - (void)showDetailController:(UIViewController *)viewController parentPath:(NSString *)parentPath {
     if (!viewController) {
         return;
     }
-    if ([viewController isKindOfClass:[OSFileCollectionViewController class]]) {
-        OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
-        [self.navigationController showViewController:vc sender:self];
-    }
-    else {
-        
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
-        UINavigationController *detailNavController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        [self.navigationController showDetailViewController:detailNavController sender:self];
-    }
+//    if ([viewController isKindOfClass:[OSFileCollectionViewController class]]) {
+//        OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
+//        [self.navigationController showViewController:vc sender:self];
+//    }
+//    else {
+//
+//        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
+//        [self.navigationController showViewController:viewController sender:self];
+//    }
+    [self.navigationController showViewController:viewController sender:self];
 }
 
 - (void)showDetailController:(UIViewController *)viewController atIndexPath:(NSIndexPath *)indexPath {
@@ -679,6 +692,10 @@ static const CGFloat windowHeight = 49.0;
         }
         
     }
+//    else if ([rootViewController isKindOfClass:NSClassFromString(@"ICSDrawerController")]) {
+//        ICSDrawerController *vc = (ICSDrawerController *)rootViewController;
+//        [self backButtonClickWithRootViewController:vc.ics_visibleViewController];
+//    }
 }
 
 - (UIViewController *)previewControllerWithFilePath:(NSString *)filePath {
@@ -770,6 +787,12 @@ static const CGFloat windowHeight = 49.0;
     return [NSURL fileURLWithPath:newPath];
 }
 
+#pragma mark *** QLPreviewControllerDelegate ***
+
+- (CGRect)previewController:(QLPreviewController *)controller frameForPreviewItem:(id <QLPreviewItem>)item inSourceView:(UIView * _Nullable * __nonnull)view {
+    return self.view.frame;
+}
+
 #pragma mark *** Actions ***
 
 - (UILongPressGestureRecognizer *)longPress {
@@ -800,9 +823,17 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)makeCollectionViewConstr {
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
+    if (@available(iOS 11.0, *)) {
+        NSLayoutConstraint *top = [self.collectionView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor];
+        NSLayoutConstraint *left = [self.collectionView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor];
+        NSLayoutConstraint *right = [self.collectionView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor];
+        NSLayoutConstraint *bottom = [self.collectionView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
+        [NSLayoutConstraint activateConstraints:@[top, left, right, bottom]];
+    } else {
+        NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
+    }
 }
 
 #pragma mark *** Setter getter ***
@@ -824,10 +855,10 @@ static const CGFloat windowHeight = 49.0;
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"复制" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"移动" image:nil],
                                                               [[OSFileBottomHUDItem alloc] initWithTitle:@"删除" image:nil],
-                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"新建文件夹" image:nil],
+                                                              [[OSFileBottomHUDItem alloc] initWithTitle:@"文件夹" image:nil],
                                                               ] toView:self.view];
         _bottomHUD.delegate = self;
-        _bottomHUD.backgroundColor = [UIColor colorWithRed:78/255.0 green:93/255.0 blue:115/255.0 alpha:1.0];
+        _bottomHUD.backgroundColor = kFileViewerGlobleColor;
     }
     return _bottomHUD;
 }
@@ -839,14 +870,10 @@ static const CGFloat windowHeight = 49.0;
         
         OSFileCollectionViewFlowLayout *layout = [OSFileCollectionViewFlowLayout new];
         _flowLayout = layout;
-        layout.itemSpacing = 20.0;
-        layout.lineSpacing = 20.0;
-        layout.lineSize = 30.0;
-        layout.lineItemCount = 3;
-        layout.lineMultiplier = 1.19;
+        [self updateCollectionViewFlowLayout:_flowLayout];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.sectionsStartOnNewLine = NO;
-        
+        layout.headerSize = CGSizeMake(self.view.bounds.size.width, 44.0);
     }
     return _flowLayout;
 }
@@ -859,9 +886,20 @@ static const CGFloat windowHeight = 49.0;
         collectionView.delegate = self;
         collectionView.backgroundColor = [UIColor colorWithWhite:0.92 alpha:1.0];
         [collectionView registerClass:[OSFileCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+        [collectionView registerClass:[OSFileCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:OSFileCollectionHeaderViewDefaultIdentifier];
         _collectionView = collectionView;
         _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        _collectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20);
+        if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == NO) {
+            UIEdgeInsets inset = _collectionView.contentInset;
+            inset.left = 20.0;
+            inset.right = 20.0;
+            inset.bottom = 20.0;
+            _collectionView.contentInset = inset;
+        }
+        else {
+          _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
+        }
+       
     }
     return _collectionView;
 }
@@ -875,7 +913,7 @@ static const CGFloat windowHeight = 49.0;
         bottomTipButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[bottomTipButton]|" options:kNilOptions metrics:nil views:@{@"bottomTipButton": bottomTipButton}]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomTipButton(==49.0)]|" options:kNilOptions metrics:nil views:@{@"bottomTipButton": bottomTipButton}]];
-        _bottomTipButton.backgroundColor = [UIColor colorWithRed:78/255.0 green:93/255.0 blue:115/255.0 alpha:1.0];
+        _bottomTipButton.backgroundColor = kFileViewerGlobleColor;
         [bottomTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         bottomTipButton.titleLabel.numberOfLines = 3;
         bottomTipButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -893,6 +931,7 @@ static const CGFloat windowHeight = 49.0;
     }
     return _selectedFiles;
 }
+
 
 - (void)addSelectedFile:(OSFileAttributeItem *)item {
     if (![self.selectedFiles containsObject:item] && !item.isRootDirectory) {
@@ -1079,7 +1118,7 @@ static const CGFloat windowHeight = 49.0;
         }
         if (!desDirectors.count) {
             desDirectors = @[
-                             [NSString getRootPath],
+                             [NSString getICloudCacheFolder],
                              [NSString getDocumentPath]];
         }
         OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:desDirectors controllerMode:mode];
@@ -1183,6 +1222,25 @@ static const CGFloat windowHeight = 49.0;
     [self reloadFiles];
 }
 
+#pragma mark *** OSFileCollectionHeaderViewDelegate ***
+
+- (void)collectionReLayoutStyle {
+    
+    [self updateCollectionViewFlowLayout:_flowLayout];
+    [self.files enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.needReLoyoutItem = YES;
+    }];
+    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof OSFileCollectionViewCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
+        [cell invalidateConstraints];
+        [UIView animateWithDuration:0.1 animations:^{
+            [cell layoutIfNeeded];
+        }];
+    }];
+    
+    [self.flowLayout invalidateLayout];
+}
+
+
 #pragma mark *** File operation ***
 
 /// copy 文件
@@ -1196,9 +1254,9 @@ completionHandler:(void (^)(void))completion {
     UIView *view = (UIView *)[UIApplication sharedApplication].delegate.window;
     __weak typeof(&*self) weakSelf = self;
     [view bb_showProgressHudWithActionCallBack:^(MBProgressHUD *hud) {
-        __strong typeof(&*weakSelf) self = weakSelf;
+         __strong typeof(&*weakSelf) self = weakSelf;
         [self.fileManager cancelAllOperation];
-        hud.label.text = @"已取消";
+         hud.label.text = @"已取消";
         if (completion) {
             completion();
         }
@@ -1358,6 +1416,9 @@ __weak id _fileOperationDelegate;
     if ([self.rootDirectoryItem isDownloadBrowser]) {
         string = @"缓存完成的文件在这显示";
     }
+    else if ([self.rootDirectoryItem isICloudDrive]) {
+        string = @"将文件移动到此处，即可从iPhone、iPad、Mac访问";
+    }
     else {
         string = @"没有文件";
     }
@@ -1388,8 +1449,38 @@ __weak id _fileOperationDelegate;
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////
 - (void)rotateToInterfaceOrientation {
+    [self updateCollectionViewFlowLayout:self.flowLayout];
     /// 屏幕旋转时重新布局item
     [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)updateCollectionViewFlowLayout:(OSFileCollectionViewFlowLayout *)flowLayout {
+    if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == YES) {
+        flowLayout.itemSpacing = 10.0;
+        flowLayout.lineSpacing = 10.0;
+        flowLayout.lineItemCount = 1;
+        flowLayout.lineMultiplier = 0.12;
+        UIEdgeInsets contentInset = self.collectionView.contentInset;
+        contentInset.left = 0.0;
+        contentInset.right = 0.0;
+        _collectionView.contentInset = contentInset;
+    }
+    else {
+        flowLayout.itemSpacing = 20.0;
+        flowLayout.lineSpacing = 20.0;
+        UIEdgeInsets contentInset = self.collectionView.contentInset;
+        contentInset.left = 20.0;
+        contentInset.right = 20.0;
+        _collectionView.contentInset = contentInset;
+        flowLayout.lineMultiplier = 1.19;
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
+            flowLayout.lineItemCount = 5;
+        }
+        else {
+            flowLayout.lineItemCount = 3;
+        }
+    }
 }
 
 @end

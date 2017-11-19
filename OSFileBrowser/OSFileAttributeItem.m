@@ -8,6 +8,7 @@
 
 #import "OSFileAttributeItem.h"
 #import "NSString+OSFile.h"
+#import "UIImage+XYImage.h"
 
 @implementation OSFileAttributeItem
 
@@ -15,6 +16,7 @@
     if (self = [super initWithPath:filePath hideDisplayFiles:hideDisplayFiles error:error]) {
         _path = filePath;
         self.status = OSFileAttributeItemStatusDefault;
+        self.needReLoyoutItem = NO;
     }
     return self;
 }
@@ -26,7 +28,20 @@
     else if ([self isDownloadBrowser]) {
         return @"缓存";
     }
+    else if ([self.path isEqualToString:[NSString getICloudCacheFolder]]) {
+        return @"iCloud Drive";
+    }
     return [super displayName];
+}
+
+- (UIImage *)icon {
+    if ([self.path isEqualToString:[NSString getICloudCacheFolder]]) {
+        return [UIImage OSFileBrowserImageNamed:@"table-folder-icloud"];
+    }
+    else if ([self.path isEqualToString:[NSString getDocumentPath]]) {
+        return [UIImage OSFileBrowserImageNamed:@"table-folder-itunes-files-sharing"];
+    }
+    return [super icon];
 }
 
 - (BOOL)isRootDirectory {
@@ -36,11 +51,18 @@
     else if ([self.path isEqualToString:[NSString getRootPath]]) {
         return YES;
     }
+    else if ([self.path isEqualToString:[NSString getICloudCacheFolder]]) {
+        return YES;
+    }
     return _isRootDirectory;
 }
 
 - (BOOL)isDownloadBrowser {
     return [self.path isEqualToString:[NSString getDownloadDisplayFolderPath]];
+}
+
+- (BOOL)isICloudDrive {
+    return [self.path isEqualToString:[NSString getICloudCacheFolder]];
 }
 
 @end

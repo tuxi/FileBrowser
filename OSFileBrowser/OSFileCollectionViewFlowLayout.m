@@ -14,7 +14,10 @@ typedef NS_ENUM(NSUInteger, OSLineDimensionType) {
     OSLineDimensionTypeExtension
 };
 
+NSNotificationName const OSFileCollectionLayoutStyleDidChangeNotification = @"OSFileCollectionLayoutStyleDidChangeNotification";
+
 static OSLineDimensionType const OSLineDimensionTypeDefault = OSLineDimensionTypeSize;
+static NSString * const OSFileCollectionViewFlowLayoutNumItemsOnLineKey = @"OSFileCollectionViewFlowLayoutNumItemsOnLineKey";
 
 static CGFloat const OSLineSizeDefault = 0;
 static CGFloat const OSLineMutliplierDefault = 1;
@@ -33,6 +36,8 @@ static CGFloat const OSLineExtensionDefault = 0;
 
 @property (nonatomic, assign) OSLineDimensionType lineDimensionType;
 
+@property (nonatomic, strong) UICollectionViewLayoutAttributes *headerAttributes;
+
 @end
 
 @implementation OSFileCollectionViewFlowLayout
@@ -41,8 +46,7 @@ static CGFloat const OSLineExtensionDefault = 0;
 @synthesize lineSize = _lineSize;
 @synthesize lineMultiplier = _lineMultiplier;
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         [self commonInit];
@@ -50,8 +54,7 @@ static CGFloat const OSLineExtensionDefault = 0;
     return self;
 }
 
-- (instancetype)initWithCoder:(nonnull NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self commonInit];
@@ -68,7 +71,7 @@ static CGFloat const OSLineExtensionDefault = 0;
 }
 
 - (void)setInitialDefaults {
-    // 设置默认属性
+    // Default properties
     _scrollDirection = UICollectionViewScrollDirectionVertical;
     _lineDimensionType = OSLineDimensionTypeDefault;
     _lineSize = OSLineSizeDefault;
@@ -80,7 +83,6 @@ static CGFloat const OSLineExtensionDefault = 0;
     _sectionsStartOnNewLine = NO;
 }
 
-/// 强制collection view重新计算全部的布局信息，并应用该布局信息
 - (void)invalidateLayout {
     [super invalidateLayout];
     self.firstLineFrames = nil;
@@ -89,8 +91,6 @@ static CGFloat const OSLineExtensionDefault = 0;
     self.calculatedItemSize = CGSizeZero;
 }
 
-/// 该方法将通知布局对象更新当前的布局。
-/// 布局更新发生在 collection view 第一次展示它的内容的时候，以及由于view的改变导致布局 invalidated 的时候。在布局更新期间， collection view都会首先调用该方法，允许布局对象对此次的更新做一些准备操作
 - (void)prepareLayout {
     [super prepareLayout];
     
@@ -98,48 +98,62 @@ static CGFloat const OSLineExtensionDefault = 0;
     
     self.calculatedItemSize = [self calculateItemSize];
     
+    self.headerAttributes = [self calculateHeaderAttributes];
+    
     NSInteger const sectionCount = [self.collectionView numberOfSections];
     for (NSInteger section=0; section<sectionCount; section++) {
         
         NSInteger const itemCount = [self.collectionView numberOfItemsInSection:section];
         
         for (NSInteger item=0; item<itemCount; item++) {
-            
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
-            
             self.itemAttributes[indexPath] = [self calculateLayoutAttributesForItemAtIndexPath:indexPath];
         }
     }
+    
+    
 }
 
-/// 获取contentSize
 - (CGSize)collectionViewContentSize {
     CGSize size;
     
     switch (self.scrollDirection) {
         case UICollectionViewScrollDirectionHorizontal:
             size.width = self.numberOfLines * self.calculatedItemSize.width;
-            // Add spacings
+            // 添加间距
             if (self.numberOfLines > 0) {
                 size.width += (self.numberOfLines - 1) * self.lineSpacing;
             }
             size.height = [self constrainedCollectionViewDimension];
+            size.height += self.headerSize.height;
             break;
             
         case UICollectionViewScrollDirectionVertical:
             size.width = [self constrainedCollectionViewDimension];
             size.height = self.numberOfLines * self.calculatedItemSize.height;
-            // Add spacings
+            // 添加间距
             if (self.numberOfLines > 0) {
                 size.height += (self.numberOfLines - 1) * self.lineSpacing;
             }
+            size.height += self.headerSize.height;
             break;
     }
     
     return size;
 }
 
-/// 返回指定indexPath的item的布局信息。子类必须重载该方法,该方法只能为cell提供布局信息，不能为补充视图和装饰视图提供
+- (UICollectionViewLayoutAttributes *)calculateHeaderAttributes {
+    if (self.headerSize.width == 0 || self.headerSize.height == 0) {
+        return nil;
+    }
+    UICollectionViewLayoutAttributes *headerAttributes;
+    headerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    // 为了防止collectionView左侧设置了contentInset，会导致header偏移，所以这里让header左右必须跟collectionView对齐
+    CGFloat x = 0 - self.collectionView.contentInset.left;
+    headerAttributes.frame = CGRectMake(x, 0, self.collectionView.frame.size.width, self.headerSize.height);
+    return headerAttributes;
+}
+
 - (nullable UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *layoutAttrs = self.itemAttributes[indexPath];
     
@@ -151,7 +165,6 @@ static CGFloat const OSLineExtensionDefault = 0;
     return layoutAttrs;
 }
 
-/// 返回UICollectionViewLayoutAttributes 类型的数组，UICollectionViewLayoutAttributes 对象包含cell或view的布局信息。子类必须重载该方法，并返回该区域内所有元素的布局信息，包括cell,追加视图和装饰视图。
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray<__kindof UICollectionViewLayoutAttributes *> *layoutAttributes = [NSMutableArray arrayWithCapacity:[self.itemAttributes count]];
     
@@ -162,17 +175,25 @@ static CGFloat const OSLineExtensionDefault = 0;
         }
     }];
     
+    if (self.headerAttributes && CGRectIntersectsRect(rect, self.headerAttributes.frame)) {
+        [layoutAttributes addObject:self.headerAttributes];
+    }
+    
     return layoutAttributes;
 }
 
-/// 该方法用来决定是否需要更新布局。如果collection view需要重新布局返回YES,否则返回NO,默认返回值为NO。子类重载该方法的时候，基于是否collection view的bounds的改变会引发cell和view布局的改变，给出正确的返回值。
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    return _headerAttributes;
+}
+
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return !CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size);
 }
 
 #pragma mark - Lazily loaded properties
 
-/// 计算第一行的item，因为每一行都一样，所以可以服用
+/// 预先计算第一的frame，然后可以重复在每一行frame
 - (NSArray<NSValue *> *)firstLineFrames {
     if (!_firstLineFrames) {
         
@@ -236,9 +257,8 @@ static CGFloat const OSLineExtensionDefault = 0;
     return _firstLineFrames;
 }
 
-#pragma mark *** Calculation methods ***
+#pragma mark - Calculation methods
 
-/// 计算每一行item的数量
 - (NSUInteger)calculateNumberOfLines {
     NSInteger numberOfLines;
     if (self.sectionsStartOnNewLine) {
@@ -269,7 +289,6 @@ static CGFloat const OSLineExtensionDefault = 0;
     return numberOfLines;
 }
 
-/// 计算item的size
 - (CGSize)calculateItemSize {
     CGFloat collectionConstrainedDimension = [self constrainedCollectionViewDimension];
     // 减去一行item之间的间距
@@ -357,7 +376,8 @@ static CGFloat const OSLineExtensionDefault = 0;
         // Add the line that this item is on in this section
         line += indexPath.item / self.lineItemCount;
         
-    } else {
+    }
+    else {
         
         // Need to calculate the number of items that have come before in previous sections
         NSUInteger numberOfItems = 0;
@@ -387,13 +407,20 @@ static CGFloat const OSLineExtensionDefault = 0;
             break;
     }
     
+    // 添加头部高度和间距值
+    if (indexPath.section == 0) {
+        frame.origin.y += self.headerSize.height + self.lineSpacing;
+    }
+    
     attrs.frame = frame;
     // Place below the scroll bar
     attrs.zIndex = -1;
+    
     return attrs;
 }
 
-#pragma mark *** Convenince sizing methods ***
+
+#pragma mark - Convenince sizing methods
 
 - (CGFloat)constrainedCollectionViewDimension {
     CGSize collectionViewInsetBoundsSize = UIEdgeInsetsInsetRect(self.collectionView.bounds, self.collectionView.contentInset).size;
@@ -407,7 +434,7 @@ static CGFloat const OSLineExtensionDefault = 0;
     }
 }
 
-#pragma mark *** Detail setters that invalidate the layout ***
+#pragma mark - Detail setters that invalidate the layout
 
 - (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection {
     NSAssert(scrollDirection == UICollectionViewScrollDirectionHorizontal || scrollDirection == UICollectionViewScrollDirectionVertical, @"Invalid scrollDirection: %ld", (long) scrollDirection);
@@ -530,6 +557,24 @@ static CGFloat const OSLineExtensionDefault = 0;
     }
     
     return [NSString stringWithFormat:@"<%@: %p; scrollDirection = %@; lineDimension = %@; lineItemCount = %llu; itemSpacing = %.3lf; lineSpacing = %.3lf; sectionsStartOnNewLine = %@>", NSStringFromClass([self class]), self, (self.scrollDirection == UICollectionViewScrollDirectionVertical ? @"Vertical" : @"Horizontal"), lineDimension, (unsigned long long) self.lineItemCount, self.itemSpacing, self.lineSpacing, (self.sectionsStartOnNewLine ? @"YES" : @"NO")];
+}
+
+
++ (OSFileCollectionLayoutStyle)collectionLayoutStyle {
+    NSNumber *res = [[NSUserDefaults standardUserDefaults] objectForKey:OSFileCollectionViewFlowLayoutNumItemsOnLineKey];
+    if (!res) {
+        return OSFileCollectionLayoutStyleMultipleItemOnLine;
+    }
+    return (OSFileCollectionLayoutStyle)[res integerValue];
+}
+
++ (void)setCollectionLayoutStyle:(OSFileCollectionLayoutStyle)collectionLayoutStyle {
+    if ([self collectionLayoutStyle] == collectionLayoutStyle) {
+        return;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:@(collectionLayoutStyle) forKey:OSFileCollectionViewFlowLayoutNumItemsOnLineKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionLayoutStyleDidChangeNotification object:nil userInfo:@{@"OSFileCollectionLayoutStyle": @(collectionLayoutStyle)}];
 }
 
 @end
