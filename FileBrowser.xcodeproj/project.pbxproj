@@ -42,6 +42,7 @@
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
+		D05152301FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D051522F1FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,9 @@
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D051522E1FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+OSStatusBarStyle.h"; sourceTree = "<group>"; };
+		D051522F1FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+OSStatusBarStyle.m"; sourceTree = "<group>"; };
+		D05152421FC2E32900D6F783 /* OSFileBrowserAppearanceConfigs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBrowserAppearanceConfigs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,9 @@
 				18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */,
 				18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */,
 				18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */,
+				D051522E1FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.h */,
+				D051522F1FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.m */,
+				D05152421FC2E32900D6F783 /* OSFileBrowserAppearanceConfigs.h */,
 			);
 			name = OSFileBrowser;
 			sourceTree = "<group>";
@@ -323,6 +330,7 @@
 			files = (
 				18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */,
 				18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */,
+				D05152301FC2DE7500D6F783 /* UIViewController+OSStatusBarStyle.m in Sources */,
 				18E3C7C61FAA20BE00567350 /* OSFileCollectionViewCell.m in Sources */,
 				18E3C7C71FAA20BE00567350 /* UIImageView+XYExtension.m in Sources */,
 				18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */,
