@@ -19,6 +19,7 @@
 #import "UIImage+XYImage.h"
 #import "MBProgressHUD+BBHUD.h"
 #import "OSFileCollectionHeaderView.h"
+#import "OSFileSearchController.h"
 
 #define dispatch_main_safe_async(block)\
     if ([NSThread isMainThread]) {\
@@ -119,6 +120,7 @@ static const CGFloat windowHeight = 49.0;
     [self setupNavigationBar];
 
 }
+
 
 /// 初始化需要监听的目录
 - (void)initWatcherFolder {
@@ -768,6 +770,14 @@ static const CGFloat windowHeight = 49.0;
     }
     OSFileAttributeItem *newItem = self.files[indexPath.row];
     return [self previewControllerWithFileItem:newItem];
+}
+
+#pragma mark *** OSFileCollectionHeaderViewDelegate ***
+
+- (void)fileCollectionHeaderView:(OSFileCollectionHeaderView *)headerView clickedSearchButton:(UIButton *)searchButton {
+    OSFileSearchController *svc = [[OSFileSearchController alloc] init];
+    svc.files = self.files;
+    [self showDetailViewController:svc sender:self];
 }
 
 #pragma mark *** QLPreviewControllerDataSource ***

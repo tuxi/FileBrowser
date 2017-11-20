@@ -104,6 +104,8 @@
     self.optionBtn.hidden = NO;
     [self setStatus:fileModel.status];
     
+    [self.titleLabel setAttributedText:self.fileModel.displayNameAttributedText];
+    
     /// 根据文件类型显示
     self.titleLabel.text = fileModel.displayName;
     if (fileModel.isDirectory) {
@@ -128,7 +130,6 @@
     if ([self.fileModel isRootDirectory]) {
         self.optionBtn.hidden = YES;
     }
-    
     /// 对标记为需要重新布局的视图，刷新
     if (self.fileModel.needReLoyoutItem) {
         [self invalidateConstraints];
