@@ -1253,7 +1253,7 @@ completionHandler:(void (^)(void))completion {
     
     UIView *view = (UIView *)[UIApplication sharedApplication].delegate.window;
     __weak typeof(&*self) weakSelf = self;
-    [view bb_showProgressHudWithActionCallBack:^(MBProgressHUD *hud) {
+    [view bb_showProgressWithActionCallBack:^(MBProgressHUD *hud) {
          __strong typeof(&*weakSelf) self = weakSelf;
         [self.fileManager cancelAllOperation];
          hud.label.text = @"已取消";
@@ -1476,10 +1476,21 @@ __weak id _fileOperationDelegate;
       
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
         if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-            flowLayout.lineItemCount = 5;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                flowLayout.lineItemCount = 10;
+            }
+            else {
+                flowLayout.lineItemCount = 5;
+            }
+            
         }
         else {
-            flowLayout.lineItemCount = 3;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                flowLayout.lineItemCount = 6;
+            }
+            else {
+                flowLayout.lineItemCount = 3;
+            }
         }
     }
 }
