@@ -19,7 +19,7 @@
 #import "UIImage+XYImage.h"
 #import "MBProgressHUD+BBHUD.h"
 #import "OSFileCollectionHeaderView.h"
-#import "OSFileSearchController.h"
+#import "OSFileSearchResultsController.h"
 
 #define dispatch_main_safe_async(block)\
     if ([NSThread isMainThread]) {\
@@ -43,9 +43,9 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 static const CGFloat windowHeight = 49.0;
 
 #ifdef __IPHONE_9_0
-@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate>
+@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
 #else
-@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate>
+@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
 #endif
 
 {
@@ -66,6 +66,7 @@ static const CGFloat windowHeight = 49.0;
 @property (nonatomic, weak) UIButton *bottomTipButton;
 @property (nonatomic, strong) OSFileAttributeItem *rootDirectoryItem;
 @property (nonatomic, strong) NSMutableArray<DirectoryWatcher *> *directoryWatcherArray;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
 
@@ -217,6 +218,32 @@ static const CGFloat windowHeight = 49.0;
     [self.view addSubview:self.collectionView];
     [self makeCollectionViewConstr];
     [self setupNodataView];
+//    [self setupSearchController];
+}
+
+- (void)setupSearchController {
+    OSFileSearchResultsController *resultsController = [[OSFileSearchResultsController alloc] init];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
+    //设置搜索时，背景变暗色
+    //self.searchController.dimsBackgroundDuringPresentation = NO;
+    // 设置搜索时，背景变模糊
+    if (@available(iOS 9.1, *)) {
+        self.searchController.obscuresBackgroundDuringPresentation = NO;
+    }
+    resultsController.searchController = self.searchController;
+    self.searchController.searchBar.showsCancelButton = YES;
+    self.searchController.searchBar.delegate = self;
+    self.searchController.delegate = self;
+    
+    CGRect searchBarFrame = self.searchController.searchBar.frame;
+    CGRect viewFrame = self.view.frame;
+    self.searchController.searchBar.frame = CGRectMake(searchBarFrame.origin.x,
+                                                       searchBarFrame.origin.y,
+                                                       viewFrame.size.width,
+                                                       44.0);
+    
+    // Add SearchController's search bar to our  and bring it to front
+    [self.navigationController.navigationBar addSubview:self.searchController.searchBar];
 }
 
 - (void)setupNodataView {
@@ -772,13 +799,40 @@ static const CGFloat windowHeight = 49.0;
     return [self previewControllerWithFileItem:newItem];
 }
 
-#pragma mark *** OSFileCollectionHeaderViewDelegate ***
+#pragma mark *** UISeacrhControllerDelegate ***
 
-- (void)fileCollectionHeaderView:(OSFileCollectionHeaderView *)headerView clickedSearchButton:(UIButton *)searchButton {
-    OSFileSearchController *svc = [[OSFileSearchController alloc] init];
-    svc.files = self.files;
-    [self showDetailViewController:svc sender:self];
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.searchController.searchBar becomeFirstResponder]; //放主线程执行这个
+    });
 }
+
+-(void)willPresentSearchController:(UISearchController *)aSearchController {
+    
+    aSearchController.searchBar.bounds = CGRectInset(aSearchController.searchBar.frame, 0.0f, 0.0f);
+    
+    // Set the position of the result's table view below the status bar and search bar
+    // Use of instance variable to do it only once, otherwise it goes down at every search request
+//    if (CGRectIsEmpty(_searchTableViewRect)) {
+//        CGRect tableViewFrame = ((UITableViewController *)aSearchController.searchResultsController).tableView
+//        .frame;
+//        tableViewFrame.origin.y = tableViewFrame.origin.y + 64; //status bar (20) + nav bar (44)
+//        tableViewFrame.size.height =  tableViewFrame.size.height;
+//
+//        _searchTableViewRect = tableViewFrame;
+//    }
+    
+//    [((UITableViewController *)aSearchController.searchResultsController).tableView setFrame:_searchTableViewRect];
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchBarDelegate
+////////////////////////////////////////////////////////////////////////
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.collectionView reloadData];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 #pragma mark *** QLPreviewControllerDataSource ***
 
@@ -909,6 +963,7 @@ static const CGFloat windowHeight = 49.0;
         else {
           _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
         }
+        _collectionView.keyboardDismissMode = YES;
        
     }
     return _collectionView;
@@ -941,6 +996,7 @@ static const CGFloat windowHeight = 49.0;
     }
     return _selectedFiles;
 }
+
 
 
 - (void)addSelectedFile:(OSFileAttributeItem *)item {
@@ -1234,6 +1290,18 @@ static const CGFloat windowHeight = 49.0;
 
 #pragma mark *** OSFileCollectionHeaderViewDelegate ***
 
+- (void)fileCollectionHeaderView:(OSFileCollectionHeaderView *)headerView clickedSearchButton:(UIButton *)searchButton {
+    //    OSFileSearchResultsController *svc = [[OSFileSearchResultsController alloc] init];
+    //    svc.files = self.files;
+    //    [self showDetailViewController:svc sender:self];
+    
+    // 弹出搜索控制器
+    self.searchController.active = YES;
+    OSFileSearchResultsController *resultsVc = (OSFileSearchResultsController *)self.searchController.searchResultsController;
+    resultsVc.files = self.files;
+    
+}
+
 - (void)collectionReLayoutStyle {
     
     [self updateCollectionViewFlowLayout:_flowLayout];
@@ -1504,6 +1572,7 @@ __weak id _fileOperationDelegate;
         }
     }
 }
+
 
 @end
 

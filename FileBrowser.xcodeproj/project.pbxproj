@@ -42,7 +42,7 @@
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
-		D055BE4C1FC3B5360089C0C3 /* OSFileSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* OSFileSearchController.m */; };
+		D055BE4C1FC3B5360089C0C3 /* OSFileSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */; };
 		D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */; };
 		D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */; };
 /* End PBXBuildFile section */
@@ -91,8 +91,8 @@
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D055BE451FC3B5350089C0C3 /* OSFileSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileSearchController.h; path = OSFileBrowser/OSFileSearchController.h; sourceTree = "<group>"; };
-		D055BE461FC3B5350089C0C3 /* OSFileSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileSearchController.m; path = OSFileBrowser/OSFileSearchController.m; sourceTree = "<group>"; };
+		D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileSearchResultsController.h; path = OSFileBrowser/OSFileSearchResultsController.h; sourceTree = "<group>"; };
+		D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileSearchResultsController.m; path = OSFileBrowser/OSFileSearchResultsController.m; sourceTree = "<group>"; };
 		D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+OSContainsEeachCharacter.h"; path = "OSFileBrowser/NSString+OSContainsEeachCharacter.h"; sourceTree = "<group>"; };
 		D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileBrowserAppearanceConfigs.h; path = OSFileBrowser/OSFileBrowserAppearanceConfigs.h; sourceTree = "<group>"; };
 		D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+OSStatusBarStyle.m"; path = "OSFileBrowser/UIViewController+OSStatusBarStyle.m"; sourceTree = "<group>"; };
@@ -118,8 +118,8 @@
 				D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */,
 				D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */,
 				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
-				D055BE451FC3B5350089C0C3 /* OSFileSearchController.h */,
-				D055BE461FC3B5350089C0C3 /* OSFileSearchController.m */,
+				D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */,
+				D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */,
 				D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */,
 				D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */,
 				185A7F631FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.h */,
@@ -353,7 +353,7 @@
 				18E3C7D41FAA20BE00567350 /* OSFileCollectionViewController.m in Sources */,
 				18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */,
 				18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */,
-				D055BE4C1FC3B5360089C0C3 /* OSFileSearchController.m in Sources */,
+				D055BE4C1FC3B5360089C0C3 /* OSFileSearchResultsController.m in Sources */,
 				18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */,
 				18E3C7D91FAA20BE00567350 /* DirectoryWatcher.m in Sources */,
 				18E3C7DA1FAA20BE00567350 /* NSDate+ESUtilities.m in Sources */,

@@ -1,12 +1,12 @@
 //
-//  OSFileSearchController.m
+//  OSFileSearchResultsController.m
 //  FileBrowser
 //
 //  Created by Swae on 2017/11/20.
 //  Copyright © 2017年 xiaoyuan. All rights reserved.
 //
 
-#import "OSFileSearchController.h"
+#import "OSFileSearchResultsController.h"
 #import "OSFileAttributeItem.h"
 #import "NSString+OSContainsEeachCharacter.h"
 #import "OSFileCollectionViewFlowLayout.h"
@@ -23,19 +23,17 @@
 
 @end
 
-static NSString * const kSearchCellIdentifier = @"OSFileSearchController";
+static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController";
 
-@interface OSFileSearchController () <UISearchBarDelegate, UISearchResultsUpdating, UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
+@interface OSFileSearchResultsController () <UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
-// 存放搜索列表中显示数据的数组
-@property (nonatomic, strong) NSMutableArray *arrOfSeachResults;
-@property (nonatomic, strong) UISearchController *searchController;
+
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) OSFileCollectionViewFlowLayout *flowLayout;
 
 @end
 
-@implementation OSFileSearchController
+@implementation OSFileSearchResultsController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,43 +43,12 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchController";
 
 - (void)setupViews {
     
-    // nil表示在当前页面显示搜索结果
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    //searchBar的frame
-    //self.searchController.searchBar.frame = CGRectMake(0, 44, 0, 44);
-    //设置搜索框的frame
-//    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-    
-    
     [self.view addSubview:self.collectionView];
     [self makeCollectionViewConstr];
-    [self setupSearchController];
 }
 
-- (void)setupSearchController {
-    //设置代理对象
-    self.searchController.searchResultsUpdater = self;/**< 显示搜索结果的VC */
-    //设置搜索时，背景变暗色
-    //self.searchController.dimsBackgroundDuringPresentation = NO;
-    //设置搜索时，背景变模糊
-    if (@available(iOS 9.1, *)) {
-        self.searchController.obscuresBackgroundDuringPresentation = NO;
-    }
-    //隐藏导航栏
-    //self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.searchBar.showsCancelButton = YES;/**< 取消按钮 */
-    //设置 searchBar 代理对象
-    self.searchController.searchBar.delegate = self;
-    
-}
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - UISearchBarDelegate
-////////////////////////////////////////////////////////////////////////
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.collectionView reloadData];
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
+
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark - UISearchResultsUpdating
@@ -89,7 +56,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchController";
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     //获取搜索框中用户输入的字符串
-    NSString *searchString = [self.searchController.searchBar text];
+    NSString *searchString = [searchController.searchBar text];
     //指定过滤条件，SELF表示要查询集合中对象，contain[c]表示包含字符串，%@是字符串内容
     //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -130,39 +97,37 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchController";
     OSFileCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSearchCellIdentifier forIndexPath:indexPath];
     
     // 显示搜索结果
-    if (self.searchController.active) {
-        OSFileAttributeItem *searchResult = self.arrOfSeachResults[indexPath.row];
-        // 原始搜索结果字符串.
-        NSString *originResult = searchResult.displayName;
+    OSFileAttributeItem *searchResult = self.arrOfSeachResults[indexPath.row];
+    // 原始搜索结果字符串.
+    NSString *originResult = searchResult.displayName;
+    
+    /*
+     // 获取关键字的位置
+     NSRange range = [originResult rangeOfString:self.searchController.searchBar.text];
+     // 转换成可以操作的字符串类型.
+     NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:originResult];
+     
+     // 添加属性(粗体)
+     [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:range];
+     // 关键字高亮
+     [attribute addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+     */
+    
+    // 转换成可以操作的字符串类型.
+    NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:originResult];
+    for (NSValue *rangeValue in [originResult rangeArrayOfEachCharacter:self.searchController.searchBar.text]) {
+        // 获取关键字的位置
+        NSRange range;
+        [rangeValue getValue:&range];
         
-        /*
-         // 获取关键字的位置
-         NSRange range = [originResult rangeOfString:self.searchController.searchBar.text];
-         // 转换成可以操作的字符串类型.
-         NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:originResult];
-         
-         // 添加属性(粗体)
-         [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:range];
-         // 关键字高亮
-         [attribute addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
-         */
-        
-        // 转换成可以操作的字符串类型.
-        NSMutableAttributedString *attribute = [[NSMutableAttributedString alloc] initWithString:originResult];
-        for (NSValue *rangeValue in [originResult rangeArrayOfEachCharacter:self.searchController.searchBar.text]) {
-            // 获取关键字的位置
-            NSRange range;
-            [rangeValue getValue:&range];
-            
-            // 添加属性(粗体)
-            [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:range];
-            // 关键字高亮
-            [attribute addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
-        }
-        
-        // 将带属性的字符串添加到cell.textLabel上.
-        cell.fileModel.displayNameAttributedText = attribute;
+        // 添加属性(粗体)
+        [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:range];
+        // 关键字高亮
+        [attribute addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
     }
+    
+    // 将带属性的字符串添加到cell.textLabel上.
+    cell.fileModel.displayNameAttributedText = attribute;
 
     cell.fileModel = self.files[indexPath.row];
     
@@ -321,6 +286,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchController";
         _collectionView = collectionView;
         _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
         _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
+        _collectionView.keyboardDismissMode = YES;
         
     }
     return _collectionView;
