@@ -15,39 +15,51 @@
 #import "OSFileCollectionViewController.h"
 #import "MBProgressHUD+BBHUD.h"
 
-@interface OSFileSearchCollectionHeaderView : UICollectionReusableView
-
-@end
-
-@implementation OSFileSearchCollectionHeaderView
-
-@end
 
 static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController";
 
 @interface OSFileSearchResultsController () <UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
 
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) OSFileCollectionViewFlowLayout *flowLayout;
-
 @end
 
 @implementation OSFileSearchResultsController
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+    if (!layout) {
+        layout = [self createDefaultFlowLayout];
+    }
+    if (self = [super initWithCollectionViewLayout:layout]) {
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setupViews];
+    [self commonInit];
+}
+
+- (void)commonInit {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)setupViews {
-    
-    [self.view addSubview:self.collectionView];
-    [self makeCollectionViewConstr];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    self.collectionView.backgroundColor = [UIColor colorWithWhite:0.92 alpha:1.0];
+    [self.collectionView registerClass:[OSFileCollectionViewCell class] forCellWithReuseIdentifier:kSearchCellIdentifier];
+    self.collectionView.keyboardDismissMode = YES;
+    [self updateCollectionViewFlowLayout:(OSFileCollectionViewFlowLayout *)self.collectionView.collectionViewLayout];
+
 }
 
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -55,30 +67,30 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
 ////////////////////////////////////////////////////////////////////////
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    [self updateViewFrame];
+    
     //获取搜索框中用户输入的字符串
     NSString *searchString = [searchController.searchBar text];
-    //指定过滤条件，SELF表示要查询集合中对象，contain[c]表示包含字符串，%@是字符串内容
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
+    // 指定过滤条件，SELF表示要查询集合中对象，contain[c]表示包含字符串，%@是字符串内容
+    // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         if ([evaluatedObject isKindOfClass:[NSString class]]) {
-            //return [(NSString *)evaluatedObject containsString:searchString];
             return [(NSString *)evaluatedObject containsEachCharacter:searchString];
         } else if ([evaluatedObject isKindOfClass:[NSDictionary class]]) {
-            //return [evaluatedObject[@"nick"] containsString:searchString];
-            return [evaluatedObject[@"nick"] containsEachCharacter:searchString];
+            return [((OSFileAttributeItem*)evaluatedObject).displayName containsEachCharacter:searchString];
         } else if ([evaluatedObject isKindOfClass:[OSFileAttributeItem class]]) {
-            //return [evaluatedObject[@"nick"] containsString:searchString];
             return [((OSFileAttributeItem*)evaluatedObject).displayName containsEachCharacter:searchString];
         }
         return [evaluatedObject containsObject:searchString];
     }];
     //如果搜索数组中存在对象，即上次搜索的结果，则清除这些对象
-    if (self.arrOfSeachResults != nil) {
-        [self.arrOfSeachResults removeAllObjects];
+    if (self.arrayOfSeachResults != nil) {
+        [self.arrayOfSeachResults removeAllObjects];
     }
-    //通过过滤条件过滤数据
-    self.arrOfSeachResults = [[self.files filteredArrayUsingPredicate:predicate] mutableCopy];
-    //刷新表格
+    // 通过过滤条件过滤数据
+    NSMutableArray<OSFileAttributeItem *> *result = [[self.files filteredArrayUsingPredicate:predicate] mutableCopy];
+    self.arrayOfSeachResults = result;
+    // 刷新表格
     [self.collectionView reloadData];
 }
 
@@ -90,14 +102,14 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.arrOfSeachResults.count;
+    return self.arrayOfSeachResults.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     OSFileCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSearchCellIdentifier forIndexPath:indexPath];
     
     // 显示搜索结果
-    OSFileAttributeItem *searchResult = self.arrOfSeachResults[indexPath.row];
+    OSFileAttributeItem *searchResult = self.arrayOfSeachResults[indexPath.row];
     // 原始搜索结果字符串.
     NSString *originResult = searchResult.displayName;
     
@@ -129,14 +141,8 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
     // 将带属性的字符串添加到cell.textLabel上.
     cell.fileModel.displayNameAttributedText = attribute;
 
-    cell.fileModel = self.files[indexPath.row];
+    cell.fileModel = searchResult;
     
-    if (cell.fileModel.status == OSFileAttributeItemStatusChecked) {
-        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-    }
-    else {
-        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    }
     return cell;
 }
 
@@ -150,24 +156,6 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
     }
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        OSFileSearchCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"OSFileSearchCollectionHeaderView" forIndexPath:indexPath];
-        UISearchBar *searchBar = self.searchController.searchBar;
-        if (searchBar) {
-            [headerView addSubview:searchBar];
-            searchBar.frame = headerView.bounds;
-//            searchBar.translatesAutoresizingMaskIntoConstraints = NO;
-//            NSArray *constraints = @[[NSLayoutConstraint constraintsWithVisualFormat:@"|[searchBar]|" options:kNilOptions metrics:nil views:@{@"searchBar": searchBar}],
-//                                     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[searchBar]|" options:kNilOptions metrics:nil views:@{@"searchBar": searchBar}]];
-//            [NSLayoutConstraint activateConstraints:[constraints valueForKeyPath:@"@unionOfArrays.self"]];
-        }
-       
-        return headerView;
-    }
-    return nil;
-}
 
 #pragma mark *** QLPreviewControllerDataSource ***
 
@@ -255,42 +243,14 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
     }];
 }
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - lazy
-////////////////////////////////////////////////////////////////////////
-
-
-- (OSFileCollectionViewFlowLayout *)flowLayout {
+- (OSFileCollectionViewFlowLayout *)createDefaultFlowLayout {
     
-    if (_flowLayout == nil) {
-        
-        OSFileCollectionViewFlowLayout *layout = [OSFileCollectionViewFlowLayout new];
-        _flowLayout = layout;
-        [self updateCollectionViewFlowLayout:_flowLayout];
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        layout.sectionsStartOnNewLine = NO;
-        layout.headerSize = CGSizeMake(self.view.bounds.size.width, 44.0);
-    }
-    return _flowLayout;
+    OSFileCollectionViewFlowLayout *layout = [OSFileCollectionViewFlowLayout new];
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    layout.sectionsStartOnNewLine = NO;
+    return layout;
 }
 
-- (UICollectionView *)collectionView {
-    if (_collectionView == nil) {
-        
-        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
-        collectionView.dataSource = self;
-        collectionView.delegate = self;
-        collectionView.backgroundColor = [UIColor colorWithWhite:0.92 alpha:1.0];
-        [collectionView registerClass:[OSFileCollectionViewCell class] forCellWithReuseIdentifier:kSearchCellIdentifier];
-        [collectionView registerClass:[OSFileSearchCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"OSFileSearchCollectionHeaderView"];
-        _collectionView = collectionView;
-        _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
-        _collectionView.keyboardDismissMode = YES;
-        
-    }
-    return _collectionView;
-}
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -304,7 +264,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
         UIEdgeInsets contentInset = self.collectionView.contentInset;
         contentInset.left = 0.0;
         contentInset.right = 0.0;
-        _collectionView.contentInset = contentInset;
+        self.collectionView.contentInset = contentInset;
     }
     else {
         flowLayout.itemSpacing = 20.0;
@@ -312,7 +272,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
         UIEdgeInsets contentInset = self.collectionView.contentInset;
         contentInset.left = 20.0;
         contentInset.right = 20.0;
-        _collectionView.contentInset = contentInset;
+        self.collectionView.contentInset = contentInset;
         flowLayout.lineMultiplier = 1.19;
         
         UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
@@ -338,21 +298,25 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
 
 
 ////////////////////////////////////////////////////////////////////////
-#pragma mark - Layout
+#pragma mark - Notification
 ////////////////////////////////////////////////////////////////////////
-- (void)makeCollectionViewConstr {
-    
-//    if (@available(iOS 11.0, *)) {
-//        NSLayoutConstraint *top = [self.collectionView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor];
-//        NSLayoutConstraint *left = [self.collectionView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor];
-//        NSLayoutConstraint *right = [self.collectionView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor];
-//        NSLayoutConstraint *bottom = [self.collectionView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
-//        [NSLayoutConstraint activateConstraints:@[top, left, right, bottom]];
-//    } else {
-        NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
-//    }
+- (void)rotateToInterfaceOrientation {
+    [self updateViewFrame];
+    [self updateCollectionViewFlowLayout:(OSFileCollectionViewFlowLayout *)self.collectionView.collectionViewLayout];
+    /// 屏幕旋转时重新布局item
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////
+
+- (void)updateViewFrame {
+    CGFloat topMargin = self.searchController.searchBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGRect viewFrame = self.view.frame;
+    viewFrame.origin.y = topMargin;
+    viewFrame.size.height = [UIScreen mainScreen].bounds.size.height - topMargin;
+    self.view.frame = viewFrame;
 }
 
 @end

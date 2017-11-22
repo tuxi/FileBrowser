@@ -218,32 +218,30 @@ static const CGFloat windowHeight = 49.0;
     [self.view addSubview:self.collectionView];
     [self makeCollectionViewConstr];
     [self setupNodataView];
-//    [self setupSearchController];
+    [self setupSearchController];
 }
 
+/// 搜索功能暂时只支持iOS11
 - (void)setupSearchController {
-    OSFileSearchResultsController *resultsController = [[OSFileSearchResultsController alloc] init];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
-    //设置搜索时，背景变暗色
-    //self.searchController.dimsBackgroundDuringPresentation = NO;
-    // 设置搜索时，背景变模糊
-    if (@available(iOS 9.1, *)) {
-        self.searchController.obscuresBackgroundDuringPresentation = NO;
+    
+    if (@available(iOS 11.0, *)) {
+        OSFileSearchResultsController *resultsController = [[OSFileSearchResultsController alloc] initWithCollectionViewLayout:nil];
+        self.searchController = [[UISearchController alloc] initWithSearchResultsController:resultsController];
+        //设置搜索时，背景变暗色
+        self.searchController.dimsBackgroundDuringPresentation = NO;
+        // 设置搜索时，背景变模糊
+        if (@available(iOS 9.1, *)) {
+            self.searchController.obscuresBackgroundDuringPresentation = NO;
+        }
+        resultsController.searchController = self.searchController;
+        self.searchController.searchResultsUpdater = resultsController;
+        self.searchController.searchBar.showsCancelButton = YES;
+        self.searchController.searchBar.delegate = self;
+        self.searchController.delegate = self;
+        self.navigationItem.hidesSearchBarWhenScrolling = YES;
+        self.navigationItem.searchController = self.searchController;
     }
-    resultsController.searchController = self.searchController;
-    self.searchController.searchBar.showsCancelButton = YES;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
     
-    CGRect searchBarFrame = self.searchController.searchBar.frame;
-    CGRect viewFrame = self.view.frame;
-    self.searchController.searchBar.frame = CGRectMake(searchBarFrame.origin.x,
-                                                       searchBarFrame.origin.y,
-                                                       viewFrame.size.width,
-                                                       44.0);
-    
-    // Add SearchController's search bar to our  and bring it to front
-    [self.navigationController.navigationBar addSubview:self.searchController.searchBar];
 }
 
 - (void)setupNodataView {
@@ -803,26 +801,14 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.searchController.searchBar becomeFirstResponder]; //放主线程执行这个
+        [self.searchController.searchBar becomeFirstResponder];
     });
+    
 }
 
--(void)willPresentSearchController:(UISearchController *)aSearchController {
-    
-    aSearchController.searchBar.bounds = CGRectInset(aSearchController.searchBar.frame, 0.0f, 0.0f);
-    
-    // Set the position of the result's table view below the status bar and search bar
-    // Use of instance variable to do it only once, otherwise it goes down at every search request
-//    if (CGRectIsEmpty(_searchTableViewRect)) {
-//        CGRect tableViewFrame = ((UITableViewController *)aSearchController.searchResultsController).tableView
-//        .frame;
-//        tableViewFrame.origin.y = tableViewFrame.origin.y + 64; //status bar (20) + nav bar (44)
-//        tableViewFrame.size.height =  tableViewFrame.size.height;
-//
-//        _searchTableViewRect = tableViewFrame;
-//    }
-    
-//    [((UITableViewController *)aSearchController.searchResultsController).tableView setFrame:_searchTableViewRect];
+- (void)willPresentSearchController:(UISearchController *)aSearchController {
+    OSFileSearchResultsController *resultsVc = (OSFileSearchResultsController *)self.searchController.searchResultsController;
+    resultsVc.files = self.files;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -934,7 +920,6 @@ static const CGFloat windowHeight = 49.0;
         
         OSFileCollectionViewFlowLayout *layout = [OSFileCollectionViewFlowLayout new];
         _flowLayout = layout;
-        [self updateCollectionViewFlowLayout:_flowLayout];
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.sectionsStartOnNewLine = NO;
         layout.headerSize = CGSizeMake(self.view.bounds.size.width, 44.0);
@@ -963,6 +948,7 @@ static const CGFloat windowHeight = 49.0;
         else {
           _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
         }
+         [self updateCollectionViewFlowLayout:_flowLayout];
         _collectionView.keyboardDismissMode = YES;
        
     }
@@ -1288,17 +1274,21 @@ static const CGFloat windowHeight = 49.0;
     [self reloadFiles];
 }
 
+- (void)rotateToInterfaceOrientation {
+    [self updateCollectionViewFlowLayout:self.flowLayout];
+    /// 屏幕旋转时重新布局item
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+
 #pragma mark *** OSFileCollectionHeaderViewDelegate ***
 
 - (void)fileCollectionHeaderView:(OSFileCollectionHeaderView *)headerView clickedSearchButton:(UIButton *)searchButton {
-    //    OSFileSearchResultsController *svc = [[OSFileSearchResultsController alloc] init];
-    //    svc.files = self.files;
-    //    [self showDetailViewController:svc sender:self];
     
-    // 弹出搜索控制器
-    self.searchController.active = YES;
-    OSFileSearchResultsController *resultsVc = (OSFileSearchResultsController *)self.searchController.searchResultsController;
-    resultsVc.files = self.files;
+    if (!self.searchController.active) {
+        // 弹出搜索控制器
+        self.searchController.active = YES;
+    }
     
 }
 
@@ -1310,9 +1300,9 @@ static const CGFloat windowHeight = 49.0;
     }];
     [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof OSFileCollectionViewCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         [cell invalidateConstraints];
-        [UIView animateWithDuration:0.28 animations:^{
+        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionShowHideTransitionViews animations:^{
             [cell layoutIfNeeded];
-        }];
+        } completion:NULL];
     }];
     
     [self.flowLayout invalidateLayout];
@@ -1526,11 +1516,6 @@ __weak id _fileOperationDelegate;
 ////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////
-- (void)rotateToInterfaceOrientation {
-    [self updateCollectionViewFlowLayout:self.flowLayout];
-    /// 屏幕旋转时重新布局item
-    [self.collectionView.collectionViewLayout invalidateLayout];
-}
 
 - (void)updateCollectionViewFlowLayout:(OSFileCollectionViewFlowLayout *)flowLayout {
     if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == YES) {

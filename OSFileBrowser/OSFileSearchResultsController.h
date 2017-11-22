@@ -8,13 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class OSFileAttributeItem;
 
-@interface OSFileSearchResultsController : UIViewController <UISearchResultsUpdating>
+@interface OSFileSearchResultsController : UICollectionViewController <UISearchResultsUpdating>
 
 // 存放搜索列表中显示数据的数组
-@property (nonatomic, strong) NSMutableArray<OSFileAttributeItem *> *arrOfSeachResults;
+@property (nonatomic, strong) NSMutableArray<OSFileAttributeItem *> *arrayOfSeachResults;
 @property (nonatomic, strong) NSArray<OSFileAttributeItem *> *files;
 @property (nonatomic, weak) UISearchController *searchController;
 
+- (instancetype)initWithCollectionViewLayout:(nullable UICollectionViewLayout *)layout;
+
 @end
+
+NS_ASSUME_NONNULL_END
