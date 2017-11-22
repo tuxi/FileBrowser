@@ -14,7 +14,7 @@
 #import "OSFilePreviewViewController.h"
 #import "OSFileCollectionViewController.h"
 #import "MBProgressHUD+BBHUD.h"
-
+#import "OSFileBrowserAppearanceConfigs.h"
 
 static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController";
 
@@ -69,7 +69,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self updateViewFrame];
     
-    //获取搜索框中用户输入的字符串
+    // 获取搜索框中用户输入的字符串
     NSString *searchString = [searchController.searchBar text];
     // 指定过滤条件，SELF表示要查询集合中对象，contain[c]表示包含字符串，%@是字符串内容
     // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", searchString];
@@ -90,7 +90,6 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
     // 通过过滤条件过滤数据
     NSMutableArray<OSFileAttributeItem *> *result = [[self.files filteredArrayUsingPredicate:predicate] mutableCopy];
     self.arrayOfSeachResults = result;
-    // 刷新表格
     [self.collectionView reloadData];
 }
 
@@ -133,12 +132,11 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
         [rangeValue getValue:&range];
         
         // 添加属性(粗体)
-        [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:range];
+        [attribute addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:range];
         // 关键字高亮
-        [attribute addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+        [attribute addAttribute:NSForegroundColorAttributeName value:kFileViewerGlobleColor range:range];
     }
     
-    // 将带属性的字符串添加到cell.textLabel上.
     cell.fileModel.displayNameAttributedText = attribute;
 
     cell.fileModel = searchResult;

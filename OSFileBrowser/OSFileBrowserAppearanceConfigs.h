@@ -21,5 +21,13 @@ method_exchangeImplementations(originalMethod, swizzleMethod);\
 }\
 }
 
+#define dispatch_main_safe_async(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+
+#define kFileViewerGlobleColor [UIColor colorWithRed:36/255.0 green:41/255.0 blue:46/255.0 alpha:1.0]
 
 #endif /* OSFileBrowserAppearanceConfigs_h */
