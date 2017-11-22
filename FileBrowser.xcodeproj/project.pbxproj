@@ -45,6 +45,7 @@
 		D055BE4C1FC3B5360089C0C3 /* OSFileSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */; };
 		D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */; };
 		D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */; };
+		D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,8 @@
 		D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+OSStatusBarStyle.m"; path = "OSFileBrowser/UIViewController+OSStatusBarStyle.m"; sourceTree = "<group>"; };
 		D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+OSContainsEeachCharacter.m"; path = "OSFileBrowser/NSString+OSContainsEeachCharacter.m"; sourceTree = "<group>"; };
 		D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+OSStatusBarStyle.h"; path = "OSFileBrowser/UIViewController+OSStatusBarStyle.h"; sourceTree = "<group>"; };
+		D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertController+AlertExtensions.m"; path = "OSFileBrowser/UIAlertController+AlertExtensions.m"; sourceTree = "<group>"; };
+		D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertController+AlertExtensions.h"; path = "OSFileBrowser/UIAlertController+AlertExtensions.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */,
+				D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */,
 				D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */,
 				D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */,
 				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
@@ -367,6 +372,7 @@
 				18E3C7DF1FAA20BE00567350 /* NSString+OSFile.m in Sources */,
 				D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */,
 				18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */,
+				D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */,
 				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
 				18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
