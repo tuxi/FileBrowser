@@ -1282,7 +1282,11 @@ static const CGFloat windowHeight = 49.0;
         // 弹出搜索控制器
         self.searchController.active = YES;
     }
-    
+    else {
+        [self.searchController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)collectionReLayoutStyle {
