@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181F96AB1FCC468000237588 /* UIScrollView+RollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181F96AA1FCC468000237588 /* UIScrollView+RollView.m */; };
 		185A7F671FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F611FC1D8B600D66AC3 /* MBProgressHUD+BBHUD.m */; };
 		185A7F681FC1D8B700D66AC3 /* OSFileCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */; };
 		185A7F691FC1D8B700D66AC3 /* OSMimeTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F651FC1D8B700D66AC3 /* OSMimeTypeMap.m */; };
@@ -50,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		07AA40085D00647EE3E7C40A /* Pods-FileBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		181F96A91FCC468000237588 /* UIScrollView+RollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+RollView.h"; path = "OSFileBrowser/UIScrollView+RollView.h"; sourceTree = "<group>"; };
+		181F96AA1FCC468000237588 /* UIScrollView+RollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+RollView.m"; path = "OSFileBrowser/UIScrollView+RollView.m"; sourceTree = "<group>"; };
 		185A7F611FC1D8B600D66AC3 /* MBProgressHUD+BBHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+BBHUD.m"; path = "OSFileBrowser/MBProgressHUD+BBHUD.m"; sourceTree = "<group>"; };
 		185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionHeaderView.m; path = OSFileBrowser/OSFileCollectionHeaderView.m; sourceTree = "<group>"; };
 		185A7F631FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MBProgressHUD+BBHUD.h"; path = "OSFileBrowser/MBProgressHUD+BBHUD.h"; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				181F96A91FCC468000237588 /* UIScrollView+RollView.h */,
+				181F96AA1FCC468000237588 /* UIScrollView+RollView.m */,
 				D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */,
 				D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */,
 				D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */,
@@ -364,6 +369,7 @@
 				18E3C7DA1FAA20BE00567350 /* NSDate+ESUtilities.m in Sources */,
 				18E3C7DB1FAA20BE00567350 /* OSFileAttributeItem.h in Sources */,
 				185A7F691FC1D8B700D66AC3 /* OSMimeTypeMap.m in Sources */,
+				181F96AB1FCC468000237588 /* UIScrollView+RollView.m in Sources */,
 				18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */,
 				18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */,
 				D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */,

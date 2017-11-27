@@ -21,7 +21,7 @@
 #import "OSFileCollectionHeaderView.h"
 #import "OSFileSearchResultsController.h"
 #import "OSFileBrowserAppearanceConfigs.h"
-
+#import "UIScrollView+RollView.h"
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
@@ -36,7 +36,7 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 static const CGFloat windowHeight = 49.0;
 
 #ifdef __IPHONE_9_0
-@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
+@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, XYRollViewScrollDelegate>
 #else
 @interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
 #endif
@@ -47,8 +47,6 @@ static const CGFloat windowHeight = 49.0;
 
 @property (nonatomic, strong) OSFileCollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
-@property (nonatomic, copy) void (^longPressCallBack)(NSIndexPath *indexPath);
 @property (nonatomic, strong) NSOperationQueue *loadFileQueue;
 @property (nonatomic, strong) OSFileManager *fileManager;
 @property (nonatomic, strong) NSArray<NSString *> *directoryArray;
@@ -157,6 +155,11 @@ static const CGFloat windowHeight = 49.0;
     [self reloadFilesWithCallBack:^{
         [weakSelf showBottomTip];
     }];
+    
+    self.collectionView.rollingDelegate = self;
+    
+    
+    self.collectionView.autoRollCellSpeed = 20;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -553,11 +556,7 @@ static const CGFloat windowHeight = 49.0;
             // 支持3D Touch
             if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)]) {
                 [self registerForPreviewingWithDelegate:self sourceView:self.view];
-                self.longPress.enabled = NO;
             }
-        } else {
-            // 不支持3D Touch
-            self.longPress.enabled = YES;
         }
     }
 }
@@ -836,30 +835,20 @@ static const CGFloat windowHeight = 49.0;
     return self.view.frame;
 }
 
-#pragma mark *** Actions ***
+#pragma mark *** XYRollViewScrollDelegate ***
 
-- (UILongPressGestureRecognizer *)longPress {
+- (void)rollView:(UIScrollView *)scrollView didRollingWithBeginIndexPath:(NSIndexPath *)beginRollIndexPath lastRollIndexPath:(NSIndexPath *)lastRollIndexPath fingerIndexPath:(NSIndexPath *)fingerIndexPath {
     
-    if (!_longPress) {
-        _longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(showPeek:)];
-        [self.view addGestureRecognizer:_longPress];
-    }
-    return _longPress;
 }
 
-- (void)showPeek:(UILongPressGestureRecognizer *)longPress {
-    if (longPress.state == UIGestureRecognizerStateBegan) {
-        CGPoint point = [longPress locationInView:self.collectionView];
-        NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-        
-        if (self.longPressCallBack) {
-            self.longPressCallBack(indexPath);
-        }
-        
-        self.longPress.enabled = NO;
-        UIViewController *vc = [self previewControllerByIndexPath:indexPath];
-        [self showDetailController:vc atIndexPath:indexPath];
-    }
+- (void)rollView:(UIScrollView *)scrollView stopRollingWithBeginIndexPath:(NSIndexPath *)beginRollIndexPath lastRollIndexPath:(NSIndexPath *)lastRollIndexPath fingerIndexPath:(NSIndexPath *)fingerIndexPath waitingDuration:(NSTimeInterval)waitingDuration {
+    
+    
+}
+
+- (void)rollView:(UIScrollView *)scrollView didRollingWithBeginIndexPath:(NSIndexPath *)beginRollIndexPath inSameIndexPath:(NSIndexPath *)fingerIndexPath waitingDuration:(NSTimeInterval)waitingDuration {
+    
+    [self.view bb_showMessage:@(waitingDuration).stringValue];
 }
 
 #pragma mark *** Layout ***
@@ -1417,7 +1406,7 @@ completionHandler:(void (^)(void))completion {
     
 }
 
-#pragma mark *** _fileOperationDelegate ***
+#pragma mark *** FileOperationDelegate ***
 __weak id _fileOperationDelegate;
 
 + (id<OSFileCollectionViewControllerFileOptionDelegate>)fileOperationDelegate {
