@@ -105,7 +105,7 @@ static const CGFloat windowHeight = 49.0;
     
     [self initWatcherFolder];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionFileCompletion:) name:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionReLayoutStyle) name:OSFileCollectionLayoutStyleDidChangeNotification object:nil];
     
@@ -1424,7 +1424,8 @@ __weak id _fileOperationDelegate;
 }
 
 - (CGPoint)contentOffsetForNoDataPlaceholder:(UIScrollView *)scrollView {
-    if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
         return CGPointMake(0, 120.0);
     }
     return CGPointMake(0, 80.0);
@@ -1522,9 +1523,9 @@ __weak id _fileOperationDelegate;
         contentInset.right = 20.0;
         _collectionView.contentInset = contentInset;
         flowLayout.lineMultiplier = 1.19;
-      
-        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-        if (orientation == UIDeviceOrientationPortrait) {
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
                 flowLayout.lineItemCount = 6;
             }
@@ -1533,7 +1534,7 @@ __weak id _fileOperationDelegate;
             }
             
         }
-        else if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        else {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
                 flowLayout.lineItemCount = 10;
             }

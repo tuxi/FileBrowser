@@ -44,7 +44,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
 }
 
 - (void)commonInit {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
 - (void)setupViews {
@@ -274,8 +274,9 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
         self.collectionView.contentInset = contentInset;
         flowLayout.lineMultiplier = 1.19;
         
-        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-        if (orientation == UIDeviceOrientationPortrait) {
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
                 flowLayout.lineItemCount = 6;
             }
@@ -284,7 +285,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
             }
             
         }
-        else if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        else {
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
                 flowLayout.lineItemCount = 10;
             }
