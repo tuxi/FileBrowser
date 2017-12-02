@@ -7,6 +7,7 @@
 //
 
 #import "NSString+OSFile.h"
+#import "OSFile.h"
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
@@ -24,6 +25,8 @@
 #endif
 
 @implementation NSString (OSFile)
+
+static NSMutableArray *_markupFiles;
 
 + (NSString *)transformedFileSizeValue:(NSNumber *)value {
     
@@ -375,6 +378,76 @@
     }
     
     return state;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+#pragma mark - 文件标记
+////////////////////////////////////////////////////////////////////////
+
++ (void)setFileMarkupWithPath:(NSString *)path {
+    if (!path.length) {
+        return;
+    }
+    
+    _markupFiles = [self markupFilePathsWithNeedReload:YES].mutableCopy;
+    
+    if (!_markupFiles) {
+        _markupFiles = @[path].mutableCopy;
+    }
+    else {
+        [_markupFiles insertObject:path atIndex:0];
+    }
+    
+    NSString *markPath = [self getMarkupCachePath];
+    
+    BOOL res = [_markupFiles writeToFile:markPath atomically:YES];
+    if (!res) {
+        
+    }
+}
+
++ (NSArray<NSString *> *)markupFilePathsWithNeedReload:(BOOL)reload {
+    if (reload) {
+        NSString *markPath = [self getMarkupCachePath];
+        NSMutableArray *markFiles = [[NSMutableArray alloc] initWithContentsOfFile:markPath];
+        _markupFiles = markFiles;
+    }
+    
+    if (!_markupFiles) {
+        return @[];
+    }
+    
+    return _markupFiles;
+}
+
++ (NSArray<OSFile *> *)markupFilesWithNeedReload:(BOOL)reload {
+    NSArray *array = [self markupFilePathsWithNeedReload:reload];
+    NSMutableArray *files = @[].mutableCopy;
+    [array enumerateObjectsUsingBlock:^(NSString *  _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
+        OSFile *file = [OSFile fileWithPath:path error:nil];
+        if (file) {
+            [files addObject:file];
+        }
+    }];
+    return files;
+}
+
++ (NSString *)getOSFileBrowserCachePath {
+    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *fullPath = [cachePath stringByAppendingPathComponent:@"OSFileBrowserCache"];
+    BOOL isExist, isDirectory;
+    isExist = [[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDirectory];
+    if (!isExist || !isDirectory) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return fullPath;
+}
+
++ (NSString *)getMarkupCachePath {
+    NSString *cache = [self getOSFileBrowserCachePath];
+    NSString *markup = [cache stringByAppendingPathComponent:@"markup.plist"];
+    return markup;
 }
 
 @end

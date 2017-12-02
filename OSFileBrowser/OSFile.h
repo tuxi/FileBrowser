@@ -150,6 +150,8 @@ OSFileFlags;
 /// @param error 返回错误信息
 /// @return 如果当前文件不存在了，会返回NO
 - (BOOL)reloadFileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error;
+/// 文件标记
+- (BOOL)fileMarkup;
 
 @end
 

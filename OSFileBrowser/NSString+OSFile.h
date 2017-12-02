@@ -18,6 +18,8 @@ typedef enum {
 }
 OSFileType;
 
+@class OSFile;
+
 @interface NSString (OSFile)
 
 + (NSString *)transformedFileSizeValue:(NSNumber *)value;
@@ -50,6 +52,13 @@ OSFileType;
 + (NSString *)getICloudCacheFolder;
 
 - (OSFileType)os_fileType;
+
+/// 获取标记的文件列表
+/// @param reload 是否重新读取本地存储的标记文件，如果是NO就直接从内存中读取记录
++ (NSArray<OSFile *> *)markupFilesWithNeedReload:(BOOL)reload;
++ (NSArray<NSString *> *)markupFilePathsWithNeedReload:(BOOL)reload;
+
++ (void)setFileMarkupWithPath:(NSString *)path;
 
 @end
 
