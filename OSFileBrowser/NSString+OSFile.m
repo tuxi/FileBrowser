@@ -381,57 +381,6 @@ static NSMutableArray *_markupFiles;
 }
 
 
-////////////////////////////////////////////////////////////////////////
-#pragma mark - 文件标记
-////////////////////////////////////////////////////////////////////////
-
-+ (void)setFileMarkupWithPath:(NSString *)path {
-    if (!path.length) {
-        return;
-    }
-    
-    _markupFiles = [self markupFilePathsWithNeedReload:YES].mutableCopy;
-    
-    if (!_markupFiles) {
-        _markupFiles = @[path].mutableCopy;
-    }
-    else {
-        [_markupFiles insertObject:path atIndex:0];
-    }
-    
-    NSString *markPath = [self getMarkupCachePath];
-    
-    BOOL res = [_markupFiles writeToFile:markPath atomically:YES];
-    if (!res) {
-        
-    }
-}
-
-+ (NSArray<NSString *> *)markupFilePathsWithNeedReload:(BOOL)reload {
-    if (reload) {
-        NSString *markPath = [self getMarkupCachePath];
-        NSMutableArray *markFiles = [[NSMutableArray alloc] initWithContentsOfFile:markPath];
-        _markupFiles = markFiles;
-    }
-    
-    if (!_markupFiles) {
-        return @[];
-    }
-    
-    return _markupFiles;
-}
-
-+ (NSArray<OSFile *> *)markupFilesWithNeedReload:(BOOL)reload {
-    NSArray *array = [self markupFilePathsWithNeedReload:reload];
-    NSMutableArray *files = @[].mutableCopy;
-    [array enumerateObjectsUsingBlock:^(NSString *  _Nonnull path, NSUInteger idx, BOOL * _Nonnull stop) {
-        OSFile *file = [OSFile fileWithPath:path error:nil];
-        if (file) {
-            [files addObject:file];
-        }
-    }];
-    return files;
-}
 
 + (NSString *)getOSFileBrowserCachePath {
     NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
@@ -449,5 +398,4 @@ static NSMutableArray *_markupFiles;
     NSString *markup = [cache stringByAppendingPathComponent:@"markup.plist"];
     return markup;
 }
-
 @end

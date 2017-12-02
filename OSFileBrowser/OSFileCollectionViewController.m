@@ -26,6 +26,7 @@
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification = @"OptionSelectedFileForMoveNotification";
+NSNotificationName const OSFileCollectionViewControllerDidMarkupFileNotification = @"OSFileCollectionViewControllerDidMarkupFileNotification";
 
 typedef NS_ENUM(NSInteger, OSFileLoadType) {
     OSFileLoadTypeCurrentDirectory,
@@ -110,7 +111,7 @@ static const CGFloat windowHeight = 49.0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionReLayoutStyle) name:OSFileCollectionLayoutStyleDidChangeNotification object:nil];
     
     [self setupNavigationBar];
-
+    
 }
 
 
@@ -157,9 +158,8 @@ static const CGFloat windowHeight = 49.0;
     }];
     
     self.collectionView.rollingDelegate = self;
-    
-    
     self.collectionView.autoRollCellSpeed = 20;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -194,6 +194,16 @@ static const CGFloat windowHeight = 49.0;
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self bottomTipButton].hidden = YES;
+}
+
+- (void)setDisplayMarkupFiles:(BOOL)displayMarkupFiles {
+    _displayMarkupFiles = displayMarkupFiles;
+    if (displayMarkupFiles) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(markupFileCompletion) name:OSFileCollectionViewControllerDidMarkupFileNotification object:nil];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:OSFileCollectionViewControllerDidMarkupFileNotification object:nil];
+    }
 }
 
 - (void)dealloc {
@@ -333,7 +343,7 @@ static const CGFloat windowHeight = 49.0;
     
     // 如果数组中只有下载文件夹和iTunes文件夹，就不能显示编辑
     BOOL displayEdit = YES;
-    if (self.directoryArray) {
+    if (self.directoryArray && !self.displayMarkupFiles) {
         NSIndexSet *set = [self.files indexesOfObjectsPassingTest:^BOOL(OSFileAttributeItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
             return [item isRootDirectory];
         }];
@@ -464,7 +474,7 @@ static const CGFloat windowHeight = 49.0;
             NSError *error = nil;
             OSFileAttributeItem *model = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:_hideDisplayFiles error:&error];
             if (model) {
-                model.isRootDirectory = YES;
+                model.isRootDirectory = !self.displayMarkupFiles;
                 if (self.mode == OSFileCollectionViewControllerModeEdit) {
                     model.status = OSFileAttributeItemStatusEdit;
                 }
@@ -665,15 +675,15 @@ static const CGFloat windowHeight = 49.0;
     if (!viewController) {
         return;
     }
-//    if ([viewController isKindOfClass:[OSFileCollectionViewController class]]) {
-//        OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
-//        [self.navigationController showViewController:vc sender:self];
-//    }
-//    else {
-//
-//        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
-//        [self.navigationController showViewController:viewController sender:self];
-//    }
+    //    if ([viewController isKindOfClass:[OSFileCollectionViewController class]]) {
+    //        OSFileCollectionViewController *vc = (OSFileCollectionViewController *)viewController;
+    //        [self.navigationController showViewController:vc sender:self];
+    //    }
+    //    else {
+    //
+    //        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
+    //        [self.navigationController showViewController:viewController sender:self];
+    //    }
     [self.navigationController showViewController:viewController sender:self];
 }
 
@@ -711,10 +721,10 @@ static const CGFloat windowHeight = 49.0;
         }
         
     }
-//    else if ([rootViewController isKindOfClass:NSClassFromString(@"ICSDrawerController")]) {
-//        ICSDrawerController *vc = (ICSDrawerController *)rootViewController;
-//        [self backButtonClickWithRootViewController:vc.ics_visibleViewController];
-//    }
+    //    else if ([rootViewController isKindOfClass:NSClassFromString(@"ICSDrawerController")]) {
+    //        ICSDrawerController *vc = (ICSDrawerController *)rootViewController;
+    //        [self backButtonClickWithRootViewController:vc.ics_visibleViewController];
+    //    }
 }
 
 - (UIViewController *)previewControllerWithFilePath:(NSString *)filePath {
@@ -837,6 +847,10 @@ static const CGFloat windowHeight = 49.0;
 
 #pragma mark *** XYRollViewScrollDelegate ***
 
+- (BOOL)rollView:(UIScrollView *)scrollView shouldNeedExchangeDataSourceFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    return NO;
+}
+
 - (void)rollView:(UIScrollView *)scrollView didRollingWithBeginIndexPath:(NSIndexPath *)beginRollIndexPath lastRollIndexPath:(NSIndexPath *)lastRollIndexPath fingerIndexPath:(NSIndexPath *)fingerIndexPath {
     
 }
@@ -928,11 +942,11 @@ static const CGFloat windowHeight = 49.0;
             _collectionView.contentInset = inset;
         }
         else {
-          _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
+            _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
         }
-         [self updateCollectionViewFlowLayout:_flowLayout];
+        [self updateCollectionViewFlowLayout:_flowLayout];
         _collectionView.keyboardDismissMode = YES;
-       
+        
     }
     return _collectionView;
 }
@@ -1248,6 +1262,12 @@ static const CGFloat windowHeight = 49.0;
     [self reloadCollectionData];
 }
 
+- (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell didMarkupFile:(OSFileAttributeItem *)fileModel {
+    [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerDidMarkupFileNotification object:fileModel.path];
+    
+    [self reloadCollectionData];
+}
+
 #pragma mark *** Notification ***
 /// 文件操作文件，比如复制、移动文件完成
 - (void)optionFileCompletion:(NSNotification *)notification {
@@ -1294,6 +1314,14 @@ static const CGFloat windowHeight = 49.0;
     [self.flowLayout invalidateLayout];
 }
 
+- (void)markupFileCompletion {
+    self.directoryArray = [OSFile markupFilePathsWithNeedReload:NO];
+    [self reloadFilesWithCallBack:^{
+        
+    }];
+    
+}
+
 
 #pragma mark *** File operation ***
 
@@ -1308,9 +1336,9 @@ completionHandler:(void (^)(void))completion {
     UIView *view = (UIView *)[UIApplication sharedApplication].delegate.window;
     __weak typeof(&*self) weakSelf = self;
     [view bb_showProgressWithActionCallBack:^(MBProgressHUD *hud) {
-         __strong typeof(&*weakSelf) self = weakSelf;
+        __strong typeof(&*weakSelf) self = weakSelf;
         [self.fileManager cancelAllOperation];
-         hud.label.text = @"已取消";
+        hud.label.text = @"已取消";
         if (completion) {
             completion();
         }
