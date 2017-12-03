@@ -27,6 +27,7 @@ NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotif
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification = @"OptionSelectedFileForMoveNotification";
 NSNotificationName const OSFileCollectionViewControllerDidMarkupFileNotification = @"OSFileCollectionViewControllerDidMarkupFileNotification";
+NSNotificationName const OSFileCollectionViewControllerNeedOpenDownloadPageNotification = @"OSFileCollectionViewControllerNeedOpenDownloadPageNotification";
 
 typedef NS_ENUM(NSInteger, OSFileLoadType) {
     OSFileLoadTypeCurrentDirectory,
@@ -199,7 +200,12 @@ static const CGFloat windowHeight = 49.0;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self reloadCollectionData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (!self.collectionView.indexPathsForVisibleItems.count) {
+            [self reloadCollectionData];
+        }
+    });
+    
 }
 
 - (void)setDisplayMarkupFiles:(BOOL)displayMarkupFiles {
@@ -252,6 +258,12 @@ static const CGFloat windowHeight = 49.0;
         self.searchController.delegate = self;
         self.navigationItem.hidesSearchBarWhenScrolling = YES;
         self.navigationItem.searchController = self.searchController;
+        
+//        self.searchController.searchBar.tintColor = [UIColor whiteColor];
+//        self.searchController.searchBar.clipsToBounds = YES;
+//        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
+//        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
+        
     }
     
 }
@@ -812,6 +824,9 @@ static const CGFloat windowHeight = 49.0;
         [self.searchController.searchBar becomeFirstResponder];
     });
     
+//    UITextField *searchField = [self.searchController.searchBar valueForKey:@"_searchField"];
+//    searchField.textColor = [UIColor whiteColor];
+    
 }
 
 - (void)willPresentSearchController:(UISearchController *)aSearchController {
@@ -1172,7 +1187,9 @@ static const CGFloat windowHeight = 49.0;
         }
         if (!desDirectors.count) {
             desDirectors = @[
+#if DEBUG
                              [NSString getICloudCacheFolder],
+#endif
                              [NSString getDocumentPath]];
         }
         OSFileCollectionViewController *vc = [[OSFileCollectionViewController alloc] initWithDirectoryArray:desDirectors controllerMode:mode];
@@ -1312,14 +1329,14 @@ static const CGFloat windowHeight = 49.0;
     }];
     [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof OSFileCollectionViewCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         [cell invalidateConstraints];
-        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [cell layoutIfNeeded];
-        } completion:^(BOOL finished) {
-            //            [self reloadCollectionData];
-        }];
+        //        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        //            [cell.contentView layoutIfNeeded];
+        //        } completion:^(BOOL finished) {
+        //
+        //        }];
     }];
     [self.flowLayout invalidateLayout];
-    [self reloadCollectionData];
+    //    [self reloadCollectionData];
 }
 
 - (void)markupFileCompletion {
@@ -1496,8 +1513,8 @@ __weak id _fileOperationDelegate;
 
 - (void)noDataPlaceholder:(UIScrollView *)scrollView didClickReloadButton:(UIButton *)button {
     if ([self.rootDirectoryItem isDownloadBrowser]) {
-        self.tabBarController.selectedIndex = 1;
-        self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerNeedOpenDownloadPageNotification object:nil];
+        //        self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
     }
 }
 
@@ -1541,7 +1558,7 @@ __weak id _fileOperationDelegate;
 ////////////////////////////////////////////////////////////////////////
 
 - (void)updateCollectionViewFlowLayout:(OSFileCollectionViewFlowLayout *)flowLayout {
-    if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == YES) {
+    if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == OSFileCollectionLayoutStyleSingleItemOnLine) {
         flowLayout.itemSpacing = 10.0;
         flowLayout.lineSpacing = 10.0;
         flowLayout.lineItemCount = 1;
