@@ -70,6 +70,9 @@ typedef void(^BBHUDActionCallBack)(MBProgressHUD *hud);
 
 @interface MBProgressHUD (BBHUD)
 
+/// button 距离边距控件的顶部和底部间距值
+@property (nonatomic) CGFloat buttonPadding;
+
 #pragma mark *** Text hud ***
 
 /// 显示文本样式的hud，不会自动隐藏，必须手动调用hide
@@ -140,5 +143,6 @@ typedef void(^BBHUDActionCallBack)(MBProgressHUD *hud);
 + (void)bb_hideHUD;
 
 @end
+
 
 
