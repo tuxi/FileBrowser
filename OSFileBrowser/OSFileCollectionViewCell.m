@@ -271,19 +271,19 @@
     if (self.fileModel.alreadyMarked) {
         isSuccess = [self.fileModel cancelMarkup];
         if (isSuccess) {
-            [MBProgressHUD bb_showMessage:@"取消标记成功"];
+            [MBProgressHUD bb_showMessage:@"取消标记成功" delayTime:0.8];
         }
         else {
-            [MBProgressHUD bb_showMessage:@"取消标记失败"];
+            [MBProgressHUD bb_showMessage:@"取消标记失败" delayTime:0.8];
         }
     }
     else {
         isSuccess = [self.fileModel markup];
         if (isSuccess) {
-            [MBProgressHUD bb_showMessage:@"标记成功"];
+            [MBProgressHUD bb_showMessage:@"标记成功" delayTime:0.8];
         }
         else {
-            [MBProgressHUD bb_showMessage:@"标记失败"];
+            [MBProgressHUD bb_showMessage:@"标记失败" delayTime:0.8];
         }
     }
     if (isSuccess) {
@@ -292,6 +292,7 @@
         }
     }
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -302,10 +303,10 @@
     // 添加通用布局
     NSLayoutConstraint *iconViewTop = [NSLayoutConstraint constraintWithItem:self.iconView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:10.0];
     _iconViewTop = iconViewTop;
-    
+
     NSLayoutConstraint *iconViewLeft = [NSLayoutConstraint constraintWithItem:self.iconView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:10.0];
     _iconViewLeft = iconViewLeft;
-    
+
     
     NSLayoutConstraint *subTitleLabelBottom = [NSLayoutConstraint constraintWithItem:self.subTitleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-6.0];
     _subTitleLabelBottom = subTitleLabelBottom;
@@ -322,7 +323,7 @@
     NSLayoutConstraint *starImageViewLeft = [NSLayoutConstraint constraintWithItem:self.starImageView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.iconView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-3.0];
     NSLayoutConstraint *starImageViewTop = [NSLayoutConstraint constraintWithItem:self.starImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.iconView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-3.0];
     NSLayoutConstraint *starImageViewWidth = [NSLayoutConstraint constraintWithItem:self.starImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:15.0];
-    NSLayoutConstraint *starImageViewHeight = [NSLayoutConstraint constraintWithItem:self.starImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:15.0];
+     NSLayoutConstraint *starImageViewHeight = [NSLayoutConstraint constraintWithItem:self.starImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:15.0];
     
     NSArray *constraints = @[
                              iconViewTop, iconViewLeft,
@@ -332,16 +333,16 @@
     
     // 根据style更新布局
     [self invalidateConstraints];
-    
+  
 }
 
 - (void)invalidateConstraints {
     
     NSMutableArray *deactivateConstraints = @[].mutableCopy;
-    NSMutableArray *activateConstraints = @[].mutableCopy;
+     NSMutableArray *activateConstraints = @[].mutableCopy;
     if ([OSFileCollectionViewFlowLayout collectionLayoutStyle] == YES) {
         self.titleLabel.numberOfLines = 1;
-        
+
         _iconViewLeft.constant = 10.0;
         _iconViewTop.constant = 10.0;
         _subTitleLabelBottom.constant = -6.0;
@@ -444,7 +445,7 @@
         if (_titleLabelTop) {
             [NSLayoutConstraint deactivateConstraints:@[_titleLabelTop]];
         }
-        
+
         
         if (_titleLabelLeft) {
             [NSLayoutConstraint deactivateConstraints:@[_titleLabelLeft]];
@@ -459,7 +460,7 @@
         NSLayoutConstraint *titleLabelRight = [NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:-3.0];
         _titleLabelRight = titleLabelRight;
         [activateConstraints addObject:titleLabelRight];
-        
+
         if (!_optionBtnBottom) {
             NSLayoutConstraint *optionBtnBottom = [NSLayoutConstraint constraintWithItem:self.optionBtn attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
             _optionBtnBottom = optionBtnBottom;
@@ -476,7 +477,7 @@
     if (activateConstraints.count) {
         [NSLayoutConstraint activateConstraints:activateConstraints];
     }
-    
+
 }
 
 - (UIButton *)optionBtn {

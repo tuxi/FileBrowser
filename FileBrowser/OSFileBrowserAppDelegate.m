@@ -23,7 +23,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     OSFileCollectionViewController *vc =
-    [[OSFileCollectionViewController alloc] initWithDirectoryArray:@[
+    [[OSFileCollectionViewController alloc] initWithFilePathArray:@[
                                                                    [NSString getRootPath],
                                                                    [NSString getDocumentPath]] controllerMode:OSFileCollectionViewControllerModeDefault];
     

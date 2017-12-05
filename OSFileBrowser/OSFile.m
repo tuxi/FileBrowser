@@ -12,6 +12,9 @@
 #import "NSDate+ESUtilities.h"
 #import "OSMimeTypeMap.h"
 #import "UIImage+XYImage.h"
+//#import "AppGroupManager.h"
+#import "OSFileHelper.h"
+#import "OSFileBrowserAppearanceConfigs.h"
 
 static NSString * const AppGroupPrefixString = @"/private/var/mobile/Containers/Shared/AppGroup/";
 static NSString * const AppSandBoxPrefixString = @"/var/mobile/Containers/Data/Application/";
@@ -68,6 +71,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
 @synthesize hideDisplayFiles            = _hideDisplayFiles;
 @synthesize mimeType                    = _mimeType;
 @synthesize alreadyMarked               = _alreadyMarked;
+@synthesize pathOfSubFiles              = _pathOfSubFiles;
 
 + (instancetype)fileWithPath:(NSString *)filePath {
     return [self fileWithPath:filePath error:NULL];
@@ -117,7 +121,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
 
 - (BOOL)reloadFileWithPath:(NSString *)filePath error:(NSError *__autoreleasing *)error {
     _path        = [filePath copy];
-    return [self reloadFileWithError:error];
+   return [self reloadFileWithError:error];
 }
 
 - (BOOL)reloadFileWithError:(NSError *__autoreleasing *)error {
@@ -149,7 +153,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
          系统中某些文件没有权限加载
          Error Domain=NSCocoaErrorDomain Code=257 "The file “var” couldn’t be opened because you don’t have permission to view it." UserInfo={NSFilePath=/var, NSUserStringVariant=(
          Folder
-         ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
+        ), NSUnderlyingError=0x1c8044c20 {Error Domain=NSPOSIXErrorDomain Code=1 "Operation not permitted"}}
          */
         NSArray *array = nil;
         if ([path isEqualToString:@"/System"]) {
@@ -171,9 +175,9 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
     };
     
     if(_isDirectory == YES) {
-        _subFiles = [_fileManager contentsOfDirectoryAtPath: _path error: &e];
+        _nameOfSubFiles = [_fileManager contentsOfDirectoryAtPath: _path error: &e];
         if (e) {
-            _subFiles = processFileBlock(_path);
+            _nameOfSubFiles = processFileBlock(_path);
             if (error) {
                 *error = e;
             }
@@ -207,16 +211,28 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
     }
     
     [self getSubTypes];
-    [self sortedSubFiles];
+    [self getPathOfSubFiles];
     [self getIcon];
     return YES;
 }
 
-- (void)removeHideFiles {
-    if (!self.subFiles.count) {
+- (void)getPathOfSubFiles {
+    if (!_nameOfSubFiles.count) {
         return;
     }
-    NSMutableArray *tempFiles = [self.subFiles mutableCopy];
+    NSMutableArray *tempPaths = @[].mutableCopy;
+    [self.nameOfSubFiles enumerateObjectsUsingBlock:^(NSString *  _Nonnull name, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *path = [self.path stringByAppendingPathComponent:name];
+        [tempPaths addObject:path];
+    }];
+    _pathOfSubFiles = tempPaths.copy;
+}
+
+- (void)removeHideFiles {
+    if (!self.nameOfSubFiles.count) {
+        return;
+    }
+    NSMutableArray *tempFiles = [self.nameOfSubFiles mutableCopy];
     NSIndexSet *indexSet = [tempFiles indexesOfObjectsPassingTest:^BOOL(NSString * _Nonnull fileName, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([fileName isKindOfClass:[NSString class]]) {
             return [fileName hasPrefix:@"."];
@@ -224,11 +240,11 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
         return NO;
     }];
     [tempFiles removeObjectsAtIndexes:indexSet];
-    _subFiles = tempFiles.copy;
+    _nameOfSubFiles = tempFiles.copy;
 }
 
 - (NSUInteger)numberOfSubFiles {
-    return _subFiles.count;
+    return _nameOfSubFiles.count;
 }
 
 #pragma mark *** Private methods ***
@@ -407,22 +423,6 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
     _HFSTypeCode      = ([_attributes objectForKey: NSFileHFSTypeCode]      == nil) ? 0 : (NSUInteger)[[_attributes objectForKey: NSFileHFSTypeCode]      integerValue];
 }
 
-- (void)sortedSubFiles {
-    _subFiles =  [_subFiles sortedArrayWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(NSString* file1, NSString* file2) {
-        NSString *newPath1 = [self.path stringByAppendingPathComponent:file1];
-        NSString *newPath2 = [self.path stringByAppendingPathComponent:file2];
-        
-        BOOL isDirectory1, isDirectory2;
-        [[NSFileManager defaultManager] fileExistsAtPath:newPath1 isDirectory:&isDirectory1];
-        [[NSFileManager defaultManager] fileExistsAtPath:newPath2 isDirectory:&isDirectory2];
-        
-        if (isDirectory1 && !isDirectory2) {
-            return NSOrderedAscending;
-        }
-        
-        return  NSOrderedDescending;
-    }];
-}
 
 - (void)getSubTypes {
     OSFile * infos;
@@ -441,7 +441,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
           || [[infos.fileExtension lowercaseString] isEqualToString: @"m4r"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"3gp"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"wav"])
-         )
+        )
     {
         _isAudio = YES;
     }
@@ -456,7 +456,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
           || [[infos.fileExtension lowercaseString] isEqualToString: @"mp4"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"mov"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"wmv"])
-         )
+        )
     {
         _isVideo = YES;
     }
@@ -476,7 +476,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
           || [[infos.fileExtension lowercaseString] isEqualToString: @"cur"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"xbm"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"webp"])
-         )
+        )
     {
         _isImage = YES;
     }
@@ -492,7 +492,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
           || [[infos.fileExtension lowercaseString] isEqualToString: @"dmg"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"app"]
           || [[infos.fileExtension lowercaseString] isEqualToString: @"ipa"])
-         )
+        )
     {
         _isArchive = YES;
     }
@@ -501,7 +501,7 @@ static NSNotificationName OSFileDidCancelMarkupedNotification = @"OSFileDidCance
         (
          infos.isRegularFile &&
          ([[infos.fileExtension lowercaseString] isEqualToString: @"exe"])
-         )
+        )
     {
         _isWindows = YES;
     }
@@ -638,26 +638,26 @@ static NSMutableArray *_markupFiles;
         NSMutableArray *markFiles = [[NSMutableArray alloc] initWithContentsOfFile:markPath];
         [markFiles enumerateObjectsUsingBlock:^(NSString *  _Nonnull markupPath, NSUInteger idx, BOOL * _Nonnull stop) {
             // 文件路径更新
-            if ([self isInAppGroupWithPath:markupPath]) {
+//            if ([self isInAppGroupWithPath:markupPath]) {
 //                NSString *str1 = [markupPath componentsSeparatedByString:AppGroupPrefixString].lastObject;
 //                NSRange range = [str1 rangeOfString:@"/"];
 //                NSString *lastFilePath = [str1 substringFromIndex:range.location];
-//                
+//
 //                NSString *str2 = [[AppGroupManager getAPPGroupHomePath] componentsSeparatedByString:AppGroupPrefixString].lastObject;
 //                NSString *needReplaceStr = [str2 componentsSeparatedByString:@"/"].firstObject;
-//                
+//
 //                markupPath = [NSString stringWithFormat:@"%@%@%@", AppGroupPrefixString, needReplaceStr, lastFilePath];
-            }
-            else {
+//            }
+//            else {
                 NSString *str1 = [markupPath componentsSeparatedByString:AppSandBoxPrefixString].lastObject;
                 NSRange range = [str1 rangeOfString:@"/"];
                 NSString *lastFilePath = [str1 substringFromIndex:range.location];
-                
+
                 NSString *str2 = [NSHomeDirectory() componentsSeparatedByString:AppSandBoxPrefixString].lastObject;
                 NSString *needReplaceStr = [str2 componentsSeparatedByString:@"/"].firstObject;
-                
+
                 markupPath = [NSString stringWithFormat:@"%@%@%@", AppSandBoxPrefixString, needReplaceStr, lastFilePath];
-            }
+//            }
             [markFiles replaceObjectAtIndex:idx withObject:markupPath];
             
         }];
