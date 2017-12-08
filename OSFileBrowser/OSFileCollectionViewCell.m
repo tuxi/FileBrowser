@@ -281,6 +281,11 @@
         else {
             [MBProgressHUD bb_showMessage:@"取消标记失败" delayTime:0.8];
         }
+        if (isSuccess) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:didCancelMarkupFile:)]) {
+                [self.delegate fileCollectionViewCell:self didCancelMarkupFile:self.fileModel];
+            }
+        }
     }
     else {
         isSuccess = [self.fileModel markup];
@@ -290,12 +295,13 @@
         else {
             [MBProgressHUD bb_showMessage:@"标记失败" delayTime:0.8];
         }
-    }
-    if (isSuccess) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:didMarkupFile:)]) {
-            [self.delegate fileCollectionViewCell:self didMarkupFile:self.fileModel];
+        if (isSuccess) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:didMarkupFile:)]) {
+                [self.delegate fileCollectionViewCell:self didMarkupFile:self.fileModel];
+            }
         }
     }
+    
 }
 
 

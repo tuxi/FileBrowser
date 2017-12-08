@@ -116,7 +116,7 @@ static const CGFloat windowHeight = 49.0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotateToInterfaceOrientation) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionFileCompletion:) name:OSFileCollectionViewControllerOptionFileCompletionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionReLayoutStyle) name:OSFileCollectionLayoutStyleDidChangeNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(markupFileCompletion:) name:OSFileCollectionViewControllerDidMarkupFileNotification object:nil];
     
 }
 
@@ -1365,8 +1365,16 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell didMarkupFile:(OSFileAttributeItem *)fileModel {
-    [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerDidMarkupFileNotification object:fileModel.path];
+    [self didMarkOrCancelMarkFile:fileModel cancelMark:NO];
+}
+
+- (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell didCancelMarkupFile:(OSFileAttributeItem *)fileModel {
+    [self didMarkOrCancelMarkFile:fileModel cancelMark:YES];
     
+}
+
+- (void)didMarkOrCancelMarkFile:(OSFileAttributeItem *)fileModel cancelMark:(BOOL)isCancelMark {
+    [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerDidMarkupFileNotification object:fileModel userInfo:@{@"isCancelMark": @(isCancelMark), @"file": fileModel.mutableCopy}];
     [self reloadCollectionData];
 }
 
@@ -1424,6 +1432,10 @@ static const CGFloat windowHeight = 49.0;
     }];
     [self.flowLayout invalidateLayout];
 //    [self reloadCollectionData];
+}
+
+- (void)markupFileCompletion:(NSNotification *)notification {
+    [self reloadCollectionData];
 }
 
 
