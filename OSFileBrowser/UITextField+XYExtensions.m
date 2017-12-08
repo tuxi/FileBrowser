@@ -10,7 +10,7 @@
 
 @implementation UITextField (XYExtensions)
 
-- (NSInteger)curOffset {
+- (NSInteger)currentOffset {
     
     // 基于文首计算出到光标的偏移数值。
     return [self offsetFromPosition:self.beginningOfDocument toPosition:self.selectedTextRange.start];
