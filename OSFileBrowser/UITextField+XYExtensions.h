@@ -10,7 +10,7 @@
 
 @interface UITextField (XYExtensions)
 
-- (NSInteger)curOffset;
+- (NSInteger)currentOffset;
 - (void)makeOffset:(NSInteger)offset;
 - (void)makeOffsetFromBeginning:(NSInteger)offset;
 
