@@ -17,6 +17,7 @@
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell needCopyFile:(OSFileAttributeItem *)fileModel;
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell needDeleteFile:(OSFileAttributeItem *)fileModel;
 - (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell didMarkupFile:(OSFileAttributeItem *)fileModel;
+- (void)fileCollectionViewCell:(OSFileCollectionViewCell *)cell didCancelMarkupFile:(OSFileAttributeItem *)fileModel;
 
 @end
 
