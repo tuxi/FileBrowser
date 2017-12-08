@@ -49,8 +49,8 @@
 		D088CA871FD63C8000BB4C74 /* OSFileMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA831FD63C7F00BB4C74 /* OSFileMarkViewController.m */; };
 		D088CA881FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */; };
 		D088CA891FD63C8000BB4C74 /* OSFileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA861FD63C8000BB4C74 /* OSFileHelper.m */; };
-		D08AFE0C1FDA997E00DE65D8 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D08AFE0B1FDA997E00DE65D8 /* UITextField+XYExtensions.m */; };
 		D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */; };
+		D2A038381FDAB2040051A286 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,10 +111,10 @@
 		D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileBrowserAppearanceConfigs.m; path = OSFileBrowser/OSFileBrowserAppearanceConfigs.m; sourceTree = "<group>"; };
 		D088CA851FD63C8000BB4C74 /* OSFileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileHelper.h; path = OSFileBrowser/OSFileHelper.h; sourceTree = "<group>"; };
 		D088CA861FD63C8000BB4C74 /* OSFileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileHelper.m; path = OSFileBrowser/OSFileHelper.m; sourceTree = "<group>"; };
-		D08AFE0A1FDA997E00DE65D8 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+XYExtensions.h"; sourceTree = "<group>"; };
-		D08AFE0B1FDA997E00DE65D8 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+XYExtensions.m"; sourceTree = "<group>"; };
 		D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertController+AlertExtensions.m"; path = "OSFileBrowser/UIAlertController+AlertExtensions.m"; sourceTree = "<group>"; };
 		D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertController+AlertExtensions.h"; path = "OSFileBrowser/UIAlertController+AlertExtensions.h"; sourceTree = "<group>"; };
+		D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+XYExtensions.h"; path = "OSFileBrowser/UITextField+XYExtensions.h"; sourceTree = "<group>"; };
+		D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+XYExtensions.m"; path = "OSFileBrowser/UITextField+XYExtensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +132,8 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */,
+				D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */,
 				D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */,
 				D088CA851FD63C8000BB4C74 /* OSFileHelper.h */,
 				D088CA861FD63C8000BB4C74 /* OSFileHelper.m */,
@@ -180,8 +182,6 @@
 				18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */,
 				18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */,
 				18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */,
-				D08AFE0A1FDA997E00DE65D8 /* UITextField+XYExtensions.h */,
-				D08AFE0B1FDA997E00DE65D8 /* UITextField+XYExtensions.m */,
 				18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */,
 			);
 			name = OSFileBrowser;
@@ -320,13 +320,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FileBrowser-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D8DAA0979E8900C1AE9F8DF6 /* [CP] Embed Pods Frameworks */ = {
@@ -393,12 +396,12 @@
 				181F96AB1FCC468000237588 /* UIScrollView+RollView.m in Sources */,
 				18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */,
 				18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */,
+				D2A038381FDAB2040051A286 /* UITextField+XYExtensions.m in Sources */,
 				D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */,
 				18E3C7DE1FAA20BE00567350 /* DirectoryWatcher.h in Sources */,
 				185A7F671FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.m in Sources */,
 				18E3C7DF1FAA20BE00567350 /* NSString+OSFile.m in Sources */,
 				D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */,
-				D08AFE0C1FDA997E00DE65D8 /* UITextField+XYExtensions.m in Sources */,
 				18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */,
 				D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */,
 				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
