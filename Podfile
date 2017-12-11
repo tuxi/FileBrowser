@@ -1,12 +1,21 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, :deployment_target => '8.0'
+
+xcodeproj 'FileBrowser.xcodeproj'
+
+inhibit_all_warnings!
+# fileBrowserPods 如果是 FileBrowserPods(大写字母开头pod install编译不过)
+def fileBrowserPods
+    pod 'MBProgressHUD', '~> 1.0.0'
+    pod 'NODataPlaceholderView', '~> 1.0.2'
+    pod 'OSFileManager', '~>0.0.4'
+end
 
 target 'FileBrowser' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
+  
+	fileBrowserPods
+end
 
-  # Pods for FileBrowser
-	pod 'MBProgressHUD', '~> 1.0.0'
-	pod 'NODataPlaceholderView', '~> 1.0.2'
-    pod 'OSFileManager', '~>0.0.4'
+target 'FileBrowserLib' do
+    fileBrowserPods
 end
