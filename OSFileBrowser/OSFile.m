@@ -644,26 +644,29 @@ static NSMutableArray *_markupFiles;
         NSMutableArray *markFiles = [[NSMutableArray alloc] initWithContentsOfFile:markPath];
         [markFiles enumerateObjectsUsingBlock:^(NSString *  _Nonnull markupPath, NSUInteger idx, BOOL * _Nonnull stop) {
             // 文件路径更新
-//            if ([self isInAppGroupWithPath:markupPath]) {
-//                NSString *str1 = [markupPath componentsSeparatedByString:AppGroupPrefixString].lastObject;
-//                NSRange range = [str1 rangeOfString:@"/"];
-//                NSString *lastFilePath = [str1 substringFromIndex:range.location];
-//
-//                NSString *str2 = [[AppGroupManager getAPPGroupHomePath] componentsSeparatedByString:AppGroupPrefixString].lastObject;
-//                NSString *needReplaceStr = [str2 componentsSeparatedByString:@"/"].firstObject;
-//
-//                markupPath = [NSString stringWithFormat:@"%@%@%@", AppGroupPrefixString, needReplaceStr, lastFilePath];
-//            }
-//            else {
+            
+            
+            
+            if ([self isInAppGroupWithPath:markupPath]) {
+#if __has_include("AppGroupManager.h")
+                NSString *str1 = [markupPath componentsSeparatedByString:AppGroupPrefixString].lastObject;
+                NSRange range = [str1 rangeOfString:@"/"];
+                NSString *lastFilePath = [str1 substringFromIndex:range.location];
+                NSString *str2 = [[AppGroupManager getAPPGroupHomePath] componentsSeparatedByString:AppGroupPrefixString].lastObject;
+                NSString *needReplaceStr = [str2 componentsSeparatedByString:@"/"].firstObject;
+                markupPath = [NSString stringWithFormat:@"%@%@%@", AppGroupPrefixString, needReplaceStr, lastFilePath];
+#endif
+            }
+            else {
                 NSString *str1 = [markupPath componentsSeparatedByString:AppSandBoxPrefixString].lastObject;
                 NSRange range = [str1 rangeOfString:@"/"];
                 NSString *lastFilePath = [str1 substringFromIndex:range.location];
-
+                
                 NSString *str2 = [NSHomeDirectory() componentsSeparatedByString:AppSandBoxPrefixString].lastObject;
                 NSString *needReplaceStr = [str2 componentsSeparatedByString:@"/"].firstObject;
-
+                
                 markupPath = [NSString stringWithFormat:@"%@%@%@", AppSandBoxPrefixString, needReplaceStr, lastFilePath];
-//            }
+            }
             [markFiles replaceObjectAtIndex:idx withObject:markupPath];
             
         }];
