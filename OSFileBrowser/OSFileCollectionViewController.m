@@ -23,6 +23,7 @@
 #import "OSFileBrowserAppearanceConfigs.h"
 #import "UIScrollView+RollView.h"
 #import "OSFileHelper.h"
+#import "OSFilePreviewViewController.h"
 
 NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
 NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
@@ -39,7 +40,7 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 static const CGFloat windowHeight = 49.0;
 
 #ifdef __IPHONE_9_0
-@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, XYRollViewScrollDelegate>
+@interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, XYRollViewScrollDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 #else
 @interface OSFileCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NoDataPlaceholderDelegate, OSFileCollectionViewCellDelegate, OSFileBottomHUDDelegate, OSFileCollectionHeaderViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
 #endif

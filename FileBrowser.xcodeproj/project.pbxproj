@@ -14,6 +14,7 @@
 				D0D0BC051FDE8A0500EC546C /* ShellScript */,
 			);
 			dependencies = (
+				D0BF29131FE10FD50055E3AB /* PBXTargetDependency */,
 			);
 			name = FileBrowserAggregate;
 			productName = FileBrowserAggregate;
@@ -83,7 +84,7 @@
 		D0B58E161FDE7E4200CC64A2 /* DirectoryWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E171FDE7E4200CC64A2 /* NSDate+ESUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E1A1FDE7E4200CC64A2 /* OSFileAttributeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E1B1FDE7E4200CC64A2 /* OSFileBottomHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E1C1FDE7E4200CC64A2 /* OSFileCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -118,12 +119,18 @@
 		D0B58E391FDE81BE00CC64A2 /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */; };
 		D0B58E3A1FDE81BE00CC64A2 /* UIImageView+XYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */; };
 		D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
-		D0B58E3C1FDE81C500CC64A2 /* OSFileBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */; };
 		D2A038381FDAB2040051A286 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		D0B58DFD1FDE7CA400CC64A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0353DDB1FA9735C0082508D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0B58DF71FDE7CA400CC64A2;
+			remoteInfo = FileBrowserLib;
+		};
+		D0BF29121FE10FD50055E3AB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D0353DDB1FA9735C0082508D /* Project object */;
 			proxyType = 1;
@@ -376,6 +383,7 @@
 				D0B58DFC1FDE7CA400CC64A2 /* FileBrowserLib.h in Headers */,
 				D0B58E1A1FDE7E4200CC64A2 /* OSFileAttributeItem.h in Headers */,
 				D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */,
+				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
 				D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */,
 				D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */,
 				D0B58E0A1FDE7E4200CC64A2 /* UITextField+XYExtensions.h in Headers */,
@@ -391,7 +399,6 @@
 				D0B58E151FDE7E4200CC64A2 /* OSMimeTypeMap.h in Headers */,
 				D0B58E161FDE7E4200CC64A2 /* DirectoryWatcher.h in Headers */,
 				D0B58E171FDE7E4200CC64A2 /* NSDate+ESUtilities.h in Headers */,
-				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
 				D0B58E1B1FDE7E4200CC64A2 /* OSFileBottomHUD.h in Headers */,
 				D0B58E1C1FDE7E4200CC64A2 /* OSFileCollectionViewCell.h in Headers */,
 				D0B58E1E1FDE7E4200CC64A2 /* OSFileCollectionViewFlowLayout.h in Headers */,
@@ -505,7 +512,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0B58E3C1FDE81C500CC64A2 /* OSFileBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +698,11 @@
 			isa = PBXTargetDependency;
 			target = D0B58DF71FDE7CA400CC64A2 /* FileBrowserLib */;
 			targetProxy = D0B58DFD1FDE7CA400CC64A2 /* PBXContainerItemProxy */;
+		};
+		D0BF29131FE10FD50055E3AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0B58DF71FDE7CA400CC64A2 /* FileBrowserLib */;
+			targetProxy = D0BF29121FE10FD50055E3AB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
