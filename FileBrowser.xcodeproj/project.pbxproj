@@ -22,36 +22,19 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		181F96AB1FCC468000237588 /* UIScrollView+RollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181F96AA1FCC468000237588 /* UIScrollView+RollView.m */; };
-		185A7F671FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F611FC1D8B600D66AC3 /* MBProgressHUD+BBHUD.m */; };
-		185A7F681FC1D8B700D66AC3 /* OSFileCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */; };
-		185A7F691FC1D8B700D66AC3 /* OSMimeTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F651FC1D8B700D66AC3 /* OSMimeTypeMap.m */; };
 		18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */; };
 		18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */; };
-		18E3C7C61FAA20BE00567350 /* OSFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */; };
-		18E3C7C71FAA20BE00567350 /* UIImageView+XYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */; };
 		18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; };
 		18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */; };
-		18E3C7CA1FAA20BE00567350 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
-		18E3C7CD1FAA20BE00567350 /* OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AD1FAA20BA00567350 /* OSFile.m */; };
-		18E3C7CE1FAA20BE00567350 /* OSFileCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */; };
 		18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */; };
 		18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; };
 		18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */; };
-		18E3C7D41FAA20BE00567350 /* OSFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */; };
-		18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */; };
-		18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */; };
-		18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */; };
-		18E3C7D91FAA20BE00567350 /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */; };
-		18E3C7DA1FAA20BE00567350 /* NSDate+ESUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BA1FAA20BC00567350 /* NSDate+ESUtilities.m */; };
 		18E3C7DB1FAA20BE00567350 /* OSFileAttributeItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */; };
 		18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */; };
 		18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BD1FAA20BD00567350 /* UIImageView+XYExtension.h */; };
 		18E3C7DE1FAA20BE00567350 /* DirectoryWatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */; };
-		18E3C7DF1FAA20BE00567350 /* NSString+OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */; };
 		18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */; };
 		18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */; };
-		18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */; };
 		18E3C7E91FAA393B00567350 /* OSFileBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */; };
 		28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */; };
 		5C36257919D8461370AF1620 /* libPods-FileBrowserLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFFD2228B56373F0284BB99 /* libPods-FileBrowserLib.a */; };
@@ -59,41 +42,13 @@
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
-		D055BE4C1FC3B5360089C0C3 /* OSFileSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */; };
-		D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */; };
-		D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */; };
-		D088CA871FD63C8000BB4C74 /* OSFileMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA831FD63C7F00BB4C74 /* OSFileMarkViewController.m */; };
-		D088CA881FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */; };
-		D088CA891FD63C8000BB4C74 /* OSFileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA861FD63C8000BB4C74 /* OSFileHelper.m */; };
-		D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */; };
 		D0B58DFC1FDE7CA400CC64A2 /* FileBrowserLib.h in Headers */ = {isa = PBXBuildFile; fileRef = D0B58DFA1FDE7CA400CC64A2 /* FileBrowserLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58DFF1FDE7CA400CC64A2 /* FileBrowserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B58DF81FDE7CA400CC64A2 /* FileBrowserLib.framework */; };
 		D0B58E001FDE7CA400CC64A2 /* FileBrowserLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0B58DF81FDE7CA400CC64A2 /* FileBrowserLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D0B58E0A1FDE7E4200CC64A2 /* UITextField+XYExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = D088CA851FD63C8000BB4C74 /* OSFileHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E0C1FDE7E4200CC64A2 /* OSFileMarkViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D088CA821FD63C7F00BB4C74 /* OSFileMarkViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E0D1FDE7E4200CC64A2 /* UIScrollView+RollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 181F96A91FCC468000237588 /* UIScrollView+RollView.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E0E1FDE7E4200CC64A2 /* UIAlertController+AlertExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E0F1FDE7E4200CC64A2 /* NSString+OSContainsEeachCharacter.h in Headers */ = {isa = PBXBuildFile; fileRef = D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E101FDE7E4200CC64A2 /* OSFileBrowserAppearanceConfigs.h in Headers */ = {isa = PBXBuildFile; fileRef = D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E111FDE7E4200CC64A2 /* OSFileSearchResultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E121FDE7E4200CC64A2 /* UIViewController+OSStatusBarStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E131FDE7E4200CC64A2 /* MBProgressHUD+BBHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 185A7F631FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E141FDE7E4200CC64A2 /* OSFileCollectionHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 185A7F661FC1D8B700D66AC3 /* OSFileCollectionHeaderView.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E151FDE7E4200CC64A2 /* OSMimeTypeMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 185A7F641FC1D8B700D66AC3 /* OSMimeTypeMap.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E161FDE7E4200CC64A2 /* DirectoryWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E171FDE7E4200CC64A2 /* NSDate+ESUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E1A1FDE7E4200CC64A2 /* OSFileAttributeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E1B1FDE7E4200CC64A2 /* OSFileBottomHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E1C1FDE7E4200CC64A2 /* OSFileCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E1E1FDE7E4200CC64A2 /* OSFileCollectionViewFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E1F1FDE7E4200CC64A2 /* OSFilePreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E201FDE7E4200CC64A2 /* UIImage+XYImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E211FDE7E4200CC64A2 /* UIImageView+XYExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BD1FAA20BD00567350 /* UIImageView+XYExtension.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		D0B58E221FDE7E4200CC64A2 /* UIViewController+XYExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0B58E231FDE81BE00CC64A2 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */; };
 		D0B58E241FDE81BE00CC64A2 /* OSFileBrowserAppearanceConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */; };
 		D0B58E251FDE81BE00CC64A2 /* OSFileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA861FD63C8000BB4C74 /* OSFileHelper.m */; };
@@ -119,7 +74,7 @@
 		D0B58E391FDE81BE00CC64A2 /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */; };
 		D0B58E3A1FDE81BE00CC64A2 /* UIImageView+XYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */; };
 		D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
-		D2A038381FDAB2040051A286 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */; };
+		D0BF29451FE11CF10055E3AB /* FileBrowserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +173,7 @@
 		D0B58DF81FDE7CA400CC64A2 /* FileBrowserLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FileBrowserLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B58DFA1FDE7CA400CC64A2 /* FileBrowserLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileBrowserLib.h; sourceTree = "<group>"; };
 		D0B58DFB1FDE7CA400CC64A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FileBrowserLib.framework; sourceTree = "<group>"; };
 		D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+XYExtensions.h"; path = "OSFileBrowser/UITextField+XYExtensions.h"; sourceTree = "<group>"; };
 		D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+XYExtensions.m"; path = "OSFileBrowser/UITextField+XYExtensions.m"; sourceTree = "<group>"; };
 		E9283F9BE9DF94E6576EE75B /* Pods-FileBrowserLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowserLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowserLib/Pods-FileBrowserLib.debug.xcconfig"; sourceTree = "<group>"; };
@@ -229,7 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */,
-				D0B58DFF1FDE7CA400CC64A2 /* FileBrowserLib.framework in Frameworks */,
+				D0BF29451FE11CF10055E3AB /* FileBrowserLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +312,7 @@
 		D0353DFE1FA9735C0082508D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */,
 				D0353DEF1FA9735C0082508D /* Assets.xcassets */,
 				D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */,
 				D0353DF41FA9735C0082508D /* Info.plist */,
@@ -386,26 +343,6 @@
 				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
 				D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */,
 				D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */,
-				D0B58E0A1FDE7E4200CC64A2 /* UITextField+XYExtensions.h in Headers */,
-				D0B58E0C1FDE7E4200CC64A2 /* OSFileMarkViewController.h in Headers */,
-				D0B58E0D1FDE7E4200CC64A2 /* UIScrollView+RollView.h in Headers */,
-				D0B58E0E1FDE7E4200CC64A2 /* UIAlertController+AlertExtensions.h in Headers */,
-				D0B58E0F1FDE7E4200CC64A2 /* NSString+OSContainsEeachCharacter.h in Headers */,
-				D0B58E101FDE7E4200CC64A2 /* OSFileBrowserAppearanceConfigs.h in Headers */,
-				D0B58E111FDE7E4200CC64A2 /* OSFileSearchResultsController.h in Headers */,
-				D0B58E121FDE7E4200CC64A2 /* UIViewController+OSStatusBarStyle.h in Headers */,
-				D0B58E131FDE7E4200CC64A2 /* MBProgressHUD+BBHUD.h in Headers */,
-				D0B58E141FDE7E4200CC64A2 /* OSFileCollectionHeaderView.h in Headers */,
-				D0B58E151FDE7E4200CC64A2 /* OSMimeTypeMap.h in Headers */,
-				D0B58E161FDE7E4200CC64A2 /* DirectoryWatcher.h in Headers */,
-				D0B58E171FDE7E4200CC64A2 /* NSDate+ESUtilities.h in Headers */,
-				D0B58E1B1FDE7E4200CC64A2 /* OSFileBottomHUD.h in Headers */,
-				D0B58E1C1FDE7E4200CC64A2 /* OSFileCollectionViewCell.h in Headers */,
-				D0B58E1E1FDE7E4200CC64A2 /* OSFileCollectionViewFlowLayout.h in Headers */,
-				D0B58E1F1FDE7E4200CC64A2 /* OSFilePreviewViewController.h in Headers */,
-				D0B58E201FDE7E4200CC64A2 /* UIImage+XYImage.h in Headers */,
-				D0B58E211FDE7E4200CC64A2 /* UIImageView+XYExtension.h in Headers */,
-				D0B58E221FDE7E4200CC64A2 /* UIViewController+XYExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,44 +555,19 @@
 			files = (
 				18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */,
 				18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */,
-				18E3C7C61FAA20BE00567350 /* OSFileCollectionViewCell.m in Sources */,
-				18E3C7C71FAA20BE00567350 /* UIImageView+XYExtension.m in Sources */,
 				18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */,
 				18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */,
-				18E3C7CA1FAA20BE00567350 /* UIViewController+XYExtensions.m in Sources */,
-				18E3C7CD1FAA20BE00567350 /* OSFile.m in Sources */,
-				D088CA871FD63C8000BB4C74 /* OSFileMarkViewController.m in Sources */,
-				D088CA891FD63C8000BB4C74 /* OSFileHelper.m in Sources */,
-				18E3C7CE1FAA20BE00567350 /* OSFileCollectionViewFlowLayout.m in Sources */,
 				18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */,
 				18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */,
 				18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */,
-				18E3C7D41FAA20BE00567350 /* OSFileCollectionViewController.m in Sources */,
-				D088CA881FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m in Sources */,
-				18E3C7D61FAA20BE00567350 /* OSFileAttributeItem.m in Sources */,
-				18E3C7D71FAA20BE00567350 /* OSFilePreviewViewController.m in Sources */,
-				D055BE4C1FC3B5360089C0C3 /* OSFileSearchResultsController.m in Sources */,
-				18E3C7D81FAA20BE00567350 /* UIImage+XYImage.m in Sources */,
-				18E3C7D91FAA20BE00567350 /* DirectoryWatcher.m in Sources */,
-				18E3C7DA1FAA20BE00567350 /* NSDate+ESUtilities.m in Sources */,
 				18E3C7DB1FAA20BE00567350 /* OSFileAttributeItem.h in Sources */,
-				185A7F691FC1D8B700D66AC3 /* OSMimeTypeMap.m in Sources */,
-				181F96AB1FCC468000237588 /* UIScrollView+RollView.m in Sources */,
 				18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */,
 				18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */,
-				D2A038381FDAB2040051A286 /* UITextField+XYExtensions.m in Sources */,
-				D055BE4E1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m in Sources */,
 				18E3C7DE1FAA20BE00567350 /* DirectoryWatcher.h in Sources */,
-				185A7F671FC1D8B700D66AC3 /* MBProgressHUD+BBHUD.m in Sources */,
-				18E3C7DF1FAA20BE00567350 /* NSString+OSFile.m in Sources */,
-				D055BE4D1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.m in Sources */,
 				18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */,
-				D096CF961FC57075007B09ED /* UIAlertController+AlertExtensions.m in Sources */,
 				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
-				18E3C7E31FAA20BE00567350 /* OSFileBottomHUD.m in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
 				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
-				185A7F681FC1D8B700D66AC3 /* OSFileCollectionHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +743,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NKW67GFDHM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FileBrowser",
+				);
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -851,6 +767,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NKW67GFDHM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FileBrowser",
+				);
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -876,6 +796,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				INFOPLIST_FILE = FileBrowserLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -887,6 +808,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -900,6 +822,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
@@ -907,6 +830,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				INFOPLIST_FILE = FileBrowserLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -918,6 +842,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
