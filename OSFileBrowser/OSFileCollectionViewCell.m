@@ -13,7 +13,7 @@
 #import "OSFileManager.h"
 #import "NSDate+ESUtilities.h"
 #import "UIViewController+XYExtensions.h"
-#import "MBProgressHUD+BBHUD.h"
+#import "MBProgressHUD+XYHUD.h"
 #import "UIImage+XYImage.h"
 #import "OSFileCollectionViewFlowLayout.h"
 #import "UITextField+XYExtensions.h"
@@ -205,7 +205,7 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self.renameNewName containsString:@"/"]) {
-            [MBProgressHUD bb_showMessage:@"名称中不符合的字符" delayTime:2.0];
+            [MBProgressHUD xy_showMessage:@"名称中不符合的字符" delayTime:2.0];
             return;
         }
         
@@ -214,7 +214,7 @@
         NSString *newPath = [currentDirectory stringByAppendingPathComponent:self.renameNewName];
         BOOL res = [[NSFileManager defaultManager] fileExistsAtPath:newPath];
         if (res) {
-            [MBProgressHUD bb_showMessage:@"存在同名的文件" delayTime:2.0];
+            [MBProgressHUD xy_showMessage:@"存在同名的文件" delayTime:2.0];
             return;
         }
         NSError *moveError = nil;
@@ -276,10 +276,10 @@
     if (self.fileModel.alreadyMarked) {
         isSuccess = [self.fileModel cancelMarkup];
         if (isSuccess) {
-            [MBProgressHUD bb_showMessage:@"取消标记成功" delayTime:0.8];
+            [MBProgressHUD xy_showMessage:@"取消标记成功" delayTime:0.8];
         }
         else {
-            [MBProgressHUD bb_showMessage:@"取消标记失败" delayTime:0.8];
+            [MBProgressHUD xy_showMessage:@"取消标记失败" delayTime:0.8];
         }
         if (isSuccess) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:didCancelMarkupFile:)]) {
@@ -290,10 +290,10 @@
     else {
         isSuccess = [self.fileModel markup];
         if (isSuccess) {
-            [MBProgressHUD bb_showMessage:@"标记成功" delayTime:0.8];
+            [MBProgressHUD xy_showMessage:@"标记成功" delayTime:0.8];
         }
         else {
-            [MBProgressHUD bb_showMessage:@"标记失败" delayTime:0.8];
+            [MBProgressHUD xy_showMessage:@"标记失败" delayTime:0.8];
         }
         if (isSuccess) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(fileCollectionViewCell:didMarkupFile:)]) {
