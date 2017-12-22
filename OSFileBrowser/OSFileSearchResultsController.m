@@ -13,7 +13,7 @@
 #import "OSFileCollectionViewCell.h"
 #import "OSFilePreviewViewController.h"
 #import "OSFileCollectionViewController.h"
-#import "MBProgressHUD+BBHUD.h"
+#import "MBProgressHUD+XYHUD.h"
 #import "OSFileBrowserAppearanceConfigs.h"
 #import "UIViewController+XYExtensions.h"
 
@@ -210,7 +210,7 @@ static NSString * const kSearchCellIdentifier = @"OSFileSearchResultsController"
                 vc = preview;
             }
             else {
-                [self.view bb_showMessage:@"无法识别的文件"];
+                [self.view xy_showMessage:@"无法识别的文件"];
             }
         }
         return vc;
