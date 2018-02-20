@@ -75,6 +75,10 @@
 		D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
 		D0B81C131FE7B18600149451 /* MBProgressHUD+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F611FC1D8B600D66AC3 /* MBProgressHUD+XYHUD.m */; };
 		D0BF29451FE11CF10055E3AB /* FileBrowserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */; };
+		D2F1216F203BFADC000E16A9 /* OSFileCollectionViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */; };
+		D2F12170203BFADC000E16A9 /* OSFileCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */; };
+		D2F12173203BFCAF000E16A9 /* OSFileCollectionSection.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */; };
+		D2F12174203BFCAF000E16A9 /* OSFileCollectionSection.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +180,10 @@
 		D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FileBrowserLib.framework; sourceTree = "<group>"; };
 		D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+XYExtensions.h"; path = "OSFileBrowser/UITextField+XYExtensions.h"; sourceTree = "<group>"; };
 		D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+XYExtensions.m"; path = "OSFileBrowser/UITextField+XYExtensions.m"; sourceTree = "<group>"; };
+		D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionViewModel.h; sourceTree = "<group>"; };
+		D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionViewModel.m; sourceTree = "<group>"; };
+		D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionSection.h; sourceTree = "<group>"; };
+		D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionSection.m; sourceTree = "<group>"; };
 		E9283F9BE9DF94E6576EE75B /* Pods-FileBrowserLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowserLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowserLib/Pods-FileBrowserLib.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +213,7 @@
 			children = (
 				D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */,
 				D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */,
+				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
 				D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */,
 				D088CA851FD63C8000BB4C74 /* OSFileHelper.h */,
 				D088CA861FD63C8000BB4C74 /* OSFileHelper.m */,
@@ -216,7 +225,6 @@
 				D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */,
 				D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */,
 				D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */,
-				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
 				D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */,
 				D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */,
 				D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */,
@@ -243,6 +251,10 @@
 				18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */,
 				18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */,
 				18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */,
+				D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */,
+				D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */,
+				D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */,
+				D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */,
 				18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */,
 				18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */,
 				18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */,
@@ -342,6 +354,8 @@
 				D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */,
 				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
 				D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */,
+				D2F12173203BFCAF000E16A9 /* OSFileCollectionSection.h in Headers */,
+				D2F1216F203BFADC000E16A9 /* OSFileCollectionViewModel.h in Headers */,
 				D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,13 +475,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FileBrowserLib-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		25BE5DE8A0FCA79F189E5F06 /* [CP] Copy Pods Resources */ = {
@@ -500,7 +517,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D0D0BC051FDE8A0500EC546C /* ShellScript */ = {
@@ -575,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2F12174203BFCAF000E16A9 /* OSFileCollectionSection.m in Sources */,
 				D0B58E361FDE81BE00CC64A2 /* OSFileCollectionViewController.m in Sources */,
 				D0B58E351FDE81BE00CC64A2 /* OSFileCollectionViewCell.m in Sources */,
 				D0B58E331FDE81BE00CC64A2 /* OSFileAttributeItem.m in Sources */,
@@ -589,6 +607,7 @@
 				D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */,
 				D0B58E321FDE81BE00CC64A2 /* OSFile.m in Sources */,
 				D0B58E281FDE81BE00CC64A2 /* UIAlertController+AlertExtensions.m in Sources */,
+				D2F12170203BFADC000E16A9 /* OSFileCollectionViewModel.m in Sources */,
 				D0B58E261FDE81BE00CC64A2 /* OSFileMarkViewController.m in Sources */,
 				D0B58E241FDE81BE00CC64A2 /* OSFileBrowserAppearanceConfigs.m in Sources */,
 				D0B58E381FDE81BE00CC64A2 /* OSFilePreviewViewController.m in Sources */,

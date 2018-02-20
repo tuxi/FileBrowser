@@ -36,9 +36,23 @@
 
 FOUNDATION_EXPORT NSNotificationName const OSFileBrowserAppearanceConfigsSortTypeDidChangeNotification;
 
+FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification;
+FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification;
+FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification;
+FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerNeedOpenDownloadPageNotification;
+FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerDidMarkupFileNotification;
+
 typedef NS_ENUM(NSInteger, OSFileBrowserSortType) {
     OSFileBrowserSortTypeOrderA_To_Z, // 按照字母a-z的排序方式
     OSFileBrowserSortTypeOrderLatestTime, // 按最新时间排序
+};
+
+typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
+    OSFileCollectionViewControllerModeDefault, // 默认模式
+    OSFileCollectionViewControllerModeEdit,    // 编辑模式
+    OSFileCollectionViewControllerModeCopy,    // 复制模式，此控制器的rootDirectory为最终复制的目录
+    OSFileCollectionViewControllerModeMove,    // 移动模式，此控制器的rootDirectory为最终移动的目录
+    
 };
 
 @interface OSFileBrowserAppearanceConfigs : NSObject
