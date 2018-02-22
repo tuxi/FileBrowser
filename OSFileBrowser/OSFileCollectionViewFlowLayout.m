@@ -93,14 +93,17 @@ static CGFloat const OSLineExtensionDefault = 0;
 
 - (void)prepareLayout {
     [super prepareLayout];
-    
+    NSInteger const sectionCount = [self.collectionView numberOfSections];
+    // 当没有数据时，不执行以下操作，防止一些crash
+    if (sectionCount == 0) {
+        return;
+    }
     self.numberOfLines = [self calculateNumberOfLines];
     
     self.calculatedItemSize = [self calculateItemSize];
     
     self.headerAttributes = [self calculateHeaderAttributes];
     
-    NSInteger const sectionCount = [self.collectionView numberOfSections];
     for (NSInteger section=0; section<sectionCount; section++) {
         
         NSInteger const itemCount = [self.collectionView numberOfItemsInSection:section];

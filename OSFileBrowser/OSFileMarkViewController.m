@@ -3,12 +3,11 @@
 //  FileDownloader
 //
 //  Created by swae on 2017/12/4.
-//  Copyright © 2017年 Ossey. All rights reserved.
+//  Copyright © 2017年 alpface. All rights reserved.
 //
 
 #import "OSFileMarkViewController.h"
-#import "OSFileCollectionViewCell.h"
-#import "OSFileAttributeItem.h"
+#import "OSFileCollectionViewModel.h"
 
 @interface OSFileMarkViewController ()
 
@@ -27,9 +26,8 @@
     if ([filePath isKindOfClass:[NSString class]]) {
         OSFileAttributeItem *file = [[OSFileAttributeItem alloc] initWithPath:filePath error:nil];
         if (file) {
-            NSMutableArray *array = self.files.mutableCopy;
+            NSMutableArray *array = self.collectionViewModel.sectionItems.firstObject.items;
             [array insertObject:file atIndex:0];
-            self.files = array.copy;
             [self reloadCollectionData];
         }
     }

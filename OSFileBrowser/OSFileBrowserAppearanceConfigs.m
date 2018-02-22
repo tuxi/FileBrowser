@@ -3,13 +3,18 @@
 //  FileDownloader
 //
 //  Created by xiaoyuan on 04/12/2017.
-//  Copyright © 2017 Ossey. All rights reserved.
+//  Copyright © 2017 alpface. All rights reserved.
 //
 
 #import "OSFileBrowserAppearanceConfigs.h"
 
 static NSString * const OSFileBrowserAppearanceConfigsSortType = @"OSFileBrowserAppearanceConfigsSortType";
 NSNotificationName const OSFileBrowserAppearanceConfigsSortTypeDidChangeNotification = @"OSFileBrowserAppearanceConfigsSortTypeDidChangeNotification";
+NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification = @"OptionFileCompletionNotification";
+NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification = @"OptionSelectedFileForCopyNotification";
+NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification = @"OptionSelectedFileForMoveNotification";
+NSNotificationName const OSFileCollectionViewControllerDidMarkupFileNotification = @"OSFileCollectionViewControllerDidMarkupFileNotification";
+NSNotificationName const OSFileCollectionViewControllerNeedOpenDownloadPageNotification = @"OSFileCollectionViewControllerNeedOpenDownloadPageNotification";
 
 @implementation OSFileBrowserAppearanceConfigs
 

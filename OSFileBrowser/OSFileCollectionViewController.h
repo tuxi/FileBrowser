@@ -7,23 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSFileBrowserAppearanceConfigs.h"
 
-FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionFileCompletionNotification;
-FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForCopyNotification;
-FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerOptionSelectedFileForMoveNotification;
-FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerNeedOpenDownloadPageNotification;
-FOUNDATION_EXPORT NSNotificationName const OSFileCollectionViewControllerDidMarkupFileNotification;
-
-typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
-    OSFileCollectionViewControllerModeDefault, // 默认模式
-    OSFileCollectionViewControllerModeEdit,    // 编辑模式
-    OSFileCollectionViewControllerModeCopy,    // 复制模式，此控制器的rootDirectory为最终复制的目录
-    OSFileCollectionViewControllerModeMove,    // 移动模式，此控制器的rootDirectory为最终移动的目录
-    
-};
-
-
-@class OSFileAttributeItem, OSFileCollectionViewController;
+@class OSFileAttributeItem, OSFileCollectionViewController, OSFileCollectionViewModel;
 
 /// 操作文件的协议
 @protocol OSFileCollectionViewControllerFileOptionDelegate <NSObject>
@@ -46,7 +32,7 @@ typedef NS_ENUM(NSInteger, OSFileCollectionViewControllerMode) {
 
 @interface OSFileCollectionViewController : UIViewController
 
-@property (nonatomic, strong) NSArray<OSFileAttributeItem *> *files;
+@property (nonatomic, strong) OSFileCollectionViewModel *collectionViewModel;
 @property (nonatomic, assign) BOOL hideDisplayFiles;
 /// 用于操作文件的全局代理，对整个类有效
 @property (nonatomic, class) id<OSFileCollectionViewControllerFileOptionDelegate> fileOperationDelegate;
@@ -80,7 +66,5 @@ completionHandler:(void (^)(void))completion;
 - (UIViewController *)previewControllerByIndexPath:(NSIndexPath *)indexPath;
 - (UIViewController *)previewControllerWithFilePath:(NSString *)filePath;
 - (void)showDetailController:(UIViewController *)viewController parentPath:(NSString *)parentPath;
-/// 根据文件路径获取一个OSFileAttributeItem，如果当前控制器的files数组中有就会返回，没有就会创建一个OSFileAttributeItem对象
-- (OSFileAttributeItem *)getFileItemByPath:(NSString *)path;
 @end
 
