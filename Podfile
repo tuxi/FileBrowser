@@ -7,7 +7,7 @@ inhibit_all_warnings!
 # fileBrowserPods 如果是 FileBrowserPods(大写字母开头pod install编译不过)
 def fileBrowserPods
     pod 'MBProgressHUD', '~> 1.0.0'
-    pod 'NODataPlaceholderView', '~> 1.0.2'
+    pod 'NODataPlaceholderView', '~> 1.0.5’
     pod 'OSFileManager', '~>0.0.4'
 end
 
