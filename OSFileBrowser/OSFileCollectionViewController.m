@@ -262,17 +262,6 @@ static const CGFloat windowHeight = 49.0;
     __weak typeof(self) weakSelf = self;
     
     self.collectionView.noDataPlaceholderDelegate = self;
-    self.collectionView.customNoDataView = ^UIView * _Nonnull{
-        if (weakSelf.collectionView.xy_loading) {
-            UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            [activityView startAnimating];
-            return activityView;
-        }
-        else {
-            return nil;
-        }
-        
-    };
     
     if ([self.parentDirectoryItem isDownloadBrowser]) {
         self.collectionView.noDataDetailTextLabelBlock = ^(UILabel * _Nonnull detailTextLabel) {
@@ -548,7 +537,7 @@ static const CGFloat windowHeight = 49.0;
 }
 
 - (void)reloadFilesWithCallBack:(void (^)(void))callBack {
-    self.collectionView.xy_loading = YES;
+    [self.collectionView xy_beginLoading];
     __weak typeof(self) weakSelf = self;
     void (^ reloadCallBack)(NSArray *fileItems) = ^ (NSArray *fileItems){
         OSFileCollectionSection *fileSec = [[OSFileCollectionSection alloc] initWithItems:fileItems];
@@ -560,7 +549,7 @@ static const CGFloat windowHeight = 49.0;
             if (callBack) {
                 callBack();
             }
-            self.collectionView.xy_loading = NO;
+            [self.collectionView xy_endLoading];
         }];
         
     };
