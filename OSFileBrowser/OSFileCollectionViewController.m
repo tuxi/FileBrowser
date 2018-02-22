@@ -189,7 +189,7 @@ static const CGFloat windowHeight = 49.0;
     if (self.collectionViewModel.mode == OSFileCollectionViewControllerModeEdit) {
         [self rightBarButtonClick];
     }
-
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -204,7 +204,7 @@ static const CGFloat windowHeight = 49.0;
             [self reloadCollectionData];
         }
     });
- 
+    
 }
 
 - (void)dealloc {
@@ -249,11 +249,11 @@ static const CGFloat windowHeight = 49.0;
         self.navigationItem.hidesSearchBarWhenScrolling = YES;
         self.navigationItem.searchController = self.searchController;
         
-//        self.searchController.searchBar.tintColor = [UIColor whiteColor];
-//        self.searchController.searchBar.clipsToBounds = YES;
-//        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
-//        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
-
+        //        self.searchController.searchBar.tintColor = [UIColor whiteColor];
+        //        self.searchController.searchBar.clipsToBounds = YES;
+        //        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor whiteColor]];
+        //        [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitle:@"取消"];
+        
     }
     
 }
@@ -477,9 +477,9 @@ static const CGFloat windowHeight = 49.0;
 #pragma mark *** Load file ***
 
 - (void)loadFileWithFilePathArray:(NSArray<NSString *> *)filePathArray completion:(void (^)(NSArray *fileItems))completion {
-    [_loadFileQueue cancelAllOperations];
+    [self.loadFileQueue cancelAllOperations];
     __weak typeof(&*self) weakSelf = self;
-    [_loadFileQueue addOperationWithBlock:^{
+    [self.loadFileQueue addOperationWithBlock:^{
         __strong typeof(&*weakSelf) self = weakSelf;
         NSMutableArray *array = @[].mutableCopy;
         [filePathArray enumerateObjectsUsingBlock:^(NSString * _Nonnull fullPath, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -735,8 +735,8 @@ static const CGFloat windowHeight = 49.0;
         [self.searchController.searchBar becomeFirstResponder];
     });
     
-//    UITextField *searchField = [self.searchController.searchBar valueForKey:@"_searchField"];
-//    searchField.textColor = [UIColor whiteColor];
+    //    UITextField *searchField = [self.searchController.searchBar valueForKey:@"_searchField"];
+    //    searchField.textColor = [UIColor whiteColor];
     
 }
 
@@ -884,6 +884,7 @@ static const CGFloat windowHeight = 49.0;
             _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 20.0, 0);
         }
         [self updateCollectionViewFlowLayout:_flowLayout];
+        self.collectionViewModel.collectionView = collectionView;
         _collectionView.keyboardDismissMode = YES;
         
     }
@@ -892,7 +893,7 @@ static const CGFloat windowHeight = 49.0;
 
 - (OSFileCollectionViewModel *)collectionViewModel {
     if (!_collectionViewModel) {
-        _collectionViewModel = [[OSFileCollectionViewModel alloc] initWithCollectionView:self.collectionView];
+        _collectionViewModel = [[OSFileCollectionViewModel alloc] init];
         _collectionViewModel.delegate = self;
     }
     return _collectionViewModel;
@@ -1209,14 +1210,14 @@ static const CGFloat windowHeight = 49.0;
     }];
     [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof OSFileCollectionViewCell * _Nonnull cell, NSUInteger idx, BOOL * _Nonnull stop) {
         [cell invalidateConstraints];
-//        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//            [cell.contentView layoutIfNeeded];
-//        } completion:^(BOOL finished) {
-//
-//        }];
+        //        [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        //            [cell.contentView layoutIfNeeded];
+        //        } completion:^(BOOL finished) {
+        //
+        //        }];
     }];
     [self.flowLayout invalidateLayout];
-//    [self reloadCollectionData];
+    //    [self reloadCollectionData];
 }
 
 - (void)markupFileCompletion:(NSNotification *)notification {
@@ -1483,7 +1484,7 @@ __weak id _fileOperationDelegate;
 - (void)noDataPlaceholder:(UIScrollView *)scrollView didClickReloadButton:(UIButton *)button {
     if ([self.parentDirectoryItem isDownloadBrowser]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:OSFileCollectionViewControllerNeedOpenDownloadPageNotification object:nil];
-//        self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
+        //        self.navigationController.viewControllers = @[self.navigationController.viewControllers.firstObject];
     }
 }
 

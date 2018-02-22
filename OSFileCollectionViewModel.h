@@ -32,8 +32,7 @@
 @property (nonatomic, strong) NSMutableArray<NSString *> *filePathArray;
 @property (nonatomic, weak) id<OSFileCollectionViewModelDelegate> delegate;
 @property (nonatomic, strong, readonly) NSMutableArray<OSFileCollectionSection *> *sectionItems;
-
-- (instancetype)initWithCollectionView:(UICollectionView *)collectionView;
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 - (void)initDataSource:(NSArray<OSFileCollectionSection *> *(^)(void))dataSource completion:(void (^)(void))completion;
 
@@ -47,3 +46,4 @@
 - (OSFileAttributeItem *)createNewItemWithNewPath:(NSString *)fullPath isHideDisplayFile:(BOOL)hideDisplayFile;
 
 @end
+

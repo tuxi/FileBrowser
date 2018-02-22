@@ -14,22 +14,17 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 
 @interface OSFileCollectionViewModel () <UICollectionViewDataSource, UICollectionViewDelegate, OSFileCollectionViewCellDelegate, OSFileCollectionHeaderViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray<OSFileCollectionSection *> *sectionItems;
 
 @end
 
 @implementation OSFileCollectionViewModel
 
-- (instancetype)initWithCollectionView:(UICollectionView *)collectionView {
-    if (self = [super init]) {
-        _collectionView = collectionView;
-        [self commonInit];
+- (void)setCollectionView:(UICollectionView *)collectionView {
+    if (_collectionView == collectionView) {
+        return;
     }
-    return self;
-}
-
-- (void)commonInit {
+    _collectionView = collectionView;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [_collectionView registerClass:[OSFileCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -243,17 +238,12 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 /// 根据完整路径创建一个新的OSFileAttributeItem，此方法适用于从本地获取新文件时使用，部分属性还是要使用oldItem中的，比如是否为选中、编辑状态
 - (OSFileAttributeItem *)createNewItemWithNewPath:(NSString *)fullPath isHideDisplayFile:(BOOL)hideDisplayFile {
     OSFileCollectionSection *sec = [self getSectionWithIdentifier:@"files"];
-    NSUInteger foundOldIdx = [sec.items indexOfObjectPassingTest:^BOOL(OSFileAttributeItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        BOOL res = [obj.path isEqualToString:fullPath];
-        if (res) {
-            *stop = YES;
-        }
-        return res;
-    }];
-    OSFileAttributeItem *oldItem = nil;
-    if (sec.items && foundOldIdx != NSNotFound) {
-        oldItem = [sec.items objectAtIndex:foundOldIdx];
-    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path == %@", fullPath];
+    NSArray *filters = [sec.items filteredArrayUsingPredicate:predicate];
+    OSFileAttributeItem *oldItem = filters.firstObject;
+    //    if (oldItem) {
+    //        return oldItem;
+    //    }
     NSError *error = nil;
     OSFileAttributeItem *newItem = [OSFileAttributeItem fileWithPath:fullPath hideDisplayFiles:hideDisplayFile error:&error];
     if (newItem) {
@@ -270,3 +260,4 @@ static NSString * const reuseIdentifier = @"OSFileCollectionViewCell";
 
 
 @end
+
