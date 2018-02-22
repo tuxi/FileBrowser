@@ -75,10 +75,8 @@
 		D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
 		D0B81C131FE7B18600149451 /* MBProgressHUD+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F611FC1D8B600D66AC3 /* MBProgressHUD+XYHUD.m */; };
 		D0BF29451FE11CF10055E3AB /* FileBrowserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */; };
-		D2F1216F203BFADC000E16A9 /* OSFileCollectionViewModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */; };
-		D2F12170203BFADC000E16A9 /* OSFileCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */; };
-		D2F12173203BFCAF000E16A9 /* OSFileCollectionSection.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */; };
-		D2F12174203BFCAF000E16A9 /* OSFileCollectionSection.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */; };
+		D2CD119C203F2CBE00E7929F /* OSFileCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */; };
+		D2CD119D203F2CF400E7929F /* OSFileCollectionSection.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,10 +178,10 @@
 		D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FileBrowserLib.framework; sourceTree = "<group>"; };
 		D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+XYExtensions.h"; path = "OSFileBrowser/UITextField+XYExtensions.h"; sourceTree = "<group>"; };
 		D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+XYExtensions.m"; path = "OSFileBrowser/UITextField+XYExtensions.m"; sourceTree = "<group>"; };
-		D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionViewModel.h; sourceTree = "<group>"; };
-		D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionViewModel.m; sourceTree = "<group>"; };
-		D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileCollectionSection.h; sourceTree = "<group>"; };
-		D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileCollectionSection.m; sourceTree = "<group>"; };
+		D2CD1195203F2CB100E7929F /* OSFileCollectionSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionSection.h; path = OSFileBrowser/OSFileCollectionSection.h; sourceTree = "<group>"; };
+		D2CD1196203F2CB100E7929F /* OSFileCollectionViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewModel.h; path = OSFileBrowser/OSFileCollectionViewModel.h; sourceTree = "<group>"; };
+		D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewModel.m; path = OSFileBrowser/OSFileCollectionViewModel.m; sourceTree = "<group>"; };
+		D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionSection.m; path = OSFileBrowser/OSFileCollectionSection.m; sourceTree = "<group>"; };
 		E9283F9BE9DF94E6576EE75B /* Pods-FileBrowserLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowserLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowserLib/Pods-FileBrowserLib.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,6 +209,10 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				D2CD1195203F2CB100E7929F /* OSFileCollectionSection.h */,
+				D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */,
+				D2CD1196203F2CB100E7929F /* OSFileCollectionViewModel.h */,
+				D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */,
 				D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */,
 				D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */,
 				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
@@ -251,10 +253,6 @@
 				18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */,
 				18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */,
 				18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */,
-				D2F1216D203BFADC000E16A9 /* OSFileCollectionViewModel.h */,
-				D2F1216E203BFADC000E16A9 /* OSFileCollectionViewModel.m */,
-				D2F12171203BFCAF000E16A9 /* OSFileCollectionSection.h */,
-				D2F12172203BFCAF000E16A9 /* OSFileCollectionSection.m */,
 				18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */,
 				18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */,
 				18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */,
@@ -354,8 +352,6 @@
 				D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */,
 				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
 				D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */,
-				D2F12173203BFCAF000E16A9 /* OSFileCollectionSection.h in Headers */,
-				D2F1216F203BFADC000E16A9 /* OSFileCollectionViewModel.h in Headers */,
 				D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,8 +588,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2F12174203BFCAF000E16A9 /* OSFileCollectionSection.m in Sources */,
 				D0B58E361FDE81BE00CC64A2 /* OSFileCollectionViewController.m in Sources */,
+				D2CD119C203F2CBE00E7929F /* OSFileCollectionViewModel.m in Sources */,
 				D0B58E351FDE81BE00CC64A2 /* OSFileCollectionViewCell.m in Sources */,
 				D0B58E331FDE81BE00CC64A2 /* OSFileAttributeItem.m in Sources */,
 				D0B58E311FDE81BE00CC64A2 /* NSString+OSFile.m in Sources */,
@@ -607,10 +603,10 @@
 				D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */,
 				D0B58E321FDE81BE00CC64A2 /* OSFile.m in Sources */,
 				D0B58E281FDE81BE00CC64A2 /* UIAlertController+AlertExtensions.m in Sources */,
-				D2F12170203BFADC000E16A9 /* OSFileCollectionViewModel.m in Sources */,
 				D0B58E261FDE81BE00CC64A2 /* OSFileMarkViewController.m in Sources */,
 				D0B58E241FDE81BE00CC64A2 /* OSFileBrowserAppearanceConfigs.m in Sources */,
 				D0B58E381FDE81BE00CC64A2 /* OSFilePreviewViewController.m in Sources */,
+				D2CD119D203F2CF400E7929F /* OSFileCollectionSection.m in Sources */,
 				D0B58E231FDE81BE00CC64A2 /* UITextField+XYExtensions.m in Sources */,
 				D0B81C131FE7B18600149451 /* MBProgressHUD+XYHUD.m in Sources */,
 				D0B58E2E1FDE81BE00CC64A2 /* OSMimeTypeMap.m in Sources */,
