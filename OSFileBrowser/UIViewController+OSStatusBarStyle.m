@@ -8,7 +8,7 @@
 
 #import "UIViewController+OSStatusBarStyle.h"
 #import <objc/runtime.h>
-#import "OSFileBrowserAppearanceConfigs.h"
+#import "XYFileBrowserAppearanceConfigs.h"
 
 static const char * OSStatusBarStyleKey = "JKR_STATUS_LIGHT";
 

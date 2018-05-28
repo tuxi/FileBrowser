@@ -15,8 +15,8 @@
 
 @implementation UIImage (XYImage)
 
-+ (UIImage *)OSFileBrowserImageNamed:(NSString *)name {
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"OSFileBrowser.bundle/%@", name]];
++ (UIImage *)XYFileBrowserImageNamed:(NSString *)name {
+    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"XYFileBrowser.bundle/%@", name]];
     return image;
 }
 

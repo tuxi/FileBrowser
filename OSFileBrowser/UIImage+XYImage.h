@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger, GradientType) {
 
 @interface UIImage (XYImage)
 
-/// 获取OSFileBrowser.bundle中的图片
-+ (UIImage *)OSFileBrowserImageNamed:(NSString *)name;
+/// 获取XYFileBrowser.bundle中的图片
++ (UIImage *)XYFileBrowserImageNamed:(NSString *)name;
 
 /// 根据一个图片的名字快速生成没有渲染的图片
 /// @param   imageName  原始图片名称

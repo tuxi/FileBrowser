@@ -22,61 +22,61 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */; };
+		18E3C7C41FAA20BE00567350 /* XYFilePreviewViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A41FAA20B800567350 /* XYFilePreviewViewController.h */; };
 		18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */; };
-		18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; };
+		18E3C7C81FAA20BE00567350 /* XYFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* XYFile.h */; };
 		18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */; };
-		18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */; };
-		18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; };
-		18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */; };
-		18E3C7DB1FAA20BE00567350 /* OSFileAttributeItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */; };
+		18E3C7D01FAA20BE00567350 /* XYFileCollectionViewFlowLayout.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B01FAA20BA00567350 /* XYFileCollectionViewFlowLayout.h */; };
+		18E3C7D21FAA20BE00567350 /* NSString+XYFile.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+XYFile.h */; };
+		18E3C7D31FAA20BE00567350 /* XYFileCollectionViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B31FAA20BB00567350 /* XYFileCollectionViewCell.h */; };
+		18E3C7DB1FAA20BE00567350 /* XYFileAttributeItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* XYFileAttributeItem.h */; };
 		18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */; };
 		18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BD1FAA20BD00567350 /* UIImageView+XYExtension.h */; };
 		18E3C7DE1FAA20BE00567350 /* DirectoryWatcher.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */; };
-		18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */; };
-		18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */; };
-		18E3C7E91FAA393B00567350 /* OSFileBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */; };
+		18E3C7E01FAA20BE00567350 /* XYFileBottomHUD.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C01FAA20BD00567350 /* XYFileBottomHUD.h */; };
+		18E3C7E11FAA20BE00567350 /* XYFileCollectionViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* XYFileCollectionViewController.h */; };
+		18E3C7E91FAA393B00567350 /* XYFileBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E3C7E81FAA393B00567350 /* XYFileBrowser.bundle */; };
 		28E96F0F46BF10AB72D95417 /* libPods-FileBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */; };
 		5C36257919D8461370AF1620 /* libPods-FileBrowserLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DFFD2228B56373F0284BB99 /* libPods-FileBrowserLib.a */; };
-		D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */; };
+		D0353DE81FA9735C0082508D /* XYFileBrowserAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DE71FA9735C0082508D /* XYFileBrowserAppDelegate.m */; };
 		D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0353DEF1FA9735C0082508D /* Assets.xcassets */; };
 		D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0353DF11FA9735C0082508D /* LaunchScreen.storyboard */; };
 		D0353DF61FA9735C0082508D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0353DF51FA9735C0082508D /* main.m */; };
 		D0B58DFC1FDE7CA400CC64A2 /* FileBrowserLib.h in Headers */ = {isa = PBXBuildFile; fileRef = D0B58DFA1FDE7CA400CC64A2 /* FileBrowserLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E001FDE7CA400CC64A2 /* FileBrowserLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0B58DF81FDE7CA400CC64A2 /* FileBrowserLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = D088CA851FD63C8000BB4C74 /* OSFileHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* OSFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E1A1FDE7E4200CC64A2 /* OSFileAttributeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0B58E0B1FDE7E4200CC64A2 /* XYFileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = D088CA851FD63C8000BB4C74 /* XYFileHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0B58E181FDE7E4200CC64A2 /* NSString+XYFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7B21FAA20BB00567350 /* NSString+XYFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0B58E191FDE7E4200CC64A2 /* XYFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7A81FAA20B900567350 /* XYFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0B58E1A1FDE7E4200CC64A2 /* XYFileAttributeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7BB1FAA20BC00567350 /* XYFileAttributeItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0B58E1D1FDE7E4200CC64A2 /* XYFileCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E3C7C11FAA20BD00567350 /* XYFileCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0B58E231FDE81BE00CC64A2 /* UITextField+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */; };
-		D0B58E241FDE81BE00CC64A2 /* OSFileBrowserAppearanceConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */; };
-		D0B58E251FDE81BE00CC64A2 /* OSFileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA861FD63C8000BB4C74 /* OSFileHelper.m */; };
-		D0B58E261FDE81BE00CC64A2 /* OSFileMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA831FD63C7F00BB4C74 /* OSFileMarkViewController.m */; };
+		D0B58E241FDE81BE00CC64A2 /* XYFileBrowserAppearanceConfigs.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA841FD63C8000BB4C74 /* XYFileBrowserAppearanceConfigs.m */; };
+		D0B58E251FDE81BE00CC64A2 /* XYFileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA861FD63C8000BB4C74 /* XYFileHelper.m */; };
+		D0B58E261FDE81BE00CC64A2 /* XYFileMarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D088CA831FD63C7F00BB4C74 /* XYFileMarkViewController.m */; };
 		D0B58E271FDE81BE00CC64A2 /* UIScrollView+RollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 181F96AA1FCC468000237588 /* UIScrollView+RollView.m */; };
 		D0B58E281FDE81BE00CC64A2 /* UIAlertController+AlertExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */; };
 		D0B58E291FDE81BE00CC64A2 /* NSString+OSContainsEeachCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */; };
-		D0B58E2A1FDE81BE00CC64A2 /* OSFileSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */; };
+		D0B58E2A1FDE81BE00CC64A2 /* XYFileSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE461FC3B5350089C0C3 /* XYFileSearchResultsController.m */; };
 		D0B58E2B1FDE81BE00CC64A2 /* UIViewController+OSStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */; };
-		D0B58E2D1FDE81BE00CC64A2 /* OSFileCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */; };
+		D0B58E2D1FDE81BE00CC64A2 /* XYFileCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F621FC1D8B600D66AC3 /* XYFileCollectionHeaderView.m */; };
 		D0B58E2E1FDE81BE00CC64A2 /* OSMimeTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F651FC1D8B700D66AC3 /* OSMimeTypeMap.m */; };
 		D0B58E2F1FDE81BE00CC64A2 /* DirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */; };
 		D0B58E301FDE81BE00CC64A2 /* NSDate+ESUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BA1FAA20BC00567350 /* NSDate+ESUtilities.m */; };
-		D0B58E311FDE81BE00CC64A2 /* NSString+OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */; };
-		D0B58E321FDE81BE00CC64A2 /* OSFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AD1FAA20BA00567350 /* OSFile.m */; };
-		D0B58E331FDE81BE00CC64A2 /* OSFileAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */; };
-		D0B58E341FDE81BE00CC64A2 /* OSFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */; };
-		D0B58E351FDE81BE00CC64A2 /* OSFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */; };
-		D0B58E361FDE81BE00CC64A2 /* OSFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */; };
-		D0B58E371FDE81BE00CC64A2 /* OSFileCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */; };
-		D0B58E381FDE81BE00CC64A2 /* OSFilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */; };
+		D0B58E311FDE81BE00CC64A2 /* NSString+XYFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7BF1FAA20BD00567350 /* NSString+XYFile.m */; };
+		D0B58E321FDE81BE00CC64A2 /* XYFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AD1FAA20BA00567350 /* XYFile.m */; };
+		D0B58E331FDE81BE00CC64A2 /* XYFileAttributeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B61FAA20BB00567350 /* XYFileAttributeItem.m */; };
+		D0B58E341FDE81BE00CC64A2 /* XYFileBottomHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7C31FAA20BE00567350 /* XYFileBottomHUD.m */; };
+		D0B58E351FDE81BE00CC64A2 /* XYFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A61FAA20B800567350 /* XYFileCollectionViewCell.m */; };
+		D0B58E361FDE81BE00CC64A2 /* XYFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B41FAA20BB00567350 /* XYFileCollectionViewController.m */; };
+		D0B58E371FDE81BE00CC64A2 /* XYFileCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AE1FAA20BA00567350 /* XYFileCollectionViewFlowLayout.m */; };
+		D0B58E381FDE81BE00CC64A2 /* XYFilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B71FAA20BC00567350 /* XYFilePreviewViewController.m */; };
 		D0B58E391FDE81BE00CC64A2 /* UIImage+XYImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */; };
 		D0B58E3A1FDE81BE00CC64A2 /* UIImageView+XYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */; };
 		D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */; };
 		D0B81C131FE7B18600149451 /* MBProgressHUD+XYHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 185A7F611FC1D8B600D66AC3 /* MBProgressHUD+XYHUD.m */; };
 		D0BF29451FE11CF10055E3AB /* FileBrowserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */; };
-		D2CD119C203F2CBE00E7929F /* OSFileCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */; };
-		D2CD119D203F2CF400E7929F /* OSFileCollectionSection.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */; };
+		D2CD119C203F2CBE00E7929F /* XYFileCollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1197203F2CB200E7929F /* XYFileCollectionViewModel.m */; };
+		D2CD119D203F2CF400E7929F /* XYFileCollectionSection.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD1198203F2CB200E7929F /* XYFileCollectionSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,61 +115,61 @@
 		181F96A91FCC468000237588 /* UIScrollView+RollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+RollView.h"; path = "OSFileBrowser/UIScrollView+RollView.h"; sourceTree = "<group>"; };
 		181F96AA1FCC468000237588 /* UIScrollView+RollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+RollView.m"; path = "OSFileBrowser/UIScrollView+RollView.m"; sourceTree = "<group>"; };
 		185A7F611FC1D8B600D66AC3 /* MBProgressHUD+XYHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+XYHUD.m"; path = "OSFileBrowser/MBProgressHUD+XYHUD.m"; sourceTree = "<group>"; };
-		185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionHeaderView.m; path = OSFileBrowser/OSFileCollectionHeaderView.m; sourceTree = "<group>"; };
+		185A7F621FC1D8B600D66AC3 /* XYFileCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionHeaderView.m; path = OSFileBrowser/XYFileCollectionHeaderView.m; sourceTree = "<group>"; };
 		185A7F631FC1D8B700D66AC3 /* MBProgressHUD+XYHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MBProgressHUD+XYHUD.h"; path = "OSFileBrowser/MBProgressHUD+XYHUD.h"; sourceTree = "<group>"; };
 		185A7F641FC1D8B700D66AC3 /* OSMimeTypeMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSMimeTypeMap.h; path = OSFileBrowser/OSMimeTypeMap.h; sourceTree = "<group>"; };
 		185A7F651FC1D8B700D66AC3 /* OSMimeTypeMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSMimeTypeMap.m; path = OSFileBrowser/OSMimeTypeMap.m; sourceTree = "<group>"; };
-		185A7F661FC1D8B700D66AC3 /* OSFileCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionHeaderView.h; path = OSFileBrowser/OSFileCollectionHeaderView.h; sourceTree = "<group>"; };
-		18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFilePreviewViewController.h; path = OSFileBrowser/OSFilePreviewViewController.h; sourceTree = "<group>"; };
+		185A7F661FC1D8B700D66AC3 /* XYFileCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionHeaderView.h; path = OSFileBrowser/XYFileCollectionHeaderView.h; sourceTree = "<group>"; };
+		18E3C7A41FAA20B800567350 /* XYFilePreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFilePreviewViewController.h; path = OSFileBrowser/XYFilePreviewViewController.h; sourceTree = "<group>"; };
 		18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+XYImage.h"; path = "OSFileBrowser/UIImage+XYImage.h"; sourceTree = "<group>"; };
-		18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewCell.m; path = OSFileBrowser/OSFileCollectionViewCell.m; sourceTree = "<group>"; };
+		18E3C7A61FAA20B800567350 /* XYFileCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionViewCell.m; path = OSFileBrowser/XYFileCollectionViewCell.m; sourceTree = "<group>"; };
 		18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+XYExtension.m"; path = "OSFileBrowser/UIImageView+XYExtension.m"; sourceTree = "<group>"; };
-		18E3C7A81FAA20B900567350 /* OSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFile.h; path = OSFileBrowser/OSFile.h; sourceTree = "<group>"; };
+		18E3C7A81FAA20B900567350 /* XYFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFile.h; path = OSFileBrowser/XYFile.h; sourceTree = "<group>"; };
 		18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+XYExtensions.h"; path = "OSFileBrowser/UIViewController+XYExtensions.h"; sourceTree = "<group>"; };
 		18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+XYExtensions.m"; path = "OSFileBrowser/UIViewController+XYExtensions.m"; sourceTree = "<group>"; };
-		18E3C7AD1FAA20BA00567350 /* OSFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFile.m; path = OSFileBrowser/OSFile.m; sourceTree = "<group>"; };
-		18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewFlowLayout.m; path = OSFileBrowser/OSFileCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewFlowLayout.h; path = OSFileBrowser/OSFileCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+OSFile.h"; path = "OSFileBrowser/NSString+OSFile.h"; sourceTree = "<group>"; };
-		18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewCell.h; path = OSFileBrowser/OSFileCollectionViewCell.h; sourceTree = "<group>"; };
-		18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewController.m; path = OSFileBrowser/OSFileCollectionViewController.m; sourceTree = "<group>"; };
-		18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileAttributeItem.m; path = OSFileBrowser/OSFileAttributeItem.m; sourceTree = "<group>"; };
-		18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFilePreviewViewController.m; path = OSFileBrowser/OSFilePreviewViewController.m; sourceTree = "<group>"; };
+		18E3C7AD1FAA20BA00567350 /* XYFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFile.m; path = OSFileBrowser/XYFile.m; sourceTree = "<group>"; };
+		18E3C7AE1FAA20BA00567350 /* XYFileCollectionViewFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionViewFlowLayout.m; path = OSFileBrowser/XYFileCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		18E3C7B01FAA20BA00567350 /* XYFileCollectionViewFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionViewFlowLayout.h; path = OSFileBrowser/XYFileCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		18E3C7B21FAA20BB00567350 /* NSString+XYFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+XYFile.h"; path = "OSFileBrowser/NSString+XYFile.h"; sourceTree = "<group>"; };
+		18E3C7B31FAA20BB00567350 /* XYFileCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionViewCell.h; path = OSFileBrowser/XYFileCollectionViewCell.h; sourceTree = "<group>"; };
+		18E3C7B41FAA20BB00567350 /* XYFileCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionViewController.m; path = OSFileBrowser/XYFileCollectionViewController.m; sourceTree = "<group>"; };
+		18E3C7B61FAA20BB00567350 /* XYFileAttributeItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFileAttributeItem.m; path = OSFileBrowser/XYFileAttributeItem.m; sourceTree = "<group>"; };
+		18E3C7B71FAA20BC00567350 /* XYFilePreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFilePreviewViewController.m; path = OSFileBrowser/XYFilePreviewViewController.m; sourceTree = "<group>"; };
 		18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+XYImage.m"; path = "OSFileBrowser/UIImage+XYImage.m"; sourceTree = "<group>"; };
 		18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DirectoryWatcher.m; path = OSFileBrowser/DirectoryWatcher.m; sourceTree = "<group>"; };
 		18E3C7BA1FAA20BC00567350 /* NSDate+ESUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSDate+ESUtilities.m"; path = "OSFileBrowser/NSDate+ESUtilities.m"; sourceTree = "<group>"; };
-		18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileAttributeItem.h; path = OSFileBrowser/OSFileAttributeItem.h; sourceTree = "<group>"; };
+		18E3C7BB1FAA20BC00567350 /* XYFileAttributeItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFileAttributeItem.h; path = OSFileBrowser/XYFileAttributeItem.h; sourceTree = "<group>"; };
 		18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDate+ESUtilities.h"; path = "OSFileBrowser/NSDate+ESUtilities.h"; sourceTree = "<group>"; };
 		18E3C7BD1FAA20BD00567350 /* UIImageView+XYExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImageView+XYExtension.h"; path = "OSFileBrowser/UIImageView+XYExtension.h"; sourceTree = "<group>"; };
 		18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DirectoryWatcher.h; path = OSFileBrowser/DirectoryWatcher.h; sourceTree = "<group>"; };
-		18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+OSFile.m"; path = "OSFileBrowser/NSString+OSFile.m"; sourceTree = "<group>"; };
-		18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileBottomHUD.h; path = OSFileBrowser/OSFileBottomHUD.h; sourceTree = "<group>"; };
-		18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewController.h; path = OSFileBrowser/OSFileCollectionViewController.h; sourceTree = "<group>"; };
-		18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OSFileBottomHUD.m; path = OSFileBrowser/OSFileBottomHUD.m; sourceTree = "<group>"; };
-		18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = OSFileBrowser.bundle; path = OSFileBrowser/OSFileBrowser.bundle; sourceTree = "<group>"; };
+		18E3C7BF1FAA20BD00567350 /* NSString+XYFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+XYFile.m"; path = "OSFileBrowser/NSString+XYFile.m"; sourceTree = "<group>"; };
+		18E3C7C01FAA20BD00567350 /* XYFileBottomHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFileBottomHUD.h; path = OSFileBrowser/XYFileBottomHUD.h; sourceTree = "<group>"; };
+		18E3C7C11FAA20BD00567350 /* XYFileCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionViewController.h; path = OSFileBrowser/XYFileCollectionViewController.h; sourceTree = "<group>"; };
+		18E3C7C31FAA20BE00567350 /* XYFileBottomHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XYFileBottomHUD.m; path = OSFileBrowser/XYFileBottomHUD.m; sourceTree = "<group>"; };
+		18E3C7E81FAA393B00567350 /* XYFileBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = XYFileBrowser.bundle; path = OSFileBrowser/XYFileBrowser.bundle; sourceTree = "<group>"; };
 		74A5B4A7C29615AD3A855D5B /* Pods-FileBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowser/Pods-FileBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		9DFFD2228B56373F0284BB99 /* libPods-FileBrowserLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FileBrowserLib.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A328EB859FE92697AD9A0BD6 /* Pods-FileBrowserLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowserLib.release.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowserLib/Pods-FileBrowserLib.release.xcconfig"; sourceTree = "<group>"; };
 		C412FB3F274B4C9DA2C16484 /* libPods-FileBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FileBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0353DE31FA9735C0082508D /* FileBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSFileBrowserAppDelegate.h; sourceTree = "<group>"; };
-		D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSFileBrowserAppDelegate.m; sourceTree = "<group>"; };
+		D0353DE61FA9735C0082508D /* XYFileBrowserAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYFileBrowserAppDelegate.h; sourceTree = "<group>"; };
+		D0353DE71FA9735C0082508D /* XYFileBrowserAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYFileBrowserAppDelegate.m; sourceTree = "<group>"; };
 		D0353DEF1FA9735C0082508D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0353DF21FA9735C0082508D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0353DF41FA9735C0082508D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0353DF51FA9735C0082508D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileSearchResultsController.h; path = OSFileBrowser/OSFileSearchResultsController.h; sourceTree = "<group>"; };
-		D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 1; name = OSFileSearchResultsController.m; path = OSFileBrowser/OSFileSearchResultsController.m; sourceTree = "<group>"; };
+		D055BE451FC3B5350089C0C3 /* XYFileSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileSearchResultsController.h; path = OSFileBrowser/XYFileSearchResultsController.h; sourceTree = "<group>"; };
+		D055BE461FC3B5350089C0C3 /* XYFileSearchResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 1; name = XYFileSearchResultsController.m; path = OSFileBrowser/XYFileSearchResultsController.m; sourceTree = "<group>"; };
 		D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+OSContainsEeachCharacter.h"; path = "OSFileBrowser/NSString+OSContainsEeachCharacter.h"; sourceTree = "<group>"; };
-		D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileBrowserAppearanceConfigs.h; path = OSFileBrowser/OSFileBrowserAppearanceConfigs.h; sourceTree = "<group>"; };
+		D055BE481FC3B5350089C0C3 /* XYFileBrowserAppearanceConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileBrowserAppearanceConfigs.h; path = OSFileBrowser/XYFileBrowserAppearanceConfigs.h; sourceTree = "<group>"; };
 		D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+OSStatusBarStyle.m"; path = "OSFileBrowser/UIViewController+OSStatusBarStyle.m"; sourceTree = "<group>"; };
 		D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+OSContainsEeachCharacter.m"; path = "OSFileBrowser/NSString+OSContainsEeachCharacter.m"; sourceTree = "<group>"; };
 		D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+OSStatusBarStyle.h"; path = "OSFileBrowser/UIViewController+OSStatusBarStyle.h"; sourceTree = "<group>"; };
-		D088CA821FD63C7F00BB4C74 /* OSFileMarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileMarkViewController.h; path = OSFileBrowser/OSFileMarkViewController.h; sourceTree = "<group>"; };
-		D088CA831FD63C7F00BB4C74 /* OSFileMarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileMarkViewController.m; path = OSFileBrowser/OSFileMarkViewController.m; sourceTree = "<group>"; };
-		D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileBrowserAppearanceConfigs.m; path = OSFileBrowser/OSFileBrowserAppearanceConfigs.m; sourceTree = "<group>"; };
-		D088CA851FD63C8000BB4C74 /* OSFileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileHelper.h; path = OSFileBrowser/OSFileHelper.h; sourceTree = "<group>"; };
-		D088CA861FD63C8000BB4C74 /* OSFileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileHelper.m; path = OSFileBrowser/OSFileHelper.m; sourceTree = "<group>"; };
+		D088CA821FD63C7F00BB4C74 /* XYFileMarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileMarkViewController.h; path = OSFileBrowser/XYFileMarkViewController.h; sourceTree = "<group>"; };
+		D088CA831FD63C7F00BB4C74 /* XYFileMarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileMarkViewController.m; path = OSFileBrowser/XYFileMarkViewController.m; sourceTree = "<group>"; };
+		D088CA841FD63C8000BB4C74 /* XYFileBrowserAppearanceConfigs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileBrowserAppearanceConfigs.m; path = OSFileBrowser/XYFileBrowserAppearanceConfigs.m; sourceTree = "<group>"; };
+		D088CA851FD63C8000BB4C74 /* XYFileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileHelper.h; path = OSFileBrowser/XYFileHelper.h; sourceTree = "<group>"; };
+		D088CA861FD63C8000BB4C74 /* XYFileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileHelper.m; path = OSFileBrowser/XYFileHelper.m; sourceTree = "<group>"; };
 		D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertController+AlertExtensions.m"; path = "OSFileBrowser/UIAlertController+AlertExtensions.m"; sourceTree = "<group>"; };
 		D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertController+AlertExtensions.h"; path = "OSFileBrowser/UIAlertController+AlertExtensions.h"; sourceTree = "<group>"; };
 		D0B58DF81FDE7CA400CC64A2 /* FileBrowserLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FileBrowserLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,10 +178,10 @@
 		D0BF29411FE116C40055E3AB /* FileBrowserLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FileBrowserLib.framework; sourceTree = "<group>"; };
 		D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITextField+XYExtensions.h"; path = "OSFileBrowser/UITextField+XYExtensions.h"; sourceTree = "<group>"; };
 		D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITextField+XYExtensions.m"; path = "OSFileBrowser/UITextField+XYExtensions.m"; sourceTree = "<group>"; };
-		D2CD1195203F2CB100E7929F /* OSFileCollectionSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionSection.h; path = OSFileBrowser/OSFileCollectionSection.h; sourceTree = "<group>"; };
-		D2CD1196203F2CB100E7929F /* OSFileCollectionViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSFileCollectionViewModel.h; path = OSFileBrowser/OSFileCollectionViewModel.h; sourceTree = "<group>"; };
-		D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionViewModel.m; path = OSFileBrowser/OSFileCollectionViewModel.m; sourceTree = "<group>"; };
-		D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSFileCollectionSection.m; path = OSFileBrowser/OSFileCollectionSection.m; sourceTree = "<group>"; };
+		D2CD1195203F2CB100E7929F /* XYFileCollectionSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionSection.h; path = OSFileBrowser/XYFileCollectionSection.h; sourceTree = "<group>"; };
+		D2CD1196203F2CB100E7929F /* XYFileCollectionViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYFileCollectionViewModel.h; path = OSFileBrowser/XYFileCollectionViewModel.h; sourceTree = "<group>"; };
+		D2CD1197203F2CB200E7929F /* XYFileCollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionViewModel.m; path = OSFileBrowser/XYFileCollectionViewModel.m; sourceTree = "<group>"; };
+		D2CD1198203F2CB200E7929F /* XYFileCollectionSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYFileCollectionSection.m; path = OSFileBrowser/XYFileCollectionSection.m; sourceTree = "<group>"; };
 		E9283F9BE9DF94E6576EE75B /* Pods-FileBrowserLib.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileBrowserLib.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FileBrowserLib/Pods-FileBrowserLib.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,61 +209,61 @@
 		18E3C7E41FAA20F800567350 /* OSFileBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				D2CD1195203F2CB100E7929F /* OSFileCollectionSection.h */,
-				D2CD1198203F2CB200E7929F /* OSFileCollectionSection.m */,
-				D2CD1196203F2CB100E7929F /* OSFileCollectionViewModel.h */,
-				D2CD1197203F2CB200E7929F /* OSFileCollectionViewModel.m */,
+				D2CD1195203F2CB100E7929F /* XYFileCollectionSection.h */,
+				D2CD1198203F2CB200E7929F /* XYFileCollectionSection.m */,
+				D2CD1196203F2CB100E7929F /* XYFileCollectionViewModel.h */,
+				D2CD1197203F2CB200E7929F /* XYFileCollectionViewModel.m */,
 				D2A038361FDAB2040051A286 /* UITextField+XYExtensions.h */,
 				D2A038371FDAB2040051A286 /* UITextField+XYExtensions.m */,
-				D055BE481FC3B5350089C0C3 /* OSFileBrowserAppearanceConfigs.h */,
-				D088CA841FD63C8000BB4C74 /* OSFileBrowserAppearanceConfigs.m */,
-				D088CA851FD63C8000BB4C74 /* OSFileHelper.h */,
-				D088CA861FD63C8000BB4C74 /* OSFileHelper.m */,
-				D088CA821FD63C7F00BB4C74 /* OSFileMarkViewController.h */,
-				D088CA831FD63C7F00BB4C74 /* OSFileMarkViewController.m */,
+				D055BE481FC3B5350089C0C3 /* XYFileBrowserAppearanceConfigs.h */,
+				D088CA841FD63C8000BB4C74 /* XYFileBrowserAppearanceConfigs.m */,
+				D088CA851FD63C8000BB4C74 /* XYFileHelper.h */,
+				D088CA861FD63C8000BB4C74 /* XYFileHelper.m */,
+				D088CA821FD63C7F00BB4C74 /* XYFileMarkViewController.h */,
+				D088CA831FD63C7F00BB4C74 /* XYFileMarkViewController.m */,
 				181F96A91FCC468000237588 /* UIScrollView+RollView.h */,
 				181F96AA1FCC468000237588 /* UIScrollView+RollView.m */,
 				D096CF951FC57074007B09ED /* UIAlertController+AlertExtensions.h */,
 				D096CF941FC57074007B09ED /* UIAlertController+AlertExtensions.m */,
 				D055BE471FC3B5350089C0C3 /* NSString+OSContainsEeachCharacter.h */,
 				D055BE4A1FC3B5360089C0C3 /* NSString+OSContainsEeachCharacter.m */,
-				D055BE451FC3B5350089C0C3 /* OSFileSearchResultsController.h */,
-				D055BE461FC3B5350089C0C3 /* OSFileSearchResultsController.m */,
+				D055BE451FC3B5350089C0C3 /* XYFileSearchResultsController.h */,
+				D055BE461FC3B5350089C0C3 /* XYFileSearchResultsController.m */,
 				D055BE4B1FC3B5360089C0C3 /* UIViewController+OSStatusBarStyle.h */,
 				D055BE491FC3B5350089C0C3 /* UIViewController+OSStatusBarStyle.m */,
 				185A7F631FC1D8B700D66AC3 /* MBProgressHUD+XYHUD.h */,
 				185A7F611FC1D8B600D66AC3 /* MBProgressHUD+XYHUD.m */,
-				185A7F661FC1D8B700D66AC3 /* OSFileCollectionHeaderView.h */,
-				185A7F621FC1D8B600D66AC3 /* OSFileCollectionHeaderView.m */,
+				185A7F661FC1D8B700D66AC3 /* XYFileCollectionHeaderView.h */,
+				185A7F621FC1D8B600D66AC3 /* XYFileCollectionHeaderView.m */,
 				185A7F641FC1D8B700D66AC3 /* OSMimeTypeMap.h */,
 				185A7F651FC1D8B700D66AC3 /* OSMimeTypeMap.m */,
 				18E3C7BE1FAA20BD00567350 /* DirectoryWatcher.h */,
 				18E3C7B91FAA20BC00567350 /* DirectoryWatcher.m */,
 				18E3C7BC1FAA20BC00567350 /* NSDate+ESUtilities.h */,
 				18E3C7BA1FAA20BC00567350 /* NSDate+ESUtilities.m */,
-				18E3C7B21FAA20BB00567350 /* NSString+OSFile.h */,
-				18E3C7BF1FAA20BD00567350 /* NSString+OSFile.m */,
-				18E3C7A81FAA20B900567350 /* OSFile.h */,
-				18E3C7AD1FAA20BA00567350 /* OSFile.m */,
-				18E3C7BB1FAA20BC00567350 /* OSFileAttributeItem.h */,
-				18E3C7B61FAA20BB00567350 /* OSFileAttributeItem.m */,
-				18E3C7C01FAA20BD00567350 /* OSFileBottomHUD.h */,
-				18E3C7C31FAA20BE00567350 /* OSFileBottomHUD.m */,
-				18E3C7B31FAA20BB00567350 /* OSFileCollectionViewCell.h */,
-				18E3C7A61FAA20B800567350 /* OSFileCollectionViewCell.m */,
-				18E3C7C11FAA20BD00567350 /* OSFileCollectionViewController.h */,
-				18E3C7B41FAA20BB00567350 /* OSFileCollectionViewController.m */,
-				18E3C7B01FAA20BA00567350 /* OSFileCollectionViewFlowLayout.h */,
-				18E3C7AE1FAA20BA00567350 /* OSFileCollectionViewFlowLayout.m */,
-				18E3C7A41FAA20B800567350 /* OSFilePreviewViewController.h */,
-				18E3C7B71FAA20BC00567350 /* OSFilePreviewViewController.m */,
+				18E3C7B21FAA20BB00567350 /* NSString+XYFile.h */,
+				18E3C7BF1FAA20BD00567350 /* NSString+XYFile.m */,
+				18E3C7A81FAA20B900567350 /* XYFile.h */,
+				18E3C7AD1FAA20BA00567350 /* XYFile.m */,
+				18E3C7BB1FAA20BC00567350 /* XYFileAttributeItem.h */,
+				18E3C7B61FAA20BB00567350 /* XYFileAttributeItem.m */,
+				18E3C7C01FAA20BD00567350 /* XYFileBottomHUD.h */,
+				18E3C7C31FAA20BE00567350 /* XYFileBottomHUD.m */,
+				18E3C7B31FAA20BB00567350 /* XYFileCollectionViewCell.h */,
+				18E3C7A61FAA20B800567350 /* XYFileCollectionViewCell.m */,
+				18E3C7C11FAA20BD00567350 /* XYFileCollectionViewController.h */,
+				18E3C7B41FAA20BB00567350 /* XYFileCollectionViewController.m */,
+				18E3C7B01FAA20BA00567350 /* XYFileCollectionViewFlowLayout.h */,
+				18E3C7AE1FAA20BA00567350 /* XYFileCollectionViewFlowLayout.m */,
+				18E3C7A41FAA20B800567350 /* XYFilePreviewViewController.h */,
+				18E3C7B71FAA20BC00567350 /* XYFilePreviewViewController.m */,
 				18E3C7A51FAA20B800567350 /* UIImage+XYImage.h */,
 				18E3C7B81FAA20BC00567350 /* UIImage+XYImage.m */,
 				18E3C7BD1FAA20BD00567350 /* UIImageView+XYExtension.h */,
 				18E3C7A71FAA20B900567350 /* UIImageView+XYExtension.m */,
 				18E3C7A91FAA20B900567350 /* UIViewController+XYExtensions.h */,
 				18E3C7AA1FAA20B900567350 /* UIViewController+XYExtensions.m */,
-				18E3C7E81FAA393B00567350 /* OSFileBrowser.bundle */,
+				18E3C7E81FAA393B00567350 /* XYFileBrowser.bundle */,
 			);
 			name = OSFileBrowser;
 			sourceTree = "<group>";
@@ -312,8 +312,8 @@
 		D0353DE51FA9735C0082508D /* FileBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				D0353DE61FA9735C0082508D /* OSFileBrowserAppDelegate.h */,
-				D0353DE71FA9735C0082508D /* OSFileBrowserAppDelegate.m */,
+				D0353DE61FA9735C0082508D /* XYFileBrowserAppDelegate.h */,
+				D0353DE71FA9735C0082508D /* XYFileBrowserAppDelegate.m */,
 				D0353DFE1FA9735C0082508D /* Supporting Files */,
 			);
 			path = FileBrowser;
@@ -348,11 +348,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0B58DFC1FDE7CA400CC64A2 /* FileBrowserLib.h in Headers */,
-				D0B58E1A1FDE7E4200CC64A2 /* OSFileAttributeItem.h in Headers */,
-				D0B58E0B1FDE7E4200CC64A2 /* OSFileHelper.h in Headers */,
-				D0B58E191FDE7E4200CC64A2 /* OSFile.h in Headers */,
-				D0B58E181FDE7E4200CC64A2 /* NSString+OSFile.h in Headers */,
-				D0B58E1D1FDE7E4200CC64A2 /* OSFileCollectionViewController.h in Headers */,
+				D0B58E1A1FDE7E4200CC64A2 /* XYFileAttributeItem.h in Headers */,
+				D0B58E0B1FDE7E4200CC64A2 /* XYFileHelper.h in Headers */,
+				D0B58E191FDE7E4200CC64A2 /* XYFile.h in Headers */,
+				D0B58E181FDE7E4200CC64A2 /* NSString+XYFile.h in Headers */,
+				D0B58E1D1FDE7E4200CC64A2 /* XYFileCollectionViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +449,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E3C7E91FAA393B00567350 /* OSFileBrowser.bundle in Resources */,
+				18E3C7E91FAA393B00567350 /* XYFileBrowser.bundle in Resources */,
 				D0353DF31FA9735C0082508D /* LaunchScreen.storyboard in Resources */,
 				D0353DF01FA9735C0082508D /* Assets.xcassets in Resources */,
 			);
@@ -480,7 +480,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		25BE5DE8A0FCA79F189E5F06 /* [CP] Copy Pods Resources */ = {
@@ -513,7 +513,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D0D0BC051FDE8A0500EC546C /* ShellScript */ = {
@@ -566,21 +566,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E3C7C41FAA20BE00567350 /* OSFilePreviewViewController.h in Sources */,
+				18E3C7C41FAA20BE00567350 /* XYFilePreviewViewController.h in Sources */,
 				18E3C7C51FAA20BE00567350 /* UIImage+XYImage.h in Sources */,
-				18E3C7C81FAA20BE00567350 /* OSFile.h in Sources */,
+				18E3C7C81FAA20BE00567350 /* XYFile.h in Sources */,
 				18E3C7C91FAA20BE00567350 /* UIViewController+XYExtensions.h in Sources */,
-				18E3C7D01FAA20BE00567350 /* OSFileCollectionViewFlowLayout.h in Sources */,
-				18E3C7D21FAA20BE00567350 /* NSString+OSFile.h in Sources */,
-				18E3C7D31FAA20BE00567350 /* OSFileCollectionViewCell.h in Sources */,
-				18E3C7DB1FAA20BE00567350 /* OSFileAttributeItem.h in Sources */,
+				18E3C7D01FAA20BE00567350 /* XYFileCollectionViewFlowLayout.h in Sources */,
+				18E3C7D21FAA20BE00567350 /* NSString+XYFile.h in Sources */,
+				18E3C7D31FAA20BE00567350 /* XYFileCollectionViewCell.h in Sources */,
+				18E3C7DB1FAA20BE00567350 /* XYFileAttributeItem.h in Sources */,
 				18E3C7DC1FAA20BE00567350 /* NSDate+ESUtilities.h in Sources */,
 				18E3C7DD1FAA20BE00567350 /* UIImageView+XYExtension.h in Sources */,
 				18E3C7DE1FAA20BE00567350 /* DirectoryWatcher.h in Sources */,
-				18E3C7E01FAA20BE00567350 /* OSFileBottomHUD.h in Sources */,
-				18E3C7E11FAA20BE00567350 /* OSFileCollectionViewController.h in Sources */,
+				18E3C7E01FAA20BE00567350 /* XYFileBottomHUD.h in Sources */,
+				18E3C7E11FAA20BE00567350 /* XYFileCollectionViewController.h in Sources */,
 				D0353DF61FA9735C0082508D /* main.m in Sources */,
-				D0353DE81FA9735C0082508D /* OSFileBrowserAppDelegate.m in Sources */,
+				D0353DE81FA9735C0082508D /* XYFileBrowserAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,30 +588,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0B58E361FDE81BE00CC64A2 /* OSFileCollectionViewController.m in Sources */,
-				D2CD119C203F2CBE00E7929F /* OSFileCollectionViewModel.m in Sources */,
-				D0B58E351FDE81BE00CC64A2 /* OSFileCollectionViewCell.m in Sources */,
-				D0B58E331FDE81BE00CC64A2 /* OSFileAttributeItem.m in Sources */,
-				D0B58E311FDE81BE00CC64A2 /* NSString+OSFile.m in Sources */,
-				D0B58E341FDE81BE00CC64A2 /* OSFileBottomHUD.m in Sources */,
-				D0B58E371FDE81BE00CC64A2 /* OSFileCollectionViewFlowLayout.m in Sources */,
-				D0B58E2A1FDE81BE00CC64A2 /* OSFileSearchResultsController.m in Sources */,
+				D0B58E361FDE81BE00CC64A2 /* XYFileCollectionViewController.m in Sources */,
+				D2CD119C203F2CBE00E7929F /* XYFileCollectionViewModel.m in Sources */,
+				D0B58E351FDE81BE00CC64A2 /* XYFileCollectionViewCell.m in Sources */,
+				D0B58E331FDE81BE00CC64A2 /* XYFileAttributeItem.m in Sources */,
+				D0B58E311FDE81BE00CC64A2 /* NSString+XYFile.m in Sources */,
+				D0B58E341FDE81BE00CC64A2 /* XYFileBottomHUD.m in Sources */,
+				D0B58E371FDE81BE00CC64A2 /* XYFileCollectionViewFlowLayout.m in Sources */,
+				D0B58E2A1FDE81BE00CC64A2 /* XYFileSearchResultsController.m in Sources */,
 				D0B58E301FDE81BE00CC64A2 /* NSDate+ESUtilities.m in Sources */,
-				D0B58E251FDE81BE00CC64A2 /* OSFileHelper.m in Sources */,
+				D0B58E251FDE81BE00CC64A2 /* XYFileHelper.m in Sources */,
 				D0B58E3A1FDE81BE00CC64A2 /* UIImageView+XYExtension.m in Sources */,
 				D0B58E2B1FDE81BE00CC64A2 /* UIViewController+OSStatusBarStyle.m in Sources */,
 				D0B58E3B1FDE81BE00CC64A2 /* UIViewController+XYExtensions.m in Sources */,
-				D0B58E321FDE81BE00CC64A2 /* OSFile.m in Sources */,
+				D0B58E321FDE81BE00CC64A2 /* XYFile.m in Sources */,
 				D0B58E281FDE81BE00CC64A2 /* UIAlertController+AlertExtensions.m in Sources */,
-				D0B58E261FDE81BE00CC64A2 /* OSFileMarkViewController.m in Sources */,
-				D0B58E241FDE81BE00CC64A2 /* OSFileBrowserAppearanceConfigs.m in Sources */,
-				D0B58E381FDE81BE00CC64A2 /* OSFilePreviewViewController.m in Sources */,
-				D2CD119D203F2CF400E7929F /* OSFileCollectionSection.m in Sources */,
+				D0B58E261FDE81BE00CC64A2 /* XYFileMarkViewController.m in Sources */,
+				D0B58E241FDE81BE00CC64A2 /* XYFileBrowserAppearanceConfigs.m in Sources */,
+				D0B58E381FDE81BE00CC64A2 /* XYFilePreviewViewController.m in Sources */,
+				D2CD119D203F2CF400E7929F /* XYFileCollectionSection.m in Sources */,
 				D0B58E231FDE81BE00CC64A2 /* UITextField+XYExtensions.m in Sources */,
 				D0B81C131FE7B18600149451 /* MBProgressHUD+XYHUD.m in Sources */,
 				D0B58E2E1FDE81BE00CC64A2 /* OSMimeTypeMap.m in Sources */,
 				D0B58E291FDE81BE00CC64A2 /* NSString+OSContainsEeachCharacter.m in Sources */,
-				D0B58E2D1FDE81BE00CC64A2 /* OSFileCollectionHeaderView.m in Sources */,
+				D0B58E2D1FDE81BE00CC64A2 /* XYFileCollectionHeaderView.m in Sources */,
 				D0B58E2F1FDE81BE00CC64A2 /* DirectoryWatcher.m in Sources */,
 				D0B58E271FDE81BE00CC64A2 /* UIScrollView+RollView.m in Sources */,
 				D0B58E391FDE81BE00CC64A2 /* UIImage+XYImage.m in Sources */,
@@ -765,7 +765,7 @@
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ossey.fileBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpface.fileBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -789,7 +789,7 @@
 				INFOPLIST_FILE = FileBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ossey.fileBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpface.fileBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -819,7 +819,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = staticlib;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = ossey.FileBrowserLib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpface.FileBrowserLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -853,7 +853,7 @@
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = staticlib;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = ossey.FileBrowserLib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alpface.FileBrowserLib;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

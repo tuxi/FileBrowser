@@ -2,7 +2,7 @@
 //  OSMimeTypeMap.m
 //  FileDownloader
 //
-//  Created by Swae on 2017/11/11.
+//  Created by xiaoyuan on 2017/11/11.
 //  Copyright © 2017年 alpface. All rights reserved.
 //
 

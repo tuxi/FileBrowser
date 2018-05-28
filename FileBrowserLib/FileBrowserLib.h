@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSFileHelper.h"
-#import "OSFileAttributeItem.h"
-#import "OSFileCollectionViewController.h"
-#import "NSString+OSFile.h"
+#import "XYFileHelper.h"
+#import "XYFileAttributeItem.h"
+#import "XYFileCollectionViewController.h"
+#import "NSString+XYFile.h"
 
 //! Project version number for FileBrowserLib.
 FOUNDATION_EXPORT double FileBrowserLibVersionNumber;

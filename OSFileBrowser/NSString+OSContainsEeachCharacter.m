@@ -2,7 +2,7 @@
 //  NSString+OSContainsEeachCharacter.m
 //  FileBrowser
 //
-//  Created by Swae on 2017/11/20.
+//  Created by xiaoyuan on 2017/11/20.
 //  Copyright © 2017年 xiaoyuan. All rights reserved.
 //
 

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSFileBrowserAppDelegate.h"
+#import "XYFileBrowserAppDelegate.h"
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([OSFileBrowserAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([XYFileBrowserAppDelegate class]));
     }
 }
